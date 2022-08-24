@@ -22,9 +22,9 @@ function App() {
   }
 
 
-  // useEffect(() => {callAPODApi()}, [])
+  useEffect(() => {callAPODApi()}, [])
 
-  useEffect(() => setImgData(data), [])
+  // useEffect(() => setImgData(data), [])
   
   const cards = imgData.map(item => (
     <Card
