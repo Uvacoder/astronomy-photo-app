@@ -4,25 +4,30 @@ import Card from './Card'
 import data from './data'
 import './App.css'
 
+import lozad from 'lozad'
+
 function App() {
-  const [imgData, setImgData] = useState([])
-  
+  const [imgData, setImgData] = useState([]) 
   
 
 
-  // gets 20 random images from APOD
-  const callAPODApi = () => {
-    fetch("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=20")
+  // gets 10 random images from APOD
+  const callApiRandom = () => {
+    fetch("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=10")
     .then((response) => response.json())
     .then((data) => {
       console.log(data)
-      // if media type is not image, to use the 2nd response
-      setImgData(data)
+      setImgData(prevData => (
+        [
+          ...prevData,
+          data
+        ]
+      ))
     });
   }
 
 
-  useEffect(() => {callAPODApi()}, [])
+  useEffect(() => {callApiRandom()}, [])
 
   // useEffect(() => setImgData(data), [])
   
@@ -36,6 +41,16 @@ function App() {
       />
   ))
 
+  // lazy load images
+  useEffect(() => {
+    const observer = lozad('.lozad', {
+      rootMargin: '600px 0px', // syntax similar to that of CSS Margin
+      threshold: 0.1, // ratio of element convergence
+      enableAutoReload: true // it will reload the new image when validating attributes changes
+    });
+    observer.observe();
+    })
+
   return (
     <div className="App">
         <h1>Astronomy</h1>
@@ -43,8 +58,7 @@ function App() {
         <input placeholder='search' />
         <input type='submit' />
         
-        <button style={{marginLeft: "20px"}}>View Likes</button>
-        
+        <button style={{marginLeft: "20px"}}>View Likes</button>        
 
         {cards}
          
