@@ -5,24 +5,46 @@ import data from './data'
 import './App.css'
 
 import lozad from 'lozad'
+import axios from 'axios'
 
 function App() {
-  const [imgData, setImgData] = useState([]) 
-  
+  const [imgData, setImgData] = useState([])   
 
 
   // gets 10 random images from APOD
+  // const callApiRandom = () => {
+  //   fetch("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=10")
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log(data)
+  //     setImgData(prevData => (
+  //       [
+  //         ...prevData,
+  //         ...data
+  //       ]
+  //     ))
+  //   });
+  // }
+
   const callApiRandom = () => {
-    fetch("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=10")
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
+    
+    axios.get("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=10")
+    .then(function (response) {
+      // handle success
+      console.log(response.data);
       setImgData(prevData => (
         [
           ...prevData,
-          data
+          ...response.data
         ]
       ))
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
     });
   }
 
