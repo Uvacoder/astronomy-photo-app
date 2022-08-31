@@ -74,8 +74,9 @@ function App() {
     })
 
   return (
-    <div className="App">
-        <h1>Astronomy</h1>
+    <div className="App bg-neutral-900 text-slate-50">
+        <h1 class="font-sans text-xl">Astronomy</h1>
+        
         
         <input placeholder='search' />
         <input type='submit' />
