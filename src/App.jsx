@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 
 import Card from './Card'
+import LoadingSpinner from './LoadingSpinner'
+
 import data from './data'
 import './App.css'
 
@@ -9,7 +11,7 @@ import axios from 'axios'
 
 function App() {
   const [itemData, setItemData] = useState([])   
-
+  const [isLoading, setIsLoading] = useState(false)
 
   // gets 10 random images from APOD
   // const callApiRandom = () => {
@@ -27,7 +29,7 @@ function App() {
   // }
 
   const callApiRandom = () => {
-    
+    setIsLoading(true)
     axios.get("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=10")
     .then(function (response) {
       // handle success
@@ -38,6 +40,7 @@ function App() {
           ...response.data
         ]
       ))
+      setIsLoading(false)
     })
     .catch(function (error) {
       // handle error
@@ -53,15 +56,18 @@ function App() {
 
   // useEffect(() => setImgData(data), [])
   
-  const cards = itemData.map(item => (
-    <Card
-      title={item?.title}
-      url={item?.url}
-      explanation={item?.explanation}
-      date={item?.date}
-      
-      />
-  ))
+  const cards = itemData.map(item => {
+    if (item?.media_type === "image") {
+      return (
+        <Card
+        title={item?.title}
+        url={item?.url}
+        explanation={item?.explanation}
+        date={item?.date}
+        />
+      )
+    }
+  })
 
   // lazy load images
   useEffect(() => {
@@ -119,6 +125,8 @@ function App() {
         <button style={{marginLeft: "20px"}}>View Likes</button>        
 
         {cards}
+        {isLoading && <LoadingSpinner />}
+        
          
         
     </div>
