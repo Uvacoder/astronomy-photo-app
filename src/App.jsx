@@ -8,7 +8,7 @@ import lozad from 'lozad'
 import axios from 'axios'
 
 function App() {
-  const [imgData, setImgData] = useState([])   
+  const [itemData, setItemData] = useState([])   
 
 
   // gets 10 random images from APOD
@@ -32,7 +32,7 @@ function App() {
     .then(function (response) {
       // handle success
       console.log(response.data);
-      setImgData(prevData => (
+      setItemData(prevData => (
         [
           ...prevData,
           ...response.data
@@ -53,7 +53,7 @@ function App() {
 
   // useEffect(() => setImgData(data), [])
   
-  const cards = imgData.map(item => (
+  const cards = itemData.map(item => (
     <Card
       title={item?.title}
       url={item?.url}
@@ -71,7 +71,42 @@ function App() {
       enableAutoReload: true // it will reload the new image when validating attributes changes
     });
     observer.observe();
-    })
+  })
+
+  // scroll to bottom event listener
+  useEffect(() => {
+    const handleScroll = event => {
+      // console.log('Math.ceil(document.documentElement.scrollTop)', Math.ceil(document.documentElement.scrollTop));
+      // console.log('window.innerHeight', window.innerHeight);      
+      // console.log('document.documentElement.offsetHeight', document.documentElement.offsetHeight);
+      if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
+        console.log("infinite scroll v1")     
+           
+        callApiRandom();
+        console.log(itemData);
+        return
+      } else if (Math.ceil(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
+        console.log("infinite scroll v2")     
+           
+        callApiRandom();
+        console.log(itemData);
+        return
+      } else if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight) {
+        console.log("infinite scroll v1")
+        
+        callApiRandom();
+        console.log(itemData);
+        return
+      }}
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [])
+
+
 
   return (
     <div className="App bg-neutral-900 text-slate-50">
