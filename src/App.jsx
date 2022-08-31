@@ -13,21 +13,6 @@ function App() {
   const [itemData, setItemData] = useState([])   
   const [isLoading, setIsLoading] = useState(false)
 
-  // gets 10 random images from APOD
-  // const callApiRandom = () => {
-  //   fetch("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=10")
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log(data)
-  //     setImgData(prevData => (
-  //       [
-  //         ...prevData,
-  //         ...data
-  //       ]
-  //     ))
-  //   });
-  // }
-
   const callApiRandom = () => {
     setIsLoading(true)
     axios.get("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=10")
