@@ -9,9 +9,31 @@ import './App.css'
 import lozad from 'lozad'
 import axios from 'axios'
 
+let date, startDate, endDate;
+
+date = new Date();
+date.setDate(date.getDate()-10);
+startDate = date.toISOString().slice(0, 10);
+console.log(startDate);
+// ---
+date.setDate(date.getDate()-1);
+endDate = date.toISOString().slice(0, 10);
+console.log(endDate);
+date.setDate(date.getDate()-9);
+startDate = date.toISOString().slice(0, 10);
+console.log(startDate);
+// ---
+
+
+
 function App() {
   const [itemData, setItemData] = useState([])   
   const [isLoading, setIsLoading] = useState(false)
+  const [dateForApi, setDateForApi] = useState({
+    date: new Date(),
+    startDate: null,
+    endDate: null
+  })
 
   const callApiRandom = () => {
     setIsLoading(true)
@@ -101,7 +123,7 @@ function App() {
 
   return (
     <div className="App bg-neutral-900 text-slate-50">
-        <h1 class="font-sans text-xl">Astronomy</h1>
+        <h1 className="font-sans text-xl">Astronomy</h1>
         
         
         <input placeholder='search' />
