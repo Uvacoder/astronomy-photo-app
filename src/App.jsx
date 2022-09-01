@@ -24,20 +24,11 @@ function App() {
     
   })
 
-  const callApiForToday = (date) => {
+  const callApiByDate = (date) => {
     
-    // let date = new Date();
-    // var d = new Date();
-    // d.setDate(d.getDate()-5);
-    /*
-    if (date !== today) {
-      
-    }
-    */
+    
     console.log(date.getMonth(), date.getDate())
     
-    
-    // date.setDate(date.getDate()-(0+10*dateForApi.numOfCalls))
     const endDateString = date.toISOString().slice(0, 10);
     console.log("end date: ", endDateString);
     
@@ -58,24 +49,34 @@ function App() {
     })
 
     // set the next end date for API to call
-    // check Feb
-    if (date.getMonth() === 1) {
-      // check leap years
-      const isLeap = new Date(date.getFullYear(), 1, 29).getMonth() == 1;
-      console.log(isLeap)
-      if (isLeap) {
-        date.setDate(28)
-      } else {
-        date.setDate(27)
-      }
-    } 
-    // check other months with data in daysPerMonth.js
+    // check num of days in months with data in daysPerMonth.js
     for (const month of daysPerMonth) {
       if (month.index === date.getMonth()) {
         date.setDate(month.days - 1)
       }
     }
+
+    // check Feb
+    if (date.getMonth() === 1) {
+      // check leap years
+      const checkYear = date.getFullYear()
+      let isLeap = new Date(checkYear, 1, 29).getMonth()
+      if (isLeap === 1) {
+        date.setDate(28)
+      } else {
+        date.setDate(27)
+      }
+    } 
   }
+
+
+  
+    
+    
+    
+
+    
+  
   
   
 
@@ -176,7 +177,7 @@ function App() {
         
         <button style={{marginLeft: "20px"}}>View Likes</button> 
 
-        <button onClick={()=>callApiForToday(today)}>Check API</button>      
+        <button onClick={()=>callApiByDate(today)}>Check API</button>      
 
         {cards}
         {isLoading && <LoadingSpinner />}

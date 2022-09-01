@@ -7,7 +7,7 @@ export default [
     {
         month: "Feb",
         index: 1,
-        days: 28
+        days: 28,
     },
     {
         month: "Mar",
