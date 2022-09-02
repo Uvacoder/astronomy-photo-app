@@ -16,19 +16,14 @@ const today = new Date();
 function App() {
   const [itemData, setItemData] = useState([])   
   const [isLoading, setIsLoading] = useState(false)
-  const [dateForApi, setDateForApi] = useState({ 
-    
-    startDateString: "",
-    
-    endDateString: "",
-    
+  const [dateForApi, setDateForApi] = useState({     
+    startDateString: "",    
+    endDateString: "",    
   })
 
   const calculateDateForApi = (date) => {
     
-    
-    console.log(date.getMonth(), date.getDate())
-    
+    // console.log(date.getMonth(), date.getDate())    
     const endDateString = date.toISOString().slice(0, 10);
     console.log("end date: ", endDateString);
     
@@ -37,14 +32,11 @@ function App() {
     const startDateString = date.toISOString().slice(0, 10);
     console.log("start date: ", startDateString);
 
-    console.log(date.getMonth(), date.getDate())
-
     setDateForApi(prevData => {
       return ({
         ...prevData,
         startDateString: startDateString,
-        endDateString: endDateString,
-        
+        endDateString: endDateString,        
       })
     })
 
@@ -66,29 +58,24 @@ function App() {
       } else {
         date.setDate(27)
       }
-    } 
-
-    
+    }     
   }
 
-  const callApiByDate = () => {
+  const callApiByDate = () => {   
     
-    
-    
-
     setIsLoading(true)
     axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateForApi.startDateString}&end_date=${dateForApi.endDateString}`)
     .then(function (response) {
       // handle success
-      console.log(response.data);
+      // console.log(response.data);
       calculateDateForApi(today)
-      // setItemData(prevData => (
-      //   [
-      //     ...prevData,
-      //     ...response.data
-      //   ]
-      // ))
-      // setIsLoading(false)
+      setItemData(prevData => (
+        [
+          ...prevData,
+          ...response.data.reverse()
+        ]
+      ))
+      setIsLoading(false)
     })
     .catch(function (error) {
       // handle error
@@ -96,20 +83,8 @@ function App() {
     })
     .then(function () {
       // always executed
-      // console.log(itemData)
     });
   }
-  
-
-
-  
-    
-    
-    
-
-    
-  
-  
   
 
   const callApiRandom = () => {
