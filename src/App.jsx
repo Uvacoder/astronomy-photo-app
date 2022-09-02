@@ -176,7 +176,7 @@ function App() {
   console.log(dateForApi)
 
   return (
-    <div className="App bg-neutral-900 text-slate-50">
+    <div className="bg-neutral-900 text-slate-50">
         <Navbar />
         {/* <h1 className="font-sans text-xl">Astronomy</h1>
         
@@ -187,10 +187,10 @@ function App() {
         <button style={{marginLeft: "20px"}}>View Likes</button> 
 
         <button onClick={()=>callApiByDate(today)}>Check API</button>       */}
-
-        {cards}
-        {isLoading && <LoadingSpinner />}
-        
+        <div className='mt-16 ml-5'>
+          {cards}
+          {isLoading && <LoadingSpinner />}
+        </div>
          
         
     </div>

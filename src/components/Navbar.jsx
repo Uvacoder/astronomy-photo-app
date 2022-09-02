@@ -2,7 +2,14 @@ export default function Navbar() {
     return (
         <div className="navbar bg-slate-900 text-slate-50 fixed top-0">
             <div className="flex-1">
-                <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+                {/* <a className="btn btn-ghost normal-case text-xl">daisyUI</a> */}
+                <div class="dropdown">
+                    <label tabindex="0" class="btn btn-ghost rounded-btn">Interstellar</label>
+                    <ul tabindex="0" class="menu dropdown-content p-1 shadow bg-slate-900 text-slate-50 rounded-box w-52 mt-1">
+                        <li><a>Latest photos</a></li> 
+                        <li><a>Random photos</a></li>
+                    </ul>
+                </div>
             </div>
             <div className="flex-none">
                 <button className="btn btn-square btn-ghost">
