@@ -24,7 +24,7 @@ function App() {
     
   })
 
-  const callApiByDate = (date) => {
+  const calculateDateForApi = (date) => {
     
     
     console.log(date.getMonth(), date.getDate())
@@ -67,7 +67,39 @@ function App() {
         date.setDate(27)
       }
     } 
+
+    
   }
+
+  const callApiByDate = () => {
+    
+    
+    
+
+    setIsLoading(true)
+    axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateForApi.startDateString}&end_date=${dateForApi.endDateString}`)
+    .then(function (response) {
+      // handle success
+      console.log(response.data);
+      calculateDateForApi(today)
+      // setItemData(prevData => (
+      //   [
+      //     ...prevData,
+      //     ...response.data
+      //   ]
+      // ))
+      // setIsLoading(false)
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+      // console.log(itemData)
+    });
+  }
+  
 
 
   
@@ -104,7 +136,7 @@ function App() {
   }
 
 
-  useEffect(() => {callApiRandom()}, [])
+  useEffect(() => {callApiRandom(); calculateDateForApi(today)}, [])
   
 
   // useEffect(() => setImgData(data), [])
