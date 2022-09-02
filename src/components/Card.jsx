@@ -2,15 +2,15 @@ export default function Card({ title, url, explanation, date}) {
     
         return (
             <div>
-                <h3>{title}</h3>
+                <h3 className="text-lg">{title}</h3>
                 <img 
                     style={{maxWidth: "60%", display: "block"}} 
                     data-src={url} 
                     className="lozad"
                     />
-                <button>Like</button>
+                <button className="btn">Like</button>
                 
-                <button>View on NASA</button>
+                <button className="btn">View on NASA</button>
                 <p style={{ 
                             width: "400px",
                             whiteSpace: "nowrap",
@@ -18,7 +18,7 @@ export default function Card({ title, url, explanation, date}) {
                             textOverflow: "ellipsis",
                             
                             }}>{explanation}</p>
-                <p>{date}</p>
+                <p className="mb-8">{date}</p>
             </div>
             
         )

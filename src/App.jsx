@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import Card from './components/Card'
 import LoadingSpinner from './components/LoadingSpinner'
+import Navbar from './components/Navbar'
 
 import data from './data/sampleData'
 import daysPerMonth from './data/daysPerMonth'
@@ -176,7 +177,8 @@ function App() {
 
   return (
     <div className="App bg-neutral-900 text-slate-50">
-        <h1 className="font-sans text-xl">Astronomy</h1>
+        <Navbar />
+        {/* <h1 className="font-sans text-xl">Astronomy</h1>
         
         
         <input placeholder='search' />
@@ -184,7 +186,7 @@ function App() {
         
         <button style={{marginLeft: "20px"}}>View Likes</button> 
 
-        <button onClick={()=>callApiByDate(today)}>Check API</button>      
+        <button onClick={()=>callApiByDate(today)}>Check API</button>       */}
 
         {cards}
         {isLoading && <LoadingSpinner />}
