@@ -8,9 +8,16 @@ export default function Card({ title, url, explanation, date}) {
                     data-src={url} 
                     className="lozad"
                     />
-                <button className="btn">Like</button>
+                <button className="btn btn-square btn-ghost invert">
+                    <img className="h-5" src="../src/icons/heart-empty.svg" />
+                </button>
+                <button className="btn btn-square btn-ghost invert">
+                    <img className="h-5" src="../src/icons/heart-solid.svg" />
+                </button>
+                <button className="btn btn-square btn-ghost invert">
+                    <img className="h-5" src="../src/icons/rocket.svg" />
+                </button>
                 
-                <button className="btn">View on NASA</button>
                 <p style={{ 
                             width: "400px",
                             whiteSpace: "nowrap",
