@@ -1,5 +1,9 @@
 import caretDown from "../icons/caret-down.svg"
 import clock from "../icons/clock.svg"
+import shuffle from "../icons/shuffle.svg"
+import magGlass from "../icons/mag-glass.svg"
+import grid from "../icons/grid.svg"
+import heartSolid from "../icons/heart-solid.svg"
 
 export default function Navbar() {
     return (
@@ -26,16 +30,16 @@ export default function Navbar() {
                     <img className="h-5" src={clock} />
                 </button>
                 <button className="btn btn-square btn-ghost invert">
-                    <img className="h-5" src="./src/icons/shuffle.svg" />
+                    <img className="h-5" src={shuffle} />
                 </button>
                 <button className="btn btn-square btn-ghost invert">
-                    <img className="h-5" src="./src/icons/mag-glass.svg" />
+                    <img className="h-5" src={magGlass} />
                 </button>
                 <button className="btn btn-square btn-ghost invert">
-                    <img className="h-5" src="./src/icons/grid.svg" />
+                    <img className="h-5" src={grid} />
                 </button>
                 <button className="btn btn-square btn-ghost invert">
-                    <img className="h-5" src="./src/icons/heart-solid.svg" />
+                    <img className="h-5" src={heartSolid} />
                 </button>
             </div>
         </div>

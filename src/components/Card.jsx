@@ -1,3 +1,7 @@
+import heartEmpty from "../icon/heart-empty.svg"
+import heartSolid from "../icon/heart-solid.svg"
+import rocket from "../icon/rocket.svg"
+
 export default function Card({ title, url, explanation, date}) {
     
         return (
@@ -9,13 +13,13 @@ export default function Card({ title, url, explanation, date}) {
                     className="lozad"
                     />
                 <button className="btn btn-square btn-ghost invert">
-                    <img className="h-5" src="./src/icons/heart-empty.svg" />
+                    <img className="h-5" src={heartEmpty} />
                 </button>
                 <button className="btn btn-square btn-ghost invert">
-                    <img className="h-5" src="./src/icons/heart-solid.svg" />
+                    <img className="h-5" src={heartSolid} />
                 </button>
                 <button className="btn btn-square btn-ghost invert">
-                    <img className="h-5" src="./src/icons/rocket.svg" />
+                    <img className="h-5" src={rocket} />
                 </button>
                 
                 <p style={{ 
