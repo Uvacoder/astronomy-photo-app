@@ -1,6 +1,6 @@
-import heartEmpty from "../icon/heart-empty.svg"
-import heartSolid from "../icon/heart-solid.svg"
-import rocket from "../icon/rocket.svg"
+import heartEmpty from "../icons/heart-empty.svg"
+import heartSolid from "../icons/heart-solid.svg"
+import rocket from "../icons/rocket.svg"
 
 export default function Card({ title, url, explanation, date}) {
     

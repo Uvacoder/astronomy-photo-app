@@ -7,20 +7,27 @@ import Navbar from './components/Navbar'
 import data from './data/sampleData'
 import daysPerMonth from './data/daysPerMonth'
 
+// import { calculateDateForApi } from './functions/apiFunctions'
+
 import './App.css'
 
 import lozad from 'lozad'
 import axios from 'axios'
 
-const today = new Date();
+const dateForApi = new Date()
 
 function App() {
+
+  const today = new Date()
   const [itemData, setItemData] = useState([])   
   const [isLoading, setIsLoading] = useState(false)
-  const [dateForApi, setDateForApi] = useState({     
+  const [dateStringForApi, setDateStringForApi] = useState({     
     startDateString: "",    
     endDateString: "",    
   })
+  // if postView is false, then gridView is active
+  const [postView, setPostView] = useState(true)
+  const [randomMode, setRandomMode] = useState(true)
 
   const calculateDateForApi = (date) => {
     
@@ -33,14 +40,13 @@ function App() {
     const startDateString = date.toISOString().slice(0, 10);
     console.log("start date: ", startDateString);
 
-    setDateForApi(prevData => {
+    setDateStringForApi(prevData => {
       return ({
         ...prevData,
         startDateString: startDateString,
         endDateString: endDateString,        
       })
     })
-
     // set the next end date for API to call
     // check num of days in months with data in daysPerMonth.js
     for (const month of daysPerMonth) {
@@ -48,7 +54,6 @@ function App() {
         date.setDate(month.days - 1)
       }
     }
-
     // check Feb
     if (date.getMonth() === 1) {
       // check leap years
@@ -65,11 +70,12 @@ function App() {
   const callApiByDate = () => {   
     
     setIsLoading(true)
-    axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateForApi.startDateString}&end_date=${dateForApi.endDateString}`)
+    calculateDateForApi(dateForApi)
+    axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
     .then(function (response) {
       // handle success
       // console.log(response.data);
-      calculateDateForApi(today)
+      // calculateDateForApi(dateForApi)
       setItemData(prevData => (
         [
           ...prevData,
@@ -113,10 +119,12 @@ function App() {
 
 
   useEffect(() => {callApiRandom(); calculateDateForApi(today)}, [])
+  // useEffect(() => {calculateDateForApi(today), callApiByDate()}, [])
   
 
   // useEffect(() => setImgData(data), [])
   
+  // map cards
   const cards = itemData.map(item => {
     if (item?.media_type === "image") {
       return (
@@ -149,19 +157,19 @@ function App() {
       if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v1")     
            
-        callApiRandom();
+        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
         console.log(itemData);
         return
       } else if (Math.ceil(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v2")     
            
-        callApiRandom();
+        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
         console.log(itemData);
         return
       } else if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v1")
         
-        callApiRandom();
+        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
         console.log(itemData);
         return
       }}
@@ -171,22 +179,25 @@ function App() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [])
+  })
 
-  console.log(dateForApi)
+  const handleMode = () => {
+    setRandomMode(prevState => !prevState)
+    console.log("mode: ", randomMode)
+    setItemData([])
+    randomMode ? callApiByDate() : callApiRandom()
+  }
+
+  console.log(dateStringForApi)
 
   return (
     <div className="bg-neutral-900 text-slate-50">
-        <Navbar />
-        {/* <h1 className="font-sans text-xl">Astronomy</h1>
+        <Navbar 
+          postView={postView} 
+          randomMode={randomMode} 
+          handleMode={handleMode}
+          />
         
-        
-        <input placeholder='search' />
-        <input type='submit' />
-        
-        <button style={{marginLeft: "20px"}}>View Likes</button> 
-
-        <button onClick={()=>callApiByDate(today)}>Check API</button>       */}
         <div className='mt-16 ml-5'>
           {cards}
           {isLoading && <LoadingSpinner />}
