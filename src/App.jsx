@@ -13,64 +13,83 @@ import './App.css'
 
 import lozad from 'lozad'
 import axios from 'axios'
+import dayjs from 'dayjs'
+import CustomParseFormat from 'dayjs/plugin/customParseFormat'
 
-const dateForApi = new Date()
+
+// const dateForApi = new Date()
 
 function App() {
 
-  const today = new Date()
+  const [dateForApi, setDateForApi] = useState(dayjs())
   const [itemData, setItemData] = useState([])   
   const [isLoading, setIsLoading] = useState(false)
-  const [dateStringForApi, setDateStringForApi] = useState({     
-    startDateString: "",    
-    endDateString: "",    
+  const [dateStringForApi, setDateStringForApi] = useState({  
+    // get date 10 days before today then format date in YYYY-MM-DD  
+    startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
+    endDateString: dayjs().format("YYYY-MM-DD"),    
+    offset: 11,
   })
   // if postView is false, then gridView is active
   const [postView, setPostView] = useState(true)
+  // if randomMode is false, chronological view is active
   const [randomMode, setRandomMode] = useState(true)
 
-  const calculateDateForApi = (date) => {
+  const calculateDateForApi = () => {
     
     // console.log(date.getMonth(), date.getDate())    
-    const endDateString = date.toISOString().slice(0, 10);
+    console.log(dateStringForApi.offset)
+    const offset = dateStringForApi.offset
+    // const endDateString = dateForApi.toISOString().slice(0, 10);
+    const endDateString = dayjs(dayjs().subtract(offset, "day")).format("YYYY-MM-DD")
     console.log("end date: ", endDateString);
     
     // sets date to the last day of previous month
-    date.setDate(0)
-    const startDateString = date.toISOString().slice(0, 10);
+    // date.setDate(0)
+    // setDateForApi(dateForApi.setDate(0))
+    // setDateForApi(dayjs(dateForApi).subtract(10, "day"))
+    // console.log(dayjs(dateForApi).subtract(10, "day"))
+    const newOffset = offset + 10
+    const newDate = dayjs().subtract(newOffset, "day")
+    // setDateForApi(newDate)
+    // console.log("new date ", dateForApi)
+    // const startDateString = dateForApi.toISOString().slice(0, 10);
+    const startDateString = dayjs(newDate).format("YYYY-MM-DD")
     console.log("start date: ", startDateString);
 
     setDateStringForApi(prevData => {
       return ({
         ...prevData,
         startDateString: startDateString,
-        endDateString: endDateString,        
+        endDateString: endDateString,    
+        offset: newOffset + 1,    
       })
     })
     // set the next end date for API to call
     // check num of days in months with data in daysPerMonth.js
-    for (const month of daysPerMonth) {
-      if (month.index === date.getMonth()) {
-        date.setDate(month.days - 1)
-      }
-    }
-    // check Feb
-    if (date.getMonth() === 1) {
-      // check leap years
-      const checkYear = date.getFullYear()
-      let isLeap = new Date(checkYear, 1, 29).getMonth()
-      if (isLeap === 1) {
-        date.setDate(28)
-      } else {
-        date.setDate(27)
-      }
-    }     
+
+    // for (const month of daysPerMonth) {
+    //   if (month.index === dateForApi.getMonth()) {
+    //     setDateForApi(dateForApi.setDate(month.days - 1))
+    //   }
+    // }
+    // // check Feb
+    // if (dateForApi.getMonth() === 1) {
+    //   // check leap years
+    //   const checkYear = dateForApi.getFullYear()
+    //   const isLeap = new Date(checkYear, 1, 29).getMonth()
+    //   if (isLeap === 1) {
+    //     date.setDate(28)
+    //   } else {
+    //     date.setDate(27)
+    //   }
+    // }     
   }
 
   const callApiByDate = () => {   
     
     setIsLoading(true)
-    calculateDateForApi(dateForApi)
+    // calculateDateForApi()
     axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
     .then(function (response) {
       // handle success
@@ -83,6 +102,7 @@ function App() {
         ]
       ))
       setIsLoading(false)
+      calculateDateForApi()
     })
     .catch(function (error) {
       // handle error
@@ -118,7 +138,7 @@ function App() {
   }
 
 
-  useEffect(() => {callApiRandom(); calculateDateForApi(today)}, [])
+  useEffect(() => {callApiRandom()}, [])
   // useEffect(() => {calculateDateForApi(today), callApiByDate()}, [])
   
 
