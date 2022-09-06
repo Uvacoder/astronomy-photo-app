@@ -5,9 +5,6 @@ import LoadingSpinner from './components/LoadingSpinner'
 import Navbar from './components/Navbar'
 
 import data from './data/sampleData'
-import daysPerMonth from './data/daysPerMonth'
-
-// import { calculateDateForApi } from './functions/apiFunctions'
 
 import './App.css'
 
@@ -16,8 +13,6 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
 
-
-// const dateForApi = new Date()
 
 function App() {
 
@@ -65,25 +60,6 @@ function App() {
         offset: newOffset + 1,    
       })
     })
-    // set the next end date for API to call
-    // check num of days in months with data in daysPerMonth.js
-
-    // for (const month of daysPerMonth) {
-    //   if (month.index === dateForApi.getMonth()) {
-    //     setDateForApi(dateForApi.setDate(month.days - 1))
-    //   }
-    // }
-    // // check Feb
-    // if (dateForApi.getMonth() === 1) {
-    //   // check leap years
-    //   const checkYear = dateForApi.getFullYear()
-    //   const isLeap = new Date(checkYear, 1, 29).getMonth()
-    //   if (isLeap === 1) {
-    //     date.setDate(28)
-    //   } else {
-    //     date.setDate(27)
-    //   }
-    // }     
   }
 
   const callApiByDate = () => {   
@@ -187,7 +163,7 @@ function App() {
         console.log(itemData);
         return
       } else if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight) {
-        console.log("infinite scroll v1")
+        console.log("infinite scroll v3")
         
         randomMode ? callApiRandom() : callApiByDate()
         console.log(itemData);
@@ -225,8 +201,7 @@ function App() {
         <div className='mt-16 ml-5'>
           {cards}
           {isLoading && <LoadingSpinner />}
-        </div>
-         
+        </div>         
         
     </div>
   )
