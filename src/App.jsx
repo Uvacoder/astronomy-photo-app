@@ -170,7 +170,7 @@ function App() {
         return
       }}
 
-    const debounceHandleScroll = debounce(handleScroll, 800)
+    const debounceHandleScroll = debounce(handleScroll, 900)
 
     // window.addEventListener('scroll', handleScroll);
     window.addEventListener('scroll', debounceHandleScroll);
@@ -183,7 +183,12 @@ function App() {
 
   const handleMode = () => {
     setRandomMode(prevState => !prevState)
-    console.log("mode: ", randomMode)
+    setDateStringForApi({  
+      // reset to initial values  
+      startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
+      endDateString: dayjs().format("YYYY-MM-DD"),    
+      offset: 11,
+    })
     setItemData([])
     randomMode ? callApiByDate() : callApiRandom()
   }
