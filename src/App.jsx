@@ -14,7 +14,7 @@ import './App.css'
 import lozad from 'lozad'
 import axios from 'axios'
 import dayjs from 'dayjs'
-import CustomParseFormat from 'dayjs/plugin/customParseFormat'
+import { debounce } from 'lodash'
 
 
 // const dateForApi = new Date()
@@ -177,27 +177,31 @@ function App() {
       if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v1")     
            
-        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
+        randomMode ? callApiRandom() : callApiByDate()
         console.log(itemData);
         return
       } else if (Math.ceil(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v2")     
            
-        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
+        randomMode ? callApiRandom() : callApiByDate()
         console.log(itemData);
         return
       } else if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v1")
         
-        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
+        randomMode ? callApiRandom() : callApiByDate()
         console.log(itemData);
         return
       }}
 
-    window.addEventListener('scroll', handleScroll);
+    const debounceHandleScroll = debounce(handleScroll, 800)
+
+    // window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', debounceHandleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      // window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', debounceHandleScroll);
     };
   })
 
