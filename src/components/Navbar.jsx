@@ -8,7 +8,7 @@ import heartSolid from "../icons/heart-solid.svg"
 
 export default function Navbar({ postView, randomMode, handleMode }) {
     return (
-        <div className="navbar bg-slate-900 text-slate-50 fixed top-0">
+        <div className="navbar bg-slate-900 text-slate-50 fixed top-0 z-40">
             <div className="flex-1">
                 {/* <a className="btn btn-ghost normal-case text-xl">daisyUI</a> */}
                 <div class="dropdown hover:bg-slate-900/25">
