@@ -153,24 +153,24 @@ function App() {
       if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v1")     
            
-        randomMode ? callApiRandom() : callApiByDate()
+        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
         console.log(itemData);
         return
       } else if (Math.ceil(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v2")     
            
-        randomMode ? callApiRandom() : callApiByDate()
+        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
         console.log(itemData);
         return
       } else if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v3")
         
-        randomMode ? callApiRandom() : callApiByDate()
+        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
         console.log(itemData);
         return
       }}
 
-    const debounceHandleScroll = debounce(handleScroll, 900)
+    const debounceHandleScroll = debounce(handleScroll, 800)
 
     // window.addEventListener('scroll', handleScroll);
     window.addEventListener('scroll', debounceHandleScroll);
