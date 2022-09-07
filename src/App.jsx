@@ -25,7 +25,7 @@ function App() {
     endDateString: dayjs().format("YYYY-MM-DD"),    
     offset: 11,
   })
-  const [likeData, setLikeData] = useState([])
+  const [likedItemData, setLikedItemData] = useState([])
 
   // if postView is false, then gridView is active
   const [postView, setPostView] = useState(true)
@@ -183,12 +183,12 @@ function App() {
 
   const handleLike = (item) => {
     
-    likeData.includes(item) ? 
-      setLikeData(prevData => {
+    likedItemData.includes(item) ? 
+      setLikedItemData(prevData => {
         let filterData = prevData;
         for (let i=0; i<filterData.length; i++) {
           if (filterData[i] === item) {
-            // console.log("remove like")
+            console.log("remove like")
             filterData.splice(i, 1)
           }
         }
@@ -196,7 +196,8 @@ function App() {
       }) 
       // console.log(item)
       :
-      setLikeData(prevData => ([...prevData, item]))
+      setLikedItemData(prevData => ([...prevData, item]))
+      console.log("add like")
     
   }
 
@@ -204,7 +205,13 @@ function App() {
   const cards = itemData.map(item => {
     if (item?.media_type === "image") {
       // console.log("mapping cards")
-      const like = likeData.includes(item) ? true : false
+      // const like = likedItemData.includes(item) ? true : false
+      let like = false;
+      for (let i=0; i<likedItemData.length; i++) {
+        if (likedItemData[i].date === item.date) {
+          like = true
+        }
+      }
       // console.log(like)
       return (
         <Card
@@ -219,7 +226,7 @@ function App() {
 
   console.log(itemData)
   console.log("likes: ")
-  console.log(likeData)
+  console.log(likedItemData)
 
   return (
     <div className="bg-neutral-900 text-slate-50">
