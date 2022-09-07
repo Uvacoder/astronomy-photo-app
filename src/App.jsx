@@ -35,7 +35,7 @@ function App() {
   const calculateDateForApi = () => {
     
     // console.log(date.getMonth(), date.getDate())    
-    console.log(dateStringForApi.offset)
+    // console.log(dateStringForApi.offset)
     const offset = dateStringForApi.offset
     // const endDateString = dateForApi.toISOString().slice(0, 10);
     const endDateString = dayjs(dayjs().subtract(offset, "day")).format("YYYY-MM-DD")
@@ -115,7 +115,7 @@ function App() {
     });
   }
 
-  // first API on app load
+  // first API call on app load
   useEffect(() => {callApiRandom()}, [])
   // useEffect(() => {calculateDateForApi(today), callApiByDate()}, []) 
   // useEffect(() => setImgData(data), [])
@@ -169,6 +169,7 @@ function App() {
   })
 
   const handleMode = () => {
+
     setRandomMode(prevState => !prevState)
     setDateStringForApi({  
       // reset to initial values  
@@ -180,29 +181,45 @@ function App() {
     randomMode ? callApiByDate() : callApiRandom()
   }
 
-  const handleLike = () => {
-    console.log("liked post")
+  const handleLike = (item) => {
+    
+    likeData.includes(item) ? 
+      setLikeData(prevData => {
+        let filterData = prevData;
+        for (let i=0; i<filterData.length; i++) {
+          if (filterData[i] === item) {
+            // console.log("remove like")
+            filterData.splice(i, 1)
+          }
+        }
+        return [...filterData]
+      }) 
+      // console.log(item)
+      :
+      setLikeData(prevData => ([...prevData, item]))
+    
   }
 
   // map cards
   const cards = itemData.map(item => {
     if (item?.media_type === "image") {
+      // console.log("mapping cards")
+      const like = likeData.includes(item) ? true : false
+      // console.log(like)
       return (
         <Card
-        title={item?.title}
-        url={item?.url}
-        explanation={item?.explanation}
-        date={item?.date}
-        like={likeData.includes(item) ? true : false}
-        handleLike={handleLike}
+          item={item}
+          like={like}
+          handleLike={handleLike}
         />
       )
     }
   })
 
 
-  // console.log(dateStringForApi)
   console.log(itemData)
+  console.log("likes: ")
+  console.log(likeData)
 
   return (
     <div className="bg-neutral-900 text-slate-50">
