@@ -6,7 +6,7 @@ import grid from "../icons/grid.svg"
 import image from "../icons/image.svg"
 import heartSolid from "../icons/heart-solid.svg"
 
-export default function Navbar({ postView, randomMode, handleMode }) {
+export default function Navbar({ postView, randomMode, handleMode, handleView }) {
     return (
         <div className="navbar bg-slate-900 text-slate-50 fixed top-0 z-40">
             <div className="flex-1">
@@ -41,10 +41,10 @@ export default function Navbar({ postView, randomMode, handleMode }) {
                 </button>
 
                 { postView ?
-                <button className="btn btn-square btn-ghost invert">
+                <button className="btn btn-square btn-ghost invert" onClick={handleView}>
                     <img className="h-5" src={grid} />
                 </button> :
-                <button className="btn btn-square btn-ghost invert">
+                <button className="btn btn-square btn-ghost invert" onClick={handleView}>
                     <img className="h-5" src={image} />
                 </button> }
 

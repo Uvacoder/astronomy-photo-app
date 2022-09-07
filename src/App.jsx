@@ -184,14 +184,14 @@ function App() {
   const handleLike = (item) => {
     
     const likedDates = likedItemData.map(item => item.date)
-    console.log(likedDates)
+    // console.log(likedDates)
 
     likedDates.includes(item.date) ? 
       setLikedItemData(prevData => {
         let filterData = prevData;
         for (let i=0; i<filterData.length; i++) {
           if (filterData[i].date === item.date) {
-            console.log("remove like")
+            // console.log("remove like")
             filterData.splice(i, 1)
           }
         }
@@ -200,8 +200,11 @@ function App() {
       // console.log(item)
       :
       setLikedItemData(prevData => ([...prevData, item]))
-      console.log("add like")
-    
+      // console.log("add like")    
+  }
+
+  const handleView = () => {
+    setPostView(prevState => !prevState)
   }
 
   // map cards
@@ -221,6 +224,7 @@ function App() {
           item={item}
           like={like}
           handleLike={handleLike}
+          postView={postView}
         />
       )
     }
@@ -237,13 +241,21 @@ function App() {
           postView={postView} 
           randomMode={randomMode} 
           handleMode={handleMode}
-          />
+          handleView={handleView}
+        />
         
-        <div className='mt-16 ml-5'>
+        {postView ? 
+        // post view
+        <div className='mt-16 ml-5'>         
           {cards}
           {isLoading && <LoadingSpinner />}
-        </div>         
-        
+        </div> :
+        // grid view
+        <div className='grid grid-cols-3 gap-4 justify-center mt-16'>
+          {cards}
+          {isLoading && <LoadingSpinner />}
+        </div>
+        }
     </div>
   )
 }

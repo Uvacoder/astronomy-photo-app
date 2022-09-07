@@ -1,16 +1,28 @@
 import CardPost from './CardPost'
+import CardGrid from './CardGrid'
 
-export default function Card({ item, handleLike, like }) {
+export default function Card({ item, handleLike, like, postView }) {
     
     
     return (
         <div>
-            <CardPost 
-                item={item}
-                handleLike={handleLike}
-                like={like}
+            { postView ? 
+            <div>
+                <CardPost 
+                    item={item}
+                    handleLike={handleLike}
+                    like={like}
+                    />
+            </div> :
+            <div>
+                <CardGrid 
+                    item={item}
                 />
+            </div>
+            }
         </div>
+        
+        
         
     )
     
