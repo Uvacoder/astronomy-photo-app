@@ -16,7 +16,7 @@ import { debounce } from 'lodash'
 
 function App() {
 
-  const [dateForApi, setDateForApi] = useState(dayjs())
+  // const [dateForApi, setDateForApi] = useState(dayjs())
   const [itemData, setItemData] = useState([])   
   const [isLoading, setIsLoading] = useState(false)
   const [dateStringForApi, setDateStringForApi] = useState({  
@@ -25,6 +25,8 @@ function App() {
     endDateString: dayjs().format("YYYY-MM-DD"),    
     offset: 11,
   })
+  const [likeData, setLikeData] = useState([])
+
   // if postView is false, then gridView is active
   const [postView, setPostView] = useState(true)
   // if randomMode is false, chronological view is active
@@ -113,28 +115,13 @@ function App() {
     });
   }
 
-
+  // first API on app load
   useEffect(() => {callApiRandom()}, [])
-  // useEffect(() => {calculateDateForApi(today), callApiByDate()}, [])
-  
-
+  // useEffect(() => {calculateDateForApi(today), callApiByDate()}, []) 
   // useEffect(() => setImgData(data), [])
   
-  // map cards
-  const cards = itemData.map(item => {
-    if (item?.media_type === "image") {
-      return (
-        <Card
-        title={item?.title}
-        url={item?.url}
-        explanation={item?.explanation}
-        date={item?.date}
-        />
-      )
-    }
-  })
-
-  // lazy load images
+  
+  // lazy load images listener
   useEffect(() => {
     const observer = lozad('.lozad', {
       rootMargin: '600px 0px', // syntax similar to that of CSS Margin
@@ -193,7 +180,29 @@ function App() {
     randomMode ? callApiByDate() : callApiRandom()
   }
 
-  console.log(dateStringForApi)
+  const handleLike = () => {
+    console.log("liked post")
+  }
+
+  // map cards
+  const cards = itemData.map(item => {
+    if (item?.media_type === "image") {
+      return (
+        <Card
+        title={item?.title}
+        url={item?.url}
+        explanation={item?.explanation}
+        date={item?.date}
+        like={likeData.includes(item) ? true : false}
+        handleLike={handleLike}
+        />
+      )
+    }
+  })
+
+
+  // console.log(dateStringForApi)
+  console.log(itemData)
 
   return (
     <div className="bg-neutral-900 text-slate-50">

@@ -3,7 +3,7 @@ import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
 import rocket from "../icons/rocket.svg"
 
-export default function Card({ title, url, explanation, date}) {
+export default function Card({ title, url, explanation, date, like, handleLike}) {
     
     const [seeMore, setSeeMore] = useState(false)
 
@@ -16,15 +16,17 @@ export default function Card({ title, url, explanation, date}) {
                 data-src={url} 
                 className="max-w-sm block lozad"
                 />
-            <button className="btn btn-square btn-ghost invert">
-                <img className="h-5" src={heartEmpty} />
-            </button>
-            <button className="btn btn-square btn-ghost invert">
+            {like ? 
+            <button className="btn btn-square btn-ghost invert" onClick={handleLike}>
                 <img className="h-5" src={heartSolid} />
-            </button>
-            <button className="btn btn-square btn-ghost invert">
+            </button> :
+            <button className="btn btn-square btn-ghost invert" onClick={handleLike}>
+                <img className="h-5" src={heartEmpty} />
+            </button> 
+            }
+            {/* <button className="btn btn-square btn-ghost invert">
                 <img className="h-5" src={rocket} />
-            </button>            
+            </button>             */}
 
             {seeMore && <p className="max-w-sm">{explanation}</p>}
             {seeMore === false && <p className="max-h-24 max-w-sm line-clamp-3">{explanation}</p>}
