@@ -183,11 +183,14 @@ function App() {
 
   const handleLike = (item) => {
     
-    likedItemData.includes(item) ? 
+    const likedDates = likedItemData.map(item => item.date)
+    console.log(likedDates)
+
+    likedDates.includes(item.date) ? 
       setLikedItemData(prevData => {
         let filterData = prevData;
         for (let i=0; i<filterData.length; i++) {
-          if (filterData[i] === item) {
+          if (filterData[i].date === item.date) {
             console.log("remove like")
             filterData.splice(i, 1)
           }
