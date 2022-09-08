@@ -1,7 +1,7 @@
 import CardPost from './CardPost'
 import CardGrid from './CardGrid'
 
-export default function Card({ item, handleLike, like, postView }) {
+export default function Card({ item, handleLike, like, postView, handleGridSingleView }) {
     
     
     return (
@@ -17,6 +17,9 @@ export default function Card({ item, handleLike, like, postView }) {
             <div>
                 <CardGrid 
                     item={item}
+                    handleLike={handleLike}
+                    like={like}
+                    handleGridSingleView={handleGridSingleView}
                 />
             </div>
             }

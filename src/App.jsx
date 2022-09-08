@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Card from './components/Card'
 import LoadingSpinner from './components/LoadingSpinner'
 import Navbar from './components/Navbar'
+import CardGridSelection from './components/CardGridSelection'
 
 import data from './data/sampleData'
 
@@ -31,6 +32,9 @@ function App() {
   const [postView, setPostView] = useState(true)
   // if randomMode is false, chronological view is active
   const [randomMode, setRandomMode] = useState(true)
+  // if card grid single is true, show the selected single post
+  const [cardGridSingle, setCardGridSingle] = useState({
+    selected: false, data: null})
 
   const calculateDateForApi = () => {
     
@@ -203,8 +207,36 @@ function App() {
       // console.log("add like")    
   }
 
+  
+
   const handleView = () => {
     setPostView(prevState => !prevState)
+  }
+
+  const handleGridSingleView = (item) => {
+    setCardGridSingle(prevState => {
+      return ({
+        selected: !prevState.selected,
+        item: item
+      })      
+    })
+    if (setCardGridSingle) {
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${window.scrollY}px`;
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
+    
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }      
+    
   }
 
   // map cards
@@ -225,18 +257,19 @@ function App() {
           like={like}
           handleLike={handleLike}
           postView={postView}
+          handleGridSingleView={handleGridSingleView}
         />
       )
     }
   })
 
 
-  console.log(itemData)
+  console.log(cardGridSingle)
   console.log("likes: ")
   console.log(likedItemData)
 
   return (
-    <div className="bg-neutral-900 text-slate-50">
+    <div className={`bg-neutral-900 text-slate-50 ${cardGridSingle.selected && "overflow-y-hidden"}`}>
         <Navbar 
           postView={postView} 
           randomMode={randomMode} 
@@ -256,6 +289,16 @@ function App() {
           {isLoading && <LoadingSpinner />}
         </div>
         }
+        {
+          cardGridSingle.selected && 
+          <CardGridSelection 
+            item={cardGridSingle.item} 
+            handleLike={handleLike}
+            handleGridSingleView={handleGridSingleView}
+            // like={like}
+            />
+        }
+        
     </div>
   )
 }

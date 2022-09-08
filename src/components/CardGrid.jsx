@@ -2,17 +2,17 @@ import { useState } from "react"
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
 
-export default function CardPost({ item, handleLike, like }) {
+export default function CardPost({ item, handleLike, like, handleGridSingleView }) {
     
     
-
     return (
         <div className="">
             
             <img 
                 data-src={item?.url} 
-                className="rounded-lg object-cover h-80 max-h-80 lozad"
-                />
+                className="rounded-lg object-cover h-80 max-h-80 cursor-pointer lozad"
+                onClick={() => handleGridSingleView(item)}
+            />
             
         </div>
         
