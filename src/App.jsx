@@ -120,9 +120,9 @@ function App() {
   }
 
   // first API call on app load
-  // useEffect(() => {callApiRandom()}, [])
+  useEffect(() => {callApiRandom()}, [])
   // useEffect(() => {calculateDateForApi(today), callApiByDate()}, []) 
-  useEffect(() => setItemData(data), [])
+  // useEffect(() => setItemData(data), [])
   
   
   // lazy load images listener
@@ -235,10 +235,15 @@ function App() {
       // console.log("add like")    
   }
 
-  const checkLikedItems = () => {
-    
+  const checkLikedItems = (item) => {
+    let like = false
+    for (let i=0; i<likedItemData.length; i++) {
+      if (likedItemData[i].date === item?.date) {
+        like = true
+      }
+    }
+    return like
   }
-
   
 
   const handleView = () => {
@@ -292,13 +297,15 @@ function App() {
     if (item?.media_type === "image") {
       // console.log("mapping cards")
       // const like = likedItemData.includes(item) ? true : false
-      let like = false;
-      for (let i=0; i<likedItemData.length; i++) {
-        if (likedItemData[i].date === item.date) {
-          like = true
-        }
-      }
+      // let like = false;
+      // for (let i=0; i<likedItemData.length; i++) {
+      //   if (likedItemData[i].date === item.date) {
+      //     like = true
+      //   }
+      // }
       // console.log(like)
+      const like = checkLikedItems(item)
+
       return (
         <Card
           item={item}
@@ -346,7 +353,7 @@ function App() {
             handleLike={handleLike}
             // loadGridSingleView={loadGridSingleView}
             unloadGridSingleView={unloadGridSingleView}
-            // like={like}
+            like={checkLikedItems(cardGridSingle.item)}
             />
         }
         

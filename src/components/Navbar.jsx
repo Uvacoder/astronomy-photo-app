@@ -10,7 +10,7 @@ export default function Navbar({ postView, randomMode, handleMode, handleView })
     return (
         <div className="navbar bg-slate-900 text-slate-50 fixed top-0 z-40">
             <div className="flex-1">
-                <a className="btn btn-ghost normal-case text-xl">INTERSTELLAR</a>
+                <a className="btn btn-ghost normal-case text-lg">INTERSTELLAR</a>
                 <div class="dropdown hover:bg-slate-900/25">
                     <div className="flex items-center">
                         <label tabindex="0" class="btn btn-ghost rounded-btn">   

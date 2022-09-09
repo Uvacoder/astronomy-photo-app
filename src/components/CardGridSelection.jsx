@@ -3,8 +3,9 @@ import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
 import close from "../icons/caret-down.svg"
 
-export default function CardGridSelection({ item, handleLike, like, unloadGridSingleView, position }) {
-    console.log(position)
+export default function CardGridSelection({ 
+    item, handleLike, like, unloadGridSingleView}) {
+    
     return (
         <div className="z-50 fixed top-1 w-screen h-screen bg-slate-800/75">
             <h3 className="text-lg">{item?.title}</h3>
