@@ -2,7 +2,7 @@ import { RevolvingDot } from 'react-loader-spinner'
 
 export default function LoadingSpinner() {
     return (
-        <div className='ml-36'>
+        <div className='ml-30'>
             <RevolvingDot
             height="100"
             width="100"

@@ -1,12 +1,17 @@
 import { useState } from "react"
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
+import close from "../icons/caret-down.svg"
 
-export default function CardGridSelection({ item, handleLike, like, handleGridSingleView }) {
-    
+export default function CardGridSelection({ item, handleLike, like, unloadGridSingleView, position }) {
+    console.log(position)
     return (
-        <div className="z-50 absolute top-0 w-screen h-screen bg-slate-100/50">
+        <div className="z-50 fixed top-1 w-screen h-screen bg-slate-800/75">
             <h3 className="text-lg">{item?.title}</h3>
+            <button className="btn btn-square btn-ghost invert" 
+                    onClick={unloadGridSingleView}>
+                <img className="h-5" src={close} />
+            </button>
             <img 
                 src={item?.url} 
                 className="max-w-sm block"

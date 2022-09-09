@@ -34,7 +34,7 @@ function App() {
   const [randomMode, setRandomMode] = useState(true)
   // if card grid single is true, show the selected single post
   const [cardGridSingle, setCardGridSingle] = useState({
-    selected: false, data: null})
+    selected: false, item: null})
 
   const calculateDateForApi = () => {
     
@@ -120,9 +120,9 @@ function App() {
   }
 
   // first API call on app load
-  useEffect(() => {callApiRandom()}, [])
+  // useEffect(() => {callApiRandom()}, [])
   // useEffect(() => {calculateDateForApi(today), callApiByDate()}, []) 
-  // useEffect(() => setImgData(data), [])
+  useEffect(() => setItemData(data), [])
   
   
   // lazy load images listener
@@ -139,8 +139,17 @@ function App() {
   useEffect(() => {
     const handleScroll = event => {
       // console.log('Math.ceil(document.documentElement.scrollTop)', Math.ceil(document.documentElement.scrollTop));
-      // console.log('window.innerHeight', window.innerHeight);      
+      // console.log('window.innerHeight', window.innerHeight);  
+      // console.log('window.pageYOffset', window.pageYOffset);    
       // console.log('document.documentElement.offsetHeight', document.documentElement.offsetHeight);
+      // const position = document.documentElement.scrollTop;
+      // setCardGridSingle(prevState => {
+      //   return ({
+      //     ...prevState,
+      //     position: position,
+      //   })
+      // })
+
       if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v1")     
            
@@ -171,6 +180,25 @@ function App() {
       window.removeEventListener('scroll', debounceHandleScroll);
     };
   })
+
+
+  // // scroll y position listener
+  // useEffect(() => {
+  //   const handleYPosition = () => {
+  //     const position = document.documentElement.scrollTop
+  //     setCardGridSingle(prevState => {
+  //       return ({
+  //         ...prevState,
+  //         position: position,
+  //       })
+  //     })
+  //   }
+  //   window.addEventListener('scroll', handleYPosition);
+
+  //   return () => {
+  //     window.removeEventListener('scroll', handleYPosition);
+  //   };
+  // })
 
   const handleMode = () => {
 
@@ -207,37 +235,57 @@ function App() {
       // console.log("add like")    
   }
 
+  const checkLikedItems = () => {
+    
+  }
+
   
 
   const handleView = () => {
     setPostView(prevState => !prevState)
   }
 
-  const handleGridSingleView = (item) => {
+  const loadGridSingleView = (item) => {
+
+    // const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
+    // console.log(scrollY);
+    // const body = document.body;
+    // body.style.position = 'fixed';
+    // body.style.top = `-${scrollY}`;
+    // body.style.position = 'fixed';
+    document.body.style.overflow = 'hidden';
+    // body.style.top = `-${cardGridSingle.position}`;
+
     setCardGridSingle(prevState => {
       return ({
+        ...prevState,
         selected: !prevState.selected,
-        item: item
+        item: item,
+      })      
+    })        
+  }
+
+  const unloadGridSingleView = () => {
+
+    // const body = document.body;
+    // const scrollY = body.style.top;
+    // body.style.position = '';
+    // body.style.top = '';
+    // window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    document.body.style.overflow = 'visible';
+
+    setCardGridSingle(prevState => {
+      return ({
+        ...prevState,
+        selected: !prevState.selected,
+        item: null
       })      
     })
-    if (setCardGridSingle) {
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${window.scrollY}px`;
-    } else {
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
-    }
-    
-    return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
-    }      
-    
   }
+
+
+
+  
 
   // map cards
   const cards = itemData.map(item => {
@@ -257,7 +305,7 @@ function App() {
           like={like}
           handleLike={handleLike}
           postView={postView}
-          handleGridSingleView={handleGridSingleView}
+          loadGridSingleView={loadGridSingleView}
         />
       )
     }
@@ -267,6 +315,7 @@ function App() {
   console.log(cardGridSingle)
   console.log("likes: ")
   console.log(likedItemData)
+  // console.log(cardGridSingle)
 
   return (
     <div className={`bg-neutral-900 text-slate-50 ${cardGridSingle.selected && "overflow-y-hidden"}`}>
@@ -293,8 +342,10 @@ function App() {
           cardGridSingle.selected && 
           <CardGridSelection 
             item={cardGridSingle.item} 
+            position={cardGridSingle.position}
             handleLike={handleLike}
-            handleGridSingleView={handleGridSingleView}
+            // loadGridSingleView={loadGridSingleView}
+            unloadGridSingleView={unloadGridSingleView}
             // like={like}
             />
         }
