@@ -1,9 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, createContext } from 'react'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 import Card from './components/Card'
 import LoadingSpinner from './components/LoadingSpinner'
 import Navbar from './components/Navbar'
 import CardGridSelection from './components/CardGridSelection'
+import Search from './components/Search'
 
 import data from './data/sampleData'
 
@@ -13,6 +19,7 @@ import lozad from 'lozad'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
+import Layout from './layout/Layout';
 
 
 function App() {
@@ -326,41 +333,65 @@ function App() {
   console.log(likedItemData)
   // console.log(cardGridSingle)
 
+
+  
+
   return (
-    <div className={`bg-neutral-900 text-slate-50 ${cardGridSingle.selected && "overflow-y-hidden"}`}>
-        <Navbar 
-          postView={postView} 
-          randomMode={randomMode} 
-          handleMode={handleMode}
-          handleView={handleView}
-          handleScrollToTop={handleScrollToTop}
-        />
+    <BrowserRouter>
+      <Routes>
+        <Route 
+          path="/" 
+          element=
+            {<Layout 
+              postView={postView} 
+              randomMode={randomMode} 
+              handleMode={handleMode}
+              handleView={handleView}
+              handleScrollToTop={handleScrollToTop}
+              />
+            }>
+          <Route path="search" element={<Search />} />
+        </Route>
+      </Routes>
+        {/* <div className={`bg-neutral-900 text-slate-50 `}>
+          <Navbar 
+            postView={postView} 
+            randomMode={randomMode} 
+            handleMode={handleMode}
+            handleView={handleView}
+            handleScrollToTop={handleScrollToTop}
+          />
+          */}
+          
+          {postView ? 
+          // post view
+          <div className='mt-16 ml-5'>         
+            {cards}
+            {isLoading && <LoadingSpinner />}
+          </div> :
+          // grid view
+          <div className='grid grid-cols-3 gap-4 justify-center mt-16'>
+            {cards}
+            {isLoading && <LoadingSpinner />}
+          </div>
+          }
+          {
+            cardGridSingle.selected && 
+            <CardGridSelection 
+              item={cardGridSingle.item} 
+              position={cardGridSingle.position}
+              handleLike={handleLike}
+              // loadGridSingleView={loadGridSingleView}
+              unloadGridSingleView={unloadGridSingleView}
+              like={checkLikedItems(cardGridSingle.item)}
+              />
+          }
+          
         
-        {postView ? 
-        // post view
-        <div className='mt-16 ml-5'>         
-          {cards}
-          {isLoading && <LoadingSpinner />}
-        </div> :
-        // grid view
-        <div className='grid grid-cols-3 gap-4 justify-center mt-16'>
-          {cards}
-          {isLoading && <LoadingSpinner />}
-        </div>
-        }
-        {
-          cardGridSingle.selected && 
-          <CardGridSelection 
-            item={cardGridSingle.item} 
-            position={cardGridSingle.position}
-            handleLike={handleLike}
-            // loadGridSingleView={loadGridSingleView}
-            unloadGridSingleView={unloadGridSingleView}
-            like={checkLikedItems(cardGridSingle.item)}
-            />
-        }
         
-    </div>
+      
+    </BrowserRouter>
+    
   )
 }
 
