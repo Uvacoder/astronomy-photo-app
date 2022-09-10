@@ -288,7 +288,9 @@ function App() {
     })
   }
 
-
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   
 
@@ -331,6 +333,7 @@ function App() {
           randomMode={randomMode} 
           handleMode={handleMode}
           handleView={handleView}
+          handleScrollToTop={handleScrollToTop}
         />
         
         {postView ? 

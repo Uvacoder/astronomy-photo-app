@@ -6,11 +6,15 @@ import grid from "../icons/grid.svg"
 import image from "../icons/image.svg"
 import heartSolid from "../icons/heart-solid.svg"
 
-export default function Navbar({ postView, randomMode, handleMode, handleView }) {
+export default function Navbar({ 
+    postView, randomMode, handleMode, handleView, handleScrollToTop }) {
     return (
         <div className="navbar bg-slate-900 text-slate-50 fixed top-0 z-40">
             <div className="flex-1">
-                <a className="btn btn-ghost normal-case text-lg">INTERSTELLAR</a>
+                <a 
+                    className="btn btn-ghost normal-case text-lg"
+                    onClick={handleScrollToTop}
+                    >INTERSTELLAR</a>
                 <div class="dropdown hover:bg-slate-900/25">
                     <div className="flex items-center">
                         <label tabindex="0" class="btn btn-ghost rounded-btn">   
