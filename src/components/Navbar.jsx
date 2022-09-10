@@ -6,9 +6,11 @@ import grid from "../icons/grid.svg"
 import image from "../icons/image.svg"
 import heartSolid from "../icons/heart-solid.svg"
 import { Link } from "react-router-dom"
+import Search from "./Search"
 
 export default function Navbar({ 
-    postView, randomMode, handleMode, handleView, handleScrollToTop }) {
+    postView, randomMode, handleMode, 
+    handleView, handleScrollToTop, isSearching, handleDatePicker }) {
     return (
         <div className="navbar bg-slate-900 text-slate-50 fixed top-0 z-40">
             <div className="flex-1">
@@ -40,9 +42,15 @@ export default function Navbar({
                 </button>
                 }                
                 
-                <button className="btn btn-square btn-ghost invert">
+                <>
+                <button className="btn btn-square btn-ghost invert"
+                        onClick={handleDatePicker}>
                     <img className="h-5" src={magGlass} />
                 </button>
+                { isSearching && <Search handleDatePicker={handleDatePicker} />}
+                </>
+                
+                
 
                 { postView ?
                 <button className="btn btn-square btn-ghost invert" onClick={handleView}>

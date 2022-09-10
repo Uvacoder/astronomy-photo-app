@@ -6,7 +6,9 @@ function Layout({
     randomMode,
     handleMode,
     handleView,
-    handleScrollToTop
+    handleScrollToTop,
+    isSearching,
+    handleDatePicker,
     }) 
     {
   return (
@@ -17,8 +19,9 @@ function Layout({
         handleMode={handleMode}
         handleView={handleView}
         handleScrollToTop={handleScrollToTop}
+        isSearching={isSearching}
+        handleDatePicker={handleDatePicker}
         />
-      
       <Outlet />
     </>
   );

@@ -1,9 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Card from './components/Card'
 import LoadingSpinner from './components/LoadingSpinner'
@@ -42,6 +38,8 @@ function App() {
   // if card grid single is true, show the selected single post
   const [cardGridSingle, setCardGridSingle] = useState({
     selected: false, item: null})
+  // if isSearching is true, date picker will appear
+  const [isSearching, setIsSearching] = useState(false)
 
   const calculateDateForApi = () => {
     
@@ -299,6 +297,9 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const handleDatePicker = () => {
+    setIsSearching(prevState => !prevState)
+  }
   
 
   // map cards
@@ -348,10 +349,13 @@ function App() {
               handleMode={handleMode}
               handleView={handleView}
               handleScrollToTop={handleScrollToTop}
+              isSearching={isSearching}
+              handleDatePicker={handleDatePicker}
               />
             }>
-          <Route path="search" element={<Search />} />
+          
         </Route>
+        <Route path="*" element="Not found" />
       </Routes>
         {/* <div className={`bg-neutral-900 text-slate-50 `}>
           <Navbar 

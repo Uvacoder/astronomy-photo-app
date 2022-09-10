@@ -2,19 +2,30 @@ import DatePicker from "react-datepicker";
 import "./search.css";
 import { useState } from "react";
 
-export default function Search() {
+export default function Search({ handleDatePicker }) {
 
     const [startDate, setStartDate] = useState(new Date())
+    
+    
+    const handleChange = (date) => {
+        setStartDate(date);
+        setTimeout(handleDatePicker, 500)
+    }
+
     console.log(startDate)
     
     
-    
     return (
-        <div className="bg-neutral-900 text-slate-50 mt-16">
+        <div className="absolute top-16 right-2">
             <DatePicker 
                 selected={startDate} 
-                onChange={(date) => setStartDate(date)} 
+                onChange={handleChange} 
                 inline
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                maxDate={new Date()}
             />
 
         </div>
