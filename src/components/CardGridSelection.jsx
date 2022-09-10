@@ -1,7 +1,7 @@
 import { useState } from "react"
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
-import close from "../icons/caret-down.svg"
+import close from "../icons/x-mark.svg"
 
 export default function CardGridSelection({ 
     item, handleLike, like, unloadGridSingleView}) {
