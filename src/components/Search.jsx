@@ -1,15 +1,16 @@
 import DatePicker from "react-datepicker";
 import "./search.css";
 import { useState } from "react";
+import { debounce } from 'lodash';
 
 export default function Search({ handleDatePicker }) {
 
     const [startDate, setStartDate] = useState(new Date())
-    
+    const closeDatePicker = debounce(handleDatePicker, 600)
     
     const handleChange = (date) => {
         setStartDate(date);
-        setTimeout(handleDatePicker, 500)
+        closeDatePicker();
     }
 
     console.log(startDate)
@@ -26,6 +27,7 @@ export default function Search({ handleDatePicker }) {
                 showYearDropdown
                 dropdownMode="select"
                 maxDate={new Date()}
+                minDate={803347920000}
             />
 
         </div>

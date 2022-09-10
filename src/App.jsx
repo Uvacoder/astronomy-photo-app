@@ -187,23 +187,7 @@ function App() {
   })
 
 
-  // // scroll y position listener
-  // useEffect(() => {
-  //   const handleYPosition = () => {
-  //     const position = document.documentElement.scrollTop
-  //     setCardGridSingle(prevState => {
-  //       return ({
-  //         ...prevState,
-  //         position: position,
-  //       })
-  //     })
-  //   }
-  //   window.addEventListener('scroll', handleYPosition);
-
-  //   return () => {
-  //     window.removeEventListener('scroll', handleYPosition);
-  //   };
-  // })
+  
 
   const handleMode = () => {
 

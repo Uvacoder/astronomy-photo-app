@@ -6,25 +6,25 @@ export default function Card({
     
     
     return (
-        <div>
+        <>
             { postView ? 
-            <div>
-                <CardPost 
-                    item={item}
-                    handleLike={handleLike}
-                    like={like}
-                    />
-            </div> :
-            <div>
-                <CardGrid 
-                    item={item}
-                    handleLike={handleLike}
-                    like={like}
-                    loadGridSingleView={loadGridSingleView}
+            
+            <CardPost 
+                item={item}
+                handleLike={handleLike}
+                like={like}
                 />
-            </div>
+            :
+        
+            <CardGrid 
+                item={item}
+                handleLike={handleLike}
+                like={like}
+                loadGridSingleView={loadGridSingleView}
+            />
+            
             }
-        </div>
+        </>
         
         
         
