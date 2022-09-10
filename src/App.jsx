@@ -351,11 +351,17 @@ function App() {
               handleScrollToTop={handleScrollToTop}
               isSearching={isSearching}
               handleDatePicker={handleDatePicker}
+              cards={cards}
+              isLoading={isLoading}
+              cardGridSingle={cardGridSingle}
+              handleLike={handleLike}
+              unloadGridSingleView={unloadGridSingleView}
+              like={checkLikedItems(cardGridSingle.item)}
               />
             }>
           
         </Route>
-        <Route path="*" element="Not found" />
+        <Route path="*" element="NOT FOUND" />
       </Routes>
         {/* <div className={`bg-neutral-900 text-slate-50 `}>
           <Navbar 
@@ -367,7 +373,7 @@ function App() {
           />
           */}
           
-          {postView ? 
+          {/* {postView ? 
           // post view
           <div className='mt-16 ml-5'>         
             {cards}
@@ -389,7 +395,7 @@ function App() {
               unloadGridSingleView={unloadGridSingleView}
               like={checkLikedItems(cardGridSingle.item)}
               />
-          }
+          } */}
           
         
         
