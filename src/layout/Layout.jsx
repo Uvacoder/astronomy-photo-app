@@ -51,7 +51,7 @@ function Layout({
           cardGridSingle.selected && 
           <CardGridSelection 
             item={cardGridSingle.item} 
-            position={cardGridSingle.position}
+            // position={cardGridSingle.position}
             handleLike={handleLike}
             // loadGridSingleView={loadGridSingleView}
             unloadGridSingleView={unloadGridSingleView}

@@ -2,10 +2,8 @@ import { useState, useEffect, createContext } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Card from './components/Card'
-import LoadingSpinner from './components/LoadingSpinner'
-import Navbar from './components/Navbar'
-import CardGridSelection from './components/CardGridSelection'
-import Search from './components/Search'
+import Likes from './components/Likes'
+import Layout from './layout/Layout';
 
 import data from './data/sampleData'
 
@@ -15,7 +13,7 @@ import lozad from 'lozad'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
-import Layout from './layout/Layout';
+
 
 
 function App() {
@@ -397,8 +395,10 @@ function App() {
               // handleInteraction={handleInteraction}
               />
             }>
+          <Route path="likes" element={<Likes />} />
           
         </Route>
+        
         <Route path="*" element="NOT FOUND" />
       </Routes>
         {/* <div className={`bg-neutral-900 text-slate-50 `}>

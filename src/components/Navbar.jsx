@@ -18,7 +18,7 @@ export default function Navbar({
                     to="/"
                     className="btn btn-ghost normal-case text-lg"
                     onClick={handleScrollToTop}>
-                        INTERSTELLAR
+                        APOD
                 </Link>
                 <div class="dropdown hover:bg-slate-900/25">
                     <div className="flex items-center">
@@ -63,10 +63,12 @@ export default function Navbar({
                 <button className="btn btn-square btn-ghost invert" onClick={handleView}>
                     <img className="h-5" src={image} />
                 </button> }
-
+                
+                <Link to="/likes">
                 <button className="btn btn-square btn-ghost invert">
                     <img className="h-5" src={heartSolid} />
                 </button>
+                </Link>
             </div>
         </div>
     )
