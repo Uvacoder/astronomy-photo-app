@@ -34,13 +34,13 @@ function App() {
   // if postView is false, then gridView is active
   const [postView, setPostView] = useState(true)
   // if randomMode is false, chronological view is active
-  const [randomMode, setRandomMode] = useState(true)
+  const [randomMode, setRandomMode] = useState(false)
   // if card grid single is true, show the selected single post
   const [cardGridSingle, setCardGridSingle] = useState({
     selected: false, item: null})
   // if isSearching is true, date picker will appear
   const [isSearching, setIsSearching] = useState(false)
-  const [searchDate, setSearchDate] = useState(new Date())
+  const [searchDate, setSearchDate] = useState()
   const [lastInteraction, setLastInteraction] = useState("")
 
   const calculateDateForApi = () => {
@@ -127,7 +127,7 @@ function App() {
   }
 
   // first API call on app load
-  useEffect(() => {callApiRandom()}, [])
+  // useEffect(() => {callApiRandom()}, [])
   useEffect(() => {callApiByDate()}, [searchDate]) 
   // useEffect(() => setItemData(data), [])
   
@@ -330,7 +330,7 @@ function App() {
   }
 
   const handleInteraction = id => {
-    // const debounceLastInteraction = debounce(setLastInteraction(id), 500);
+    // const debounceLastInteraction = debounce(() => setLastInteraction(id), 500);
     // debounceLastInteraction;
     setLastInteraction(id);
   }
