@@ -40,6 +40,7 @@ function App() {
     selected: false, item: null})
   // if isSearching is true, date picker will appear
   const [isSearching, setIsSearching] = useState(false)
+  const [searchDate, setSearchDate] = useState(new Date())
 
   const calculateDateForApi = () => {
     
@@ -284,6 +285,13 @@ function App() {
   const handleDatePicker = () => {
     setIsSearching(prevState => !prevState)
   }
+
+  const closeDatePicker = debounce(handleDatePicker, 600)
+
+  const handleDateSearch = date => {
+    setSearchDate(date);
+    closeDatePicker();
+  }
   
 
   // map cards
@@ -313,9 +321,9 @@ function App() {
   })
 
 
-  console.log(cardGridSingle)
-  console.log("likes: ")
-  console.log(likedItemData)
+  console.log(searchDate)
+  // console.log("likes: ")
+  // console.log(likedItemData)
   // console.log(cardGridSingle)
 
 
@@ -335,6 +343,8 @@ function App() {
               handleScrollToTop={handleScrollToTop}
               isSearching={isSearching}
               handleDatePicker={handleDatePicker}
+              handleDateSearch={handleDateSearch}
+              searchDate={searchDate}
               cards={cards}
               isLoading={isLoading}
               cardGridSingle={cardGridSingle}

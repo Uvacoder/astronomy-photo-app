@@ -10,6 +10,8 @@ function Layout({
     handleScrollToTop,
     isSearching,
     handleDatePicker,
+    handleDateSearch,
+    searchDate,
     cards,
     isLoading,
     cardGridSingle,
@@ -28,6 +30,8 @@ function Layout({
         handleScrollToTop={handleScrollToTop}
         isSearching={isSearching}
         handleDatePicker={handleDatePicker}
+        handleDateSearch={handleDateSearch}
+        searchDate={searchDate}
         />
       <div className="bg-neutral-900 text-slate-50">
         {postView ? 

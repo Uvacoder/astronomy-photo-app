@@ -9,8 +9,8 @@ import { Link } from "react-router-dom"
 import Search from "./Search"
 
 export default function Navbar({ 
-    postView, randomMode, handleMode, 
-    handleView, handleScrollToTop, isSearching, handleDatePicker }) {
+    postView, randomMode, handleMode, handleView, handleScrollToTop, 
+    isSearching, handleDatePicker, handleDateSearch, searchDate }) {
     return (
         <div className="navbar bg-slate-900 text-slate-50 fixed top-0 z-40">
             <div className="flex-1">
@@ -47,7 +47,11 @@ export default function Navbar({
                         onClick={handleDatePicker}>
                     <img className="h-5" src={magGlass} />
                 </button>
-                { isSearching && <Search handleDatePicker={handleDatePicker} />}
+                { isSearching && <Search 
+                    handleDatePicker={handleDatePicker}
+                    handleDateSearch={handleDateSearch}
+                    searchDate={searchDate}
+                    />}
                 </>
                 
                 
