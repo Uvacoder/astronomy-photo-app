@@ -309,6 +309,7 @@ function App() {
     // callApiByDate();
     setSearchDate(date);
     closeDatePicker();
+    setRandomMode(false);
     setItemData([]);
   }
   
