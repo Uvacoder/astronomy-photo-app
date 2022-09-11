@@ -127,7 +127,7 @@ function App() {
 
   // first API call on app load
   useEffect(() => {callApiRandom()}, [])
-  // useEffect(() => {calculateDateForApi(today), callApiByDate()}, []) 
+  useEffect(() => {callApiByDate()}, [searchDate]) 
   // useEffect(() => setItemData(data), [])
   
   
@@ -289,8 +289,27 @@ function App() {
   const closeDatePicker = debounce(handleDatePicker, 600)
 
   const handleDateSearch = date => {
+    
+    // set date string for API
+    // console.log(dayjs(searchDate).format("YYYY-MM-DD"))
+    const searchDateInStringFormat = dayjs(date).format("YYYY-MM-DD");
+    console.log(searchDateInStringFormat);
+    const searchDateInDayjsFormat = dayjs(searchDateInStringFormat);
+    const today = dayjs();
+    const diff = today.diff(searchDateInDayjsFormat, 'day');
+    console.log(diff);
+    
+    setDateStringForApi({
+      startDateString: dayjs(dayjs(date).subtract(10, "day")).format("YYYY-MM-DD"),    
+      endDateString: dayjs(date).format("YYYY-MM-DD"),    
+      offset: diff + 11,
+    })
+    
+    // call API by date
+    // callApiByDate();
     setSearchDate(date);
     closeDatePicker();
+    setItemData([]);
   }
   
 
@@ -325,7 +344,7 @@ function App() {
   // console.log("likes: ")
   // console.log(likedItemData)
   // console.log(cardGridSingle)
-
+  console.log(dateStringForApi)
 
   
 
