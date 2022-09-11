@@ -6,7 +6,7 @@ export default function CardPost({ item, handleLike, like, loadGridSingleView })
     
     
     return (
-        <div className="">
+        <div className="" id={`${item?.date}`}>
             
             <img 
                 data-src={item?.url} 

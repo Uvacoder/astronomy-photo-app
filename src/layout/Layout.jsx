@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import LoadingSpinner from "../components/LoadingSpinner";
+import CardGridSelection from "../components/CardGridSelection";
 
 function Layout({
     postView,

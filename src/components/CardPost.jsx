@@ -9,7 +9,7 @@ export default function CardPost({ item, handleLike, like }) {
     const handleMore = () => setSeeMore(prevState => !prevState)
 
     return (
-        <>
+        <div id={`${item?.date}`}>
             <h3 className="text-lg">{item?.title}</h3>
             <img 
                 data-src={item?.url} 
@@ -28,7 +28,7 @@ export default function CardPost({ item, handleLike, like }) {
             {seeMore === false && <p className="max-h-24 max-w-sm line-clamp-3">{item?.explanation}</p>}
             {seeMore === false && <p onClick={handleMore} className="cursor-pointer">..more</p>}
             <p className="mb-8">{item?.date}</p>
-        </>
+        </div>
         
     )
     
