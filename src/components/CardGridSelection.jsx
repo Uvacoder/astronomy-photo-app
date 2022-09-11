@@ -4,7 +4,7 @@ import heartSolid from "../icons/heart-solid.svg"
 import close from "../icons/x-mark.svg"
 
 export default function CardGridSelection({ 
-    item, handleLike, like, unloadGridSingleView}) {
+    item, handleLike, like, unloadGridSingleView }) {
     
     return (
         <div className="z-50 fixed top-1 w-screen h-screen bg-slate-800/75">

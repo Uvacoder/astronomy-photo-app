@@ -41,6 +41,7 @@ function App() {
   // if isSearching is true, date picker will appear
   const [isSearching, setIsSearching] = useState(false)
   const [searchDate, setSearchDate] = useState(new Date())
+  const [lastInteraction, setLastInteraction] = useState("")
 
   const calculateDateForApi = () => {
     
@@ -237,8 +238,23 @@ function App() {
   
 
   const handleView = () => {
-    setPostView(prevState => !prevState)
+    setPostView(prevState => !prevState);
+    
+    // const scrollToLastInteracted = debounce(document.getElementById(lastInteraction).scrollIntoView(true), 300);
+    // scrollToLastInteracted;
+    // const x = document.getElementById(lastInteraction)
+    // // console.log("scroll to: ");
+    // console.log(x);
   }
+
+  useEffect(() => {
+    
+    document.getElementById(lastInteraction)?.scrollIntoView();
+    console.log("scroll to: ");
+    console.log(lastInteraction);
+    
+    
+  }, [postView])
 
   const loadGridSingleView = (item) => {
 
@@ -312,6 +328,12 @@ function App() {
     setRandomMode(false);
     setItemData([]);
   }
+
+  const handleInteraction = id => {
+    // const debounceLastInteraction = debounce(setLastInteraction(id), 500);
+    // debounceLastInteraction;
+    setLastInteraction(id);
+  }
   
 
   // map cards
@@ -335,18 +357,19 @@ function App() {
           handleLike={handleLike}
           postView={postView}
           loadGridSingleView={loadGridSingleView}
+          handleInteraction={handleInteraction}
         />
       )
     }
   })
 
 
-  console.log(searchDate)
+  // console.log(searchDate)
   // console.log("likes: ")
   // console.log(likedItemData)
   // console.log(cardGridSingle)
-  console.log(dateStringForApi)
-
+  // console.log(dateStringForApi)
+  console.log(lastInteraction)
   
 
   return (
@@ -371,6 +394,7 @@ function App() {
               handleLike={handleLike}
               unloadGridSingleView={unloadGridSingleView}
               like={checkLikedItems(cardGridSingle.item)}
+              // handleInteraction={handleInteraction}
               />
             }>
           

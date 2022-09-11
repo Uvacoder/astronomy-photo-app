@@ -2,7 +2,7 @@ import CardPost from './CardPost'
 import CardGrid from './CardGrid'
 
 export default function Card({ 
-    item, handleLike, like, postView, loadGridSingleView}) {
+    item, handleLike, like, postView, loadGridSingleView, handleInteraction}) {
     
     
     return (
@@ -13,6 +13,7 @@ export default function Card({
                 item={item}
                 handleLike={handleLike}
                 like={like}
+                handleInteraction={handleInteraction}
                 />
             :
         
@@ -21,6 +22,7 @@ export default function Card({
                 handleLike={handleLike}
                 like={like}
                 loadGridSingleView={loadGridSingleView}
+                handleInteraction={handleInteraction}
             />
             
             }

@@ -2,14 +2,14 @@ import { useState } from "react"
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
 
-export default function CardPost({ item, handleLike, like }) {
+export default function CardPost({ item, handleLike, like, handleInteraction }) {
     
     const [seeMore, setSeeMore] = useState(false)
 
     const handleMore = () => setSeeMore(prevState => !prevState)
 
     return (
-        <div id={`${item?.date}`}>
+        <div id={`${item?.date}`} onMouseOver={() => handleInteraction(item?.date)}>
             <h3 className="text-lg">{item?.title}</h3>
             <img 
                 data-src={item?.url} 
