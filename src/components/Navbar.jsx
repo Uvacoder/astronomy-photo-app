@@ -20,7 +20,7 @@ export default function Navbar({
                     onClick={handleScrollToTop}>
                         APOD
                 </Link>
-                <div class="dropdown hover:bg-slate-900/25">
+                {/* <div class="dropdown hover:bg-slate-900/25">
                     <div className="flex items-center">
                         <label tabindex="0" class="btn btn-ghost rounded-btn">   
                         <img class="h-5 ml-4 invert" src={caretDown} />
@@ -30,9 +30,18 @@ export default function Navbar({
                         <li><a>Latest photos</a></li> 
                         <li><a>Random photos</a></li>
                     </ul>
-                </div>
+                </div> */}
             </div>
             <div className="flex-none">
+                <ul className="menu menu-horizontal p-0">
+                <li><Link to="/">Latest</Link></li>
+                <li><Link to="/random">Shuffle</Link></li>
+                <li><button onClick={() => console.log("feed")}>Feed</button></li>
+                <li><button onClick={() => console.log("grid")}>Grid</button></li>
+                <li><Link to="/likes">Likes</Link></li>
+                </ul>
+            </div>
+            {/* <div className="flex-none">
                 { randomMode ?
                 <button onClick={handleMode} className="btn btn-square btn-ghost invert">
                     <img className="h-5" src={clock} />
@@ -69,7 +78,7 @@ export default function Navbar({
                     <img className="h-5" src={heartSolid} />
                 </button>
                 </Link>
-            </div>
+            </div> */}
         </div>
     )
 }

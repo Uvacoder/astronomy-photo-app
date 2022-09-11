@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Card from './components/Card'
 import Likes from './components/Likes'
 import Layout from './layout/Layout';
+import Container from './layout/Container';
 
 import data from './data/sampleData'
 
@@ -395,6 +396,24 @@ function App() {
               // handleInteraction={handleInteraction}
               />
             }>
+          <Route index element={<Container 
+            postView={postView}
+            cards={cards}
+            isLoading={isLoading}
+            cardGridSingle={cardGridSingle}
+            handleLike={handleLike}
+            unloadGridSingleView={unloadGridSingleView}
+            like={checkLikedItems(cardGridSingle.item)}
+            />} />
+          <Route path="random" element={<Container 
+            postView={postView}
+            cards={cards}
+            isLoading={isLoading}
+            cardGridSingle={cardGridSingle}
+            handleLike={handleLike}
+            unloadGridSingleView={unloadGridSingleView}
+            like={checkLikedItems(cardGridSingle.item)}
+            />} />
           <Route path="likes" element={<Likes />} />
           
         </Route>

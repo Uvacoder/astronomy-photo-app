@@ -34,7 +34,7 @@ function Layout({
         handleDateSearch={handleDateSearch}
         searchDate={searchDate}
         />
-      <div className="bg-neutral-900 text-slate-50">
+      {/* <div className="bg-neutral-900 text-slate-50">
         {postView ? 
         // post view
         <div className='mt-16 ml-5'>         
@@ -57,9 +57,9 @@ function Layout({
             unloadGridSingleView={unloadGridSingleView}
             like={like}
             />
-        }
+        } */}
         <Outlet />
-      </div>
+      
     </>
   );
 }
