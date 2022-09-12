@@ -1,11 +1,11 @@
 import { useState, useEffect, createContext } from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Card from './components/Card'
 import Likes from './layout/Likes'
-import Layout from './layout/Layout';
-import Container from './components/Container';
-
+import Layout from './layout/Layout'
+import Container from './components/Container'
+import Container1 from './components/Container1'
 
 import data from './data/sampleData'
 
@@ -435,14 +435,8 @@ function App() {
               handleGridView={handleGridView}
               />
             }>
-          <Route index element={<Container 
-            feedView={feedView}
-            cards={cards}
-            isLoading={isLoading}
-            cardGridSingle={cardGridSingle}
-            handleLike={handleLike}
-            unloadGridSingleView={unloadGridSingleView}
-            checkLikeSingleGrid={checkLikeSingleGrid}
+          <Route index element={<Container1
+            containerData={containerData}
             />} />
           <Route path="shuffle" element={<Container 
             feedView={feedView}
