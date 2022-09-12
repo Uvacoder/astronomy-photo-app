@@ -1,10 +1,11 @@
-import LoadingSpinner from "../components/LoadingSpinner"
-import CardGridSelection from "../components/CardGridSelection"
+import LoadingSpinner from "./LoadingSpinner"
+import CardGridSelection from "./CardGridSelection"
 
 export default function Container({
     feedView, cards, isLoading, cardGridSingle, 
-    handleLike, unloadGridSingleView, like
+    handleLike, unloadGridSingleView, checkLikeSingleGrid
 }) {
+    
     return (
         // <div className="bg-neutral-900 text-slate-50">
         <div className="">
@@ -28,7 +29,7 @@ export default function Container({
             handleLike={handleLike}
             // loadGridSingleView={loadGridSingleView}
             unloadGridSingleView={unloadGridSingleView}
-            like={like}
+            checkLikeSingleGrid={checkLikeSingleGrid}
             />
         }
         

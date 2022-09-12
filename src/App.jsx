@@ -2,9 +2,9 @@ import { useState, useEffect, createContext } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Card from './components/Card'
-import Likes from './components/Likes'
+import Likes from './layout/Likes'
 import Layout from './layout/Layout';
-import Container from './layout/Container';
+import Container from './components/Container';
 
 
 import data from './data/sampleData'
@@ -16,8 +16,7 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
 
-
-
+export const ContainerContext = createContext();
 
 function App() {
 
@@ -45,25 +44,18 @@ function App() {
   const [searchMode, setSearchMode] = useState(false)
   const [lastInteraction, setLastInteraction] = useState("")
 
+   
+
   const calculateDateForApi = () => {
     
-    // console.log(date.getMonth(), date.getDate())    
-    // console.log(dateStringForApi.offset)
     const offset = dateStringForApi.offset
-    // const endDateString = dateForApi.toISOString().slice(0, 10);
-    const endDateString = dayjs(dayjs().subtract(offset, "day")).format("YYYY-MM-DD")
-    console.log("end date: ", endDateString);
     
-    // sets date to the last day of previous month
-    // date.setDate(0)
-    // setDateForApi(dateForApi.setDate(0))
-    // setDateForApi(dayjs(dateForApi).subtract(10, "day"))
-    // console.log(dayjs(dateForApi).subtract(10, "day"))
+    const endDateString = dayjs(dayjs().subtract(offset, "day")).format("YYYY-MM-DD")
+    console.log("end date: ", endDateString);    
+    
     const newOffset = offset + 10
     const newDate = dayjs().subtract(newOffset, "day")
-    // setDateForApi(newDate)
-    // console.log("new date ", dateForApi)
-    // const startDateString = dateForApi.toISOString().slice(0, 10);
+    
     const startDateString = dayjs(newDate).format("YYYY-MM-DD")
     console.log("start date: ", startDateString);
 
@@ -80,12 +72,10 @@ function App() {
   const callApiByDate = () => {   
     
     setIsLoading(true)
-    // calculateDateForApi()
+    
     axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
     .then(function (response) {
       // handle success
-      // console.log(response.data);
-      // calculateDateForApi(dateForApi)
       setItemData(prevData => (
         [
           ...prevData,
@@ -102,8 +92,7 @@ function App() {
     .then(function () {
       // always executed
     });
-  }
-  
+  }  
 
   const callApiRandom = () => {
     setIsLoading(true)
@@ -125,6 +114,7 @@ function App() {
     })
     .then(function () {
       // always executed
+      console.log('callApiRandom')
     });
   }
 
@@ -152,12 +142,7 @@ function App() {
       // console.log('window.pageYOffset', window.pageYOffset);    
       // console.log('document.documentElement.offsetHeight', document.documentElement.offsetHeight);
       // const position = document.documentElement.scrollTop;
-      // setCardGridSingle(prevState => {
-      //   return ({
-      //     ...prevState,
-      //     position: position,
-      //   })
-      // })
+      
 
       if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
         console.log("infinite scroll v1")     
@@ -190,27 +175,11 @@ function App() {
     };
   })
 
-
-  
-
-  // const handleMode = () => {
-
-  //   setRandomMode(prevState => !prevState)
-  //   setDateStringForApi({  
-  //     // reset to initial values  
-  //     startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
-  //     endDateString: dayjs().format("YYYY-MM-DD"),    
-  //     offset: 11,
-  //   })
-  //   setItemData([])
-  //   randomMode ? callApiByDate() : callApiRandom()
-  // }
-
+  // add or remove likes from likedItemData
   const handleLike = (item) => {
     
     const likedDates = likedItemData.map(item => item.date)
-    // console.log(likedDates)
-
+    
     likedDates.includes(item.date) ? 
       setLikedItemData(prevData => {
         let filterData = prevData;
@@ -228,10 +197,11 @@ function App() {
       // console.log("add like")    
   }
 
+  // check if card is liked when rendering
   const checkLikedItems = (item) => {
     let like = false
     for (let i=0; i<likedItemData.length; i++) {
-      if (likedItemData[i].date === item?.date) {
+      if (likedItemData[i]?.date === item?.date) {
         like = true
       }
     }
@@ -239,21 +209,19 @@ function App() {
   }
   
 
-  const handleView = () => {
-    setFeedView(prevState => !prevState);
-  }
+  // const handleView = () => {
+  //   setFeedView(prevState => !prevState);
+  // }
 
   const handleFeedView = () => {
     setFeedView(true);
-
   }
 
   const handleGridView = () => {
     setFeedView(false);
   }
 
-  const handleRandomView = () => {
-    
+  const handleRandomView = () => {    
     setRandomMode(true);
     setItemData([]);
     callApiRandom();
@@ -267,7 +235,6 @@ function App() {
   }
 
   const handleLatestView = () => {
-
     if (randomMode) {
       setRandomMode(false);      
       setItemData([]);
@@ -292,19 +259,18 @@ function App() {
       // setRandomMode(false);
       setSearchMode(false);
       setItemData([]);
-    }
-    
+    }    
   }  
 
-  useEffect(() => {
-    
+  // to scroll window to last interacted element
+  useEffect(() => {    
     document.getElementById(lastInteraction)?.scrollIntoView();
     console.log("scroll to: ");
-    console.log(lastInteraction);
-    
-    
+    console.log(lastInteraction);   
   }, [feedView])
 
+
+  // freeze grid view and render a modal of selection
   const loadGridSingleView = (item) => {
 
     // const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
@@ -325,6 +291,14 @@ function App() {
     })        
   }
 
+  // // check whether single grid item is liked
+  // const checkLikeSingleGrid = () => {
+  //   const check = checkLikedItems(cardGridSingle.item);
+  //   console.log(check)
+  //   return check
+  // }
+
+  // unfreeze grid view and close modal
   const unloadGridSingleView = () => {
 
     // const body = document.body;
@@ -343,16 +317,19 @@ function App() {
     })
   }
 
+  // scroll window to top of body
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  // toggle the date picker for searching
   const handleDatePicker = () => {
     setIsSearching(prevState => !prevState)
   }
 
   const closeDatePicker = debounce(handleDatePicker, 600)
 
+  // get the date searched for, reset the cards, call Api and render searched card
   const handleDateSearch = date => {
     
     // set date string for API
@@ -379,6 +356,7 @@ function App() {
     setItemData([]);
   }
 
+  // gets the id of last interacted card element so window can scroll to element when switching view
   const handleInteraction = id => {
     // const debounceLastInteraction = debounce(() => setLastInteraction(id), 500);
     // debounceLastInteraction;
@@ -415,14 +393,28 @@ function App() {
 
 
   // console.log(searchDate)
-  // console.log("likes: ")
-  // console.log(likedItemData)
+  console.log("likes: ")
+  console.log(likedItemData)
   // console.log(cardGridSingle)
   // console.log(dateStringForApi)
   console.log(lastInteraction)
   
+  const test = "test"
+  const checkLikeSingleGrid = checkLikedItems(cardGridSingle.item)
+  console.log(checkLikeSingleGrid)
+
+  const containerData = {
+    feedView,
+    cards,
+    isLoading,
+    cardGridSingle,
+    handleLike,
+    unloadGridSingleView,
+    checkLikeSingleGrid,
+  }
 
   return (
+    <ContainerContext.Provider value={containerData}>
     <BrowserRouter>
       <Routes>
         <Route 
@@ -431,7 +423,7 @@ function App() {
             {<Layout 
               feedView={feedView} 
               randomMode={randomMode}
-              handleView={handleView}
+              // handleView={handleView}
               handleScrollToTop={handleScrollToTop}
               isSearching={isSearching}
               handleDatePicker={handleDatePicker}
@@ -450,16 +442,16 @@ function App() {
             cardGridSingle={cardGridSingle}
             handleLike={handleLike}
             unloadGridSingleView={unloadGridSingleView}
-            like={checkLikedItems(cardGridSingle.item)}
+            checkLikeSingleGrid={checkLikeSingleGrid}
             />} />
-          <Route path="random" element={<Container 
+          <Route path="shuffle" element={<Container 
             feedView={feedView}
             cards={cards}
             isLoading={isLoading}
             cardGridSingle={cardGridSingle}
             handleLike={handleLike}
             unloadGridSingleView={unloadGridSingleView}
-            like={checkLikedItems(cardGridSingle.item)}
+            checkLikeSingleGrid={checkLikeSingleGrid}
             />} />
           <Route path="search" element={<Container 
             feedView={feedView}
@@ -468,53 +460,17 @@ function App() {
             cardGridSingle={cardGridSingle}
             handleLike={handleLike}
             unloadGridSingleView={unloadGridSingleView}
-            like={checkLikedItems(cardGridSingle.item)}
+            checkLikeSingleGrid={checkLikeSingleGrid}
             />} />
-          <Route path="likes" element={<Likes />} />
+          <Route path="/likes" element={<Likes />} />
+          <Route path={`${test}`} element={<Likes />} />
           
         </Route>
         
         <Route path="*" element="NOT FOUND" />
       </Routes>
-        {/* <div className={`bg-neutral-900 text-slate-50 `}>
-          <Navbar 
-            feedView={feedView} 
-            randomMode={randomMode} 
-            handleMode={handleMode}
-            handleView={handleView}
-            handleScrollToTop={handleScrollToTop}
-          />
-          */}
-          
-          {/* {feedView ? 
-          // post view
-          <div className='mt-16 ml-5'>         
-            {cards}
-            {isLoading && <LoadingSpinner />}
-          </div> :
-          // grid view
-          <div className='grid grid-cols-3 gap-4 justify-center mt-16'>
-            {cards}
-            {isLoading && <LoadingSpinner />}
-          </div>
-          }
-          {
-            cardGridSingle.selected && 
-            <CardGridSelection 
-              item={cardGridSingle.item} 
-              position={cardGridSingle.position}
-              handleLike={handleLike}
-              // loadGridSingleView={loadGridSingleView}
-              unloadGridSingleView={unloadGridSingleView}
-              like={checkLikedItems(cardGridSingle.item)}
-              />
-          } */}
-          
-        
-        
-      
     </BrowserRouter>
-    
+    </ContainerContext.Provider>
   )
 }
 

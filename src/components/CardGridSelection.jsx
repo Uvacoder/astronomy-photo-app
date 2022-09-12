@@ -4,10 +4,10 @@ import heartSolid from "../icons/heart-solid.svg"
 import close from "../icons/x-mark.svg"
 
 export default function CardGridSelection({ 
-    item, handleLike, like, unloadGridSingleView }) {
+    item, handleLike, checkLikeSingleGrid, unloadGridSingleView }) {
     
     return (
-        <div className="z-50 fixed top-1 w-screen h-screen bg-slate-800/75">
+        <div className="z-50 fixed top-1 w-screen h-screen bg-slate-800/75 text-slate-50">
             <h3 className="text-lg">{item?.title}</h3>
             <button className="btn btn-square btn-ghost invert" 
                     onClick={unloadGridSingleView}>
@@ -17,7 +17,7 @@ export default function CardGridSelection({
                 src={item?.url} 
                 className="max-w-sm block"
                 />
-            {like ? 
+            {checkLikeSingleGrid ? 
             <button className="btn btn-square btn-ghost invert" onClick={() => handleLike(item)}>
                 <img className="h-5" src={heartSolid} />
             </button> :

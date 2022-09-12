@@ -6,7 +6,7 @@ import grid from "../icons/grid.svg"
 import image from "../icons/image.svg"
 import heartSolid from "../icons/heart-solid.svg"
 import { Link } from "react-router-dom"
-import Search from "./Search"
+import Calendar from "./Calendar"
 
 export default function Navbar({ 
     handleScrollToTop, isSearching, handleDatePicker, handleDateSearch, searchDate, 
@@ -36,13 +36,13 @@ export default function Navbar({
             <div className="flex-none">
                 <ul className="menu menu-horizontal p-0">
                 <li><Link to="/"><button onClick={handleLatestView}>Latest</button></Link></li>
-                <li><Link to="/random"><button onClick={handleRandomView}>Shuffle</button></Link></li>
+                <li><Link to="/shuffle"><button onClick={handleRandomView}>Shuffle</button></Link></li>
                 <li><button onClick={handleFeedView}>Feed</button></li>
                 <li><button onClick={handleGridView}>Grid</button></li>
                 <li>
                     <Link to="/search">
                         <button onClick={handleDatePicker}>Search</button>
-                        {isSearching && <Search 
+                        {isSearching && <Calendar 
                             handleDateSearch={handleDateSearch}
                             searchDate={searchDate}
                             />
@@ -67,7 +67,7 @@ export default function Navbar({
                         onClick={handleDatePicker}>
                     <img className="h-5" src={magGlass} />
                 </button>
-                { isSearching && <Search 
+                { isSearching && <Calendar 
                     handleDatePicker={handleDatePicker}
                     handleDateSearch={handleDateSearch}
                     searchDate={searchDate}

@@ -2,7 +2,7 @@ import { useState } from "react"
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
 
-export default function CardPost({ item, handleLike, like, loadGridSingleView, handleInteraction }) {
+export default function CardPost({ item, loadGridSingleView, handleInteraction }) {
     
     
     return (
