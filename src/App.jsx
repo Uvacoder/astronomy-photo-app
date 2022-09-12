@@ -5,6 +5,7 @@ import Card from './components/Card'
 import Likes from './components/Likes'
 import Layout from './layout/Layout';
 import Container from './layout/Container';
+import Search from './components/Search';
 
 import data from './data/sampleData'
 
@@ -14,6 +15,7 @@ import lozad from 'lozad'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
+
 
 
 
@@ -30,8 +32,8 @@ function App() {
   })
   const [likedItemData, setLikedItemData] = useState([])
 
-  // if postView is false, then gridView is active
-  const [postView, setPostView] = useState(true)
+  // if feedView is false, then gridView is active
+  const [feedView, setFeedView] = useState(true)
   // if randomMode is false, chronological view is active
   const [randomMode, setRandomMode] = useState(false)
   // if card grid single is true, show the selected single post
@@ -190,18 +192,18 @@ function App() {
 
   
 
-  const handleMode = () => {
+  // const handleMode = () => {
 
-    setRandomMode(prevState => !prevState)
-    setDateStringForApi({  
-      // reset to initial values  
-      startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
-      endDateString: dayjs().format("YYYY-MM-DD"),    
-      offset: 11,
-    })
-    setItemData([])
-    randomMode ? callApiByDate() : callApiRandom()
-  }
+  //   setRandomMode(prevState => !prevState)
+  //   setDateStringForApi({  
+  //     // reset to initial values  
+  //     startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
+  //     endDateString: dayjs().format("YYYY-MM-DD"),    
+  //     offset: 11,
+  //   })
+  //   setItemData([])
+  //   randomMode ? callApiByDate() : callApiRandom()
+  // }
 
   const handleLike = (item) => {
     
@@ -237,14 +239,47 @@ function App() {
   
 
   const handleView = () => {
-    setPostView(prevState => !prevState);
-    
-    // const scrollToLastInteracted = debounce(document.getElementById(lastInteraction).scrollIntoView(true), 300);
-    // scrollToLastInteracted;
-    // const x = document.getElementById(lastInteraction)
-    // // console.log("scroll to: ");
-    // console.log(x);
+    setFeedView(prevState => !prevState);
   }
+
+  const handleFeedView = () => {
+    setFeedView(true);
+
+  }
+
+  const handleGridView = () => {
+    setFeedView(false);
+  }
+
+  const handleRandomView = () => {
+    
+    setRandomMode(true);
+    setItemData([]);
+    callApiRandom();
+    setDateStringForApi({  
+      // reset to initial values  
+      startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
+      endDateString: dayjs().format("YYYY-MM-DD"),    
+      offset: 11,
+    });
+    
+  }
+
+  const handleLatestView = () => {
+
+    if (randomMode) {
+      setRandomMode(false);
+      setItemData([]);
+      callApiByDate();  
+      setDateStringForApi({  
+        // reset to initial values  
+        startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
+        endDateString: dayjs().format("YYYY-MM-DD"),    
+        offset: 11,
+    })
+    }
+    
+  }  
 
   useEffect(() => {
     
@@ -253,7 +288,7 @@ function App() {
     console.log(lastInteraction);
     
     
-  }, [postView])
+  }, [feedView])
 
   const loadGridSingleView = (item) => {
 
@@ -354,7 +389,7 @@ function App() {
           item={item}
           like={like}
           handleLike={handleLike}
-          postView={postView}
+          feedView={feedView}
           loadGridSingleView={loadGridSingleView}
           handleInteraction={handleInteraction}
         />
@@ -378,9 +413,9 @@ function App() {
           path="/" 
           element=
             {<Layout 
-              postView={postView} 
+              feedView={feedView} 
               randomMode={randomMode} 
-              handleMode={handleMode}
+              // handleMode={handleMode}
               handleView={handleView}
               handleScrollToTop={handleScrollToTop}
               isSearching={isSearching}
@@ -393,11 +428,14 @@ function App() {
               handleLike={handleLike}
               unloadGridSingleView={unloadGridSingleView}
               like={checkLikedItems(cardGridSingle.item)}
-              // handleInteraction={handleInteraction}
+              handleRandomView={handleRandomView}
+              handleLatestView={handleLatestView}
+              handleFeedView={handleFeedView}
+              handleGridView={handleGridView}
               />
             }>
           <Route index element={<Container 
-            postView={postView}
+            feedView={feedView}
             cards={cards}
             isLoading={isLoading}
             cardGridSingle={cardGridSingle}
@@ -406,7 +444,16 @@ function App() {
             like={checkLikedItems(cardGridSingle.item)}
             />} />
           <Route path="random" element={<Container 
-            postView={postView}
+            feedView={feedView}
+            cards={cards}
+            isLoading={isLoading}
+            cardGridSingle={cardGridSingle}
+            handleLike={handleLike}
+            unloadGridSingleView={unloadGridSingleView}
+            like={checkLikedItems(cardGridSingle.item)}
+            />} />
+          <Route path="search" element={<Container 
+            feedView={feedView}
             cards={cards}
             isLoading={isLoading}
             cardGridSingle={cardGridSingle}
@@ -422,7 +469,7 @@ function App() {
       </Routes>
         {/* <div className={`bg-neutral-900 text-slate-50 `}>
           <Navbar 
-            postView={postView} 
+            feedView={feedView} 
             randomMode={randomMode} 
             handleMode={handleMode}
             handleView={handleView}
@@ -430,7 +477,7 @@ function App() {
           />
           */}
           
-          {/* {postView ? 
+          {/* {feedView ? 
           // post view
           <div className='mt-16 ml-5'>         
             {cards}

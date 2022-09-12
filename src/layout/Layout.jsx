@@ -4,7 +4,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import CardGridSelection from "../components/CardGridSelection";
 
 function Layout({
-    postView,
+    feedView,
     randomMode,
     handleMode,
     handleView,
@@ -18,21 +18,29 @@ function Layout({
     cardGridSingle,
     handleLike,
     unloadGridSingleView,
-    like
+    like,
+    handleRandomView,
+    handleLatestView,
+    handleFeedView,
+    handleGridView,
     }) 
     {
   return (
     <>
       <Navbar 
-        postView={postView} 
+        feedView={feedView} 
         randomMode={randomMode} 
-        handleMode={handleMode}
+        // handleMode={handleMode}
         handleView={handleView}
         handleScrollToTop={handleScrollToTop}
         isSearching={isSearching}
         handleDatePicker={handleDatePicker}
         handleDateSearch={handleDateSearch}
         searchDate={searchDate}
+        handleRandomView={handleRandomView}
+        handleLatestView={handleLatestView}
+        handleFeedView={handleFeedView}
+        handleGridView={handleGridView}
         />
       {/* <div className="bg-neutral-900 text-slate-50">
         {postView ? 

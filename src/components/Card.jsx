@@ -2,12 +2,12 @@ import CardPost from './CardPost'
 import CardGrid from './CardGrid'
 
 export default function Card({ 
-    item, handleLike, like, postView, loadGridSingleView, handleInteraction}) {
+    item, handleLike, like, feedView, loadGridSingleView, handleInteraction}) {
     
     
     return (
         <>
-            { postView ? 
+            { feedView ? 
             
             <CardPost 
                 item={item}

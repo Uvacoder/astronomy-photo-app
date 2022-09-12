@@ -2,9 +2,14 @@ import DatePicker from "react-datepicker";
 import "./search.css";
 import { useState } from "react";
 import { debounce } from 'lodash';
+import Container from "../layout/Container";
 
 
-export default function Search({ handleDatePicker, handleDateSearch, searchDate }) {
+export default function Search({ 
+    handleDatePicker, handleDateSearch, searchDate,
+    cards, isLoading, cardGridSingle, handleLike, unloadGridSingleView, like, feedView,
+    isSearching,
+}) {
 
     // const [startDate, setStartDate] = useState(new Date())
     // const debounceHandleDateSearch = debounce(handleDatePicker, 600)
@@ -20,20 +25,25 @@ export default function Search({ handleDatePicker, handleDateSearch, searchDate 
     
     
     return (
+        <>
+        
         <div className="absolute top-16 right-2">
-            <DatePicker 
-                selected={searchDate} 
-                onChange={date => handleDateSearch(date)} 
-                inline
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                maxDate={new Date()}
-                minDate={803347920000}
-            />
-
+        <DatePicker 
+            selected={searchDate} 
+            onChange={date => handleDateSearch(date)} 
+            inline
+            peekNextMonth
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            maxDate={new Date()}
+            minDate={803347920000}
+        />
         </div>
+        
+        
+        </>
+        
     )
 }
 

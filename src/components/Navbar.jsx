@@ -9,8 +9,10 @@ import { Link } from "react-router-dom"
 import Search from "./Search"
 
 export default function Navbar({ 
-    postView, randomMode, handleMode, handleView, handleScrollToTop, 
-    isSearching, handleDatePicker, handleDateSearch, searchDate }) {
+    feedView, randomMode, handleMode, handleView, handleScrollToTop, 
+    isSearching, handleDatePicker, handleDateSearch, searchDate, handleRandomView,
+    handleLatestView, handleFeedView, handleGridView,    
+}) {
     return (
         <div className="navbar bg-slate-900 text-slate-50 fixed top-0 z-40">
             <div className="flex-1">
@@ -34,10 +36,20 @@ export default function Navbar({
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal p-0">
-                <li><Link to="/">Latest</Link></li>
-                <li><Link to="/random">Shuffle</Link></li>
-                <li><button onClick={() => console.log("feed")}>Feed</button></li>
-                <li><button onClick={() => console.log("grid")}>Grid</button></li>
+                <li><Link to="/"><button onClick={handleLatestView}>Latest</button></Link></li>
+                <li><Link to="/random"><button onClick={handleRandomView}>Shuffle</button></Link></li>
+                <li><button onClick={handleFeedView}>Feed</button></li>
+                <li><button onClick={handleGridView}>Grid</button></li>
+                <li>
+                    <Link to="/search">
+                        <button onClick={handleDatePicker}>Search</button>
+                        {isSearching && <Search 
+                            handleDateSearch={handleDateSearch}
+                            searchDate={searchDate}
+                            />
+                        }
+                    </Link>
+                </li>
                 <li><Link to="/likes">Likes</Link></li>
                 </ul>
             </div>
@@ -65,7 +77,7 @@ export default function Navbar({
                 
                 
 
-                { postView ?
+                { feedView ?
                 <button className="btn btn-square btn-ghost invert" onClick={handleView}>
                     <img className="h-5" src={grid} />
                 </button> :

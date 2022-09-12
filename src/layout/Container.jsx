@@ -1,12 +1,13 @@
 import LoadingSpinner from "../components/LoadingSpinner"
+import CardGridSelection from "../components/CardGridSelection"
 
 export default function Container({
-    postView, cards, isLoading, cardGridSingle, 
+    feedView, cards, isLoading, cardGridSingle, 
     handleLike, unloadGridSingleView, like
 }) {
     return (
         <div className="bg-neutral-900 text-slate-50">
-        {postView ? 
+        {feedView ? 
         // post view
         <div className='mt-16 ml-5'>         
           {cards}
