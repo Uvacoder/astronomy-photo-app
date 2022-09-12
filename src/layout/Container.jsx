@@ -6,7 +6,8 @@ export default function Container({
     handleLike, unloadGridSingleView, like
 }) {
     return (
-        <div className="bg-neutral-900 text-slate-50">
+        // <div className="bg-neutral-900 text-slate-50">
+        <div className="">
         {feedView ? 
         // post view
         <div className='mt-16 ml-5'>         

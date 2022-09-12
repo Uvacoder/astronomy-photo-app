@@ -9,12 +9,11 @@ import { Link } from "react-router-dom"
 import Search from "./Search"
 
 export default function Navbar({ 
-    feedView, randomMode, handleMode, handleView, handleScrollToTop, 
-    isSearching, handleDatePicker, handleDateSearch, searchDate, handleRandomView,
-    handleLatestView, handleFeedView, handleGridView,    
+    handleScrollToTop, isSearching, handleDatePicker, handleDateSearch, searchDate, 
+    handleRandomView, handleLatestView, handleFeedView, handleGridView,    
 }) {
     return (
-        <div className="navbar bg-slate-900 text-slate-50 fixed top-0 z-40">
+        <div className="navbar bg-slate-50 fixed top-0 z-40">
             <div className="flex-1">
                 <Link 
                     to="/"

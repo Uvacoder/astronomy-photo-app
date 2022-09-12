@@ -7,7 +7,7 @@ export default function LoadingSpinner() {
             height="100"
             width="100"
             radius="6"
-            color="white"
+            color="black"
             secondaryColor=''
             ariaLabel="revolving-dot-loading"
             wrapperStyle={{}}

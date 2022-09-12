@@ -4,21 +4,11 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import CardGridSelection from "../components/CardGridSelection";
 
 function Layout({
-    feedView,
-    randomMode,
-    handleMode,
-    handleView,
     handleScrollToTop,
     isSearching,
     handleDatePicker,
     handleDateSearch,
-    searchDate,
-    cards,
-    isLoading,
-    cardGridSingle,
-    handleLike,
-    unloadGridSingleView,
-    like,
+    searchDate,    
     handleRandomView,
     handleLatestView,
     handleFeedView,
@@ -28,10 +18,6 @@ function Layout({
   return (
     <>
       <Navbar 
-        feedView={feedView} 
-        randomMode={randomMode} 
-        // handleMode={handleMode}
-        handleView={handleView}
         handleScrollToTop={handleScrollToTop}
         isSearching={isSearching}
         handleDatePicker={handleDatePicker}

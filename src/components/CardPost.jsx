@@ -9,17 +9,17 @@ export default function CardPost({ item, handleLike, like, handleInteraction }) 
     const handleMore = () => setSeeMore(prevState => !prevState)
 
     return (
-        <div id={`${item?.date}`} onMouseOver={() => handleInteraction(item?.date)}>
+        <div id={`${item?.date}`} onMouseOver={() => handleInteraction(item?.date)} className="z-0">
             <h3 className="text-lg">{item?.title}</h3>
             <img 
                 data-src={item?.url} 
                 className="max-w-sm block lozad"
                 />
             {like ? 
-            <button className="btn btn-square btn-ghost invert" onClick={() => handleLike(item)}>
+            <button className="btn btn-square btn-ghost" onClick={() => handleLike(item)}>
                 <img className="h-5" src={heartSolid} />
             </button> :
-            <button className="btn btn-square btn-ghost invert" onClick={() => handleLike(item)}>
+            <button className="btn btn-square btn-ghost" onClick={() => handleLike(item)}>
                 <img className="h-5" src={heartEmpty} />
             </button> 
             }

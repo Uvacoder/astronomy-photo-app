@@ -5,7 +5,7 @@ import Card from './components/Card'
 import Likes from './components/Likes'
 import Layout from './layout/Layout';
 import Container from './layout/Container';
-import Search from './components/Search';
+
 
 import data from './data/sampleData'
 
@@ -42,6 +42,7 @@ function App() {
   // if isSearching is true, date picker will appear
   const [isSearching, setIsSearching] = useState(false)
   const [searchDate, setSearchDate] = useState()
+  const [searchMode, setSearchMode] = useState(false)
   const [lastInteraction, setLastInteraction] = useState("")
 
   const calculateDateForApi = () => {
@@ -268,7 +269,7 @@ function App() {
   const handleLatestView = () => {
 
     if (randomMode) {
-      setRandomMode(false);
+      setRandomMode(false);      
       setItemData([]);
       callApiByDate();  
       setDateStringForApi({  
@@ -277,6 +278,20 @@ function App() {
         endDateString: dayjs().format("YYYY-MM-DD"),    
         offset: 11,
     })
+    }
+    if (searchMode) {
+      console.log("searching latest")
+      setDateStringForApi({  
+        // reset to initial values  
+        startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
+        endDateString: dayjs().format("YYYY-MM-DD"),    
+        offset: 11,
+      })
+      setSearchDate();
+      // closeDatePicker();
+      // setRandomMode(false);
+      setSearchMode(false);
+      setItemData([]);
     }
     
   }  
@@ -360,6 +375,7 @@ function App() {
     setSearchDate(date);
     closeDatePicker();
     setRandomMode(false);
+    setSearchMode(true);
     setItemData([]);
   }
 
@@ -414,20 +430,13 @@ function App() {
           element=
             {<Layout 
               feedView={feedView} 
-              randomMode={randomMode} 
-              // handleMode={handleMode}
+              randomMode={randomMode}
               handleView={handleView}
               handleScrollToTop={handleScrollToTop}
               isSearching={isSearching}
               handleDatePicker={handleDatePicker}
               handleDateSearch={handleDateSearch}
               searchDate={searchDate}
-              cards={cards}
-              isLoading={isLoading}
-              cardGridSingle={cardGridSingle}
-              handleLike={handleLike}
-              unloadGridSingleView={unloadGridSingleView}
-              like={checkLikedItems(cardGridSingle.item)}
               handleRandomView={handleRandomView}
               handleLatestView={handleLatestView}
               handleFeedView={handleFeedView}
