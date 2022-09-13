@@ -1,11 +1,9 @@
 import { useState, useEffect, createContext } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import Card from './components/Card'
 import Likes from './layout/Likes'
 import Layout from './layout/Layout'
 import Container from './components/Container'
-import Container1 from './components/Container1'
 
 import data from './data/sampleData'
 
@@ -16,10 +14,10 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
 
-export const ContainerContext = createContext();
+export const DataContext = createContext();
 
 function App() {
-
+  
   // const [dateForApi, setDateForApi] = useState(dayjs())
   const [itemData, setItemData] = useState([])   
   const [isLoading, setIsLoading] = useState(false)
@@ -209,10 +207,6 @@ function App() {
   }
   
 
-  // const handleView = () => {
-  //   setFeedView(prevState => !prevState);
-  // }
-
   const handleFeedView = () => {
     setFeedView(true);
   }
@@ -230,8 +224,7 @@ function App() {
       startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
       endDateString: dayjs().format("YYYY-MM-DD"),    
       offset: 11,
-    });
-    
+    });    
   }
 
   const handleLatestView = () => {
@@ -273,15 +266,8 @@ function App() {
   // freeze grid view and render a modal of selection
   const loadGridSingleView = (item) => {
 
-    // const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
-    // console.log(scrollY);
-    // const body = document.body;
-    // body.style.position = 'fixed';
-    // body.style.top = `-${scrollY}`;
-    // body.style.position = 'fixed';
     document.body.style.overflow = 'hidden';
-    // body.style.top = `-${cardGridSingle.position}`;
-
+    
     setCardGridSingle(prevState => {
       return ({
         ...prevState,
@@ -290,22 +276,10 @@ function App() {
       })      
     })        
   }
-
-  // // check whether single grid item is liked
-  // const checkLikeSingleGrid = () => {
-  //   const check = checkLikedItems(cardGridSingle.item);
-  //   console.log(check)
-  //   return check
-  // }
-
+  
   // unfreeze grid view and close modal
   const unloadGridSingleView = () => {
 
-    // const body = document.body;
-    // const scrollY = body.style.top;
-    // body.style.position = '';
-    // body.style.top = '';
-    // window.scrollTo(0, parseInt(scrollY || '0') * -1);
     document.body.style.overflow = 'visible';
 
     setCardGridSingle(prevState => {
@@ -361,36 +335,7 @@ function App() {
     // const debounceLastInteraction = debounce(() => setLastInteraction(id), 500);
     // debounceLastInteraction;
     setLastInteraction(id);
-  }
-  
-
-  // map cards
-  const cards = itemData.map(item => {
-    if (item?.media_type === "image") {
-      // console.log("mapping cards")
-      // const like = likedItemData.includes(item) ? true : false
-      // let like = false;
-      // for (let i=0; i<likedItemData.length; i++) {
-      //   if (likedItemData[i].date === item.date) {
-      //     like = true
-      //   }
-      // }
-      // console.log(like)
-      const like = checkLikedItems(item)
-
-      return (
-        <Card
-          item={item}
-          like={like}
-          handleLike={handleLike}
-          feedView={feedView}
-          loadGridSingleView={loadGridSingleView}
-          handleInteraction={handleInteraction}
-        />
-      )
-    }
-  })
-
+  }  
 
   // console.log(searchDate)
   console.log("likes: ")
@@ -403,18 +348,31 @@ function App() {
   const checkLikeSingleGrid = checkLikedItems(cardGridSingle.item)
   console.log(checkLikeSingleGrid)
 
-  const containerData = {
+  const data = {
+    itemData,
     feedView,
-    cards,
     isLoading,
     cardGridSingle,
     handleLike,
+    checkLikedItems,
+    loadGridSingleView,
     unloadGridSingleView,
     checkLikeSingleGrid,
+    handleInteraction,
+    handleScrollToTop,
+    isSearching,
+    handleDatePicker,
+    handleDateSearch,
+    searchDate,
+    handleRandomView,
+    handleLatestView,
+    handleFeedView,
+    handleGridView
   }
 
+  
   return (
-    <ContainerContext.Provider value={containerData}>
+    <DataContext.Provider value={data}>
     <BrowserRouter>
       <Routes>
         <Route 
@@ -423,7 +381,6 @@ function App() {
             {<Layout 
               feedView={feedView} 
               randomMode={randomMode}
-              // handleView={handleView}
               handleScrollToTop={handleScrollToTop}
               isSearching={isSearching}
               handleDatePicker={handleDatePicker}
@@ -435,27 +392,9 @@ function App() {
               handleGridView={handleGridView}
               />
             }>
-          <Route index element={<Container1
-            containerData={containerData}
-            />} />
-          <Route path="shuffle" element={<Container 
-            feedView={feedView}
-            cards={cards}
-            isLoading={isLoading}
-            cardGridSingle={cardGridSingle}
-            handleLike={handleLike}
-            unloadGridSingleView={unloadGridSingleView}
-            checkLikeSingleGrid={checkLikeSingleGrid}
-            />} />
-          <Route path="search" element={<Container 
-            feedView={feedView}
-            cards={cards}
-            isLoading={isLoading}
-            cardGridSingle={cardGridSingle}
-            handleLike={handleLike}
-            unloadGridSingleView={unloadGridSingleView}
-            checkLikeSingleGrid={checkLikeSingleGrid}
-            />} />
+          <Route index element={<Container />} />
+          <Route path="shuffle" element={<Container />} />
+          <Route path="search" element={<Container />} />
           <Route path="/likes" element={<Likes />} />
           <Route path={`${test}`} element={<Likes />} />
           
@@ -464,7 +403,7 @@ function App() {
         <Route path="*" element="NOT FOUND" />
       </Routes>
     </BrowserRouter>
-    </ContainerContext.Provider>
+    </DataContext.Provider>
   )
 }
 

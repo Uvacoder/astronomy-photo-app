@@ -1,20 +1,25 @@
-import { useState } from "react"
+import { useContext } from 'react'
+import { DataContext } from '../App'
+
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
 import close from "../icons/x-mark.svg"
 
-export default function CardGridSelection({ 
-    item, handleLike, checkLikeSingleGrid, unloadGridSingleView }) {
+export default function CardGridSelection() {
     
+    const dataContext = useContext(DataContext)
+    const { cardGridSingle, handleLike, 
+        checkLikeSingleGrid, unloadGridSingleView } = dataContext || {}
+
     return (
         <div className="z-50 fixed top-1 w-screen h-screen bg-slate-800/75 text-slate-50">
-            <h3 className="text-lg">{item?.title}</h3>
+            <h3 className="text-lg">{cardGridSingle.item.title}</h3>
             <button className="btn btn-square btn-ghost invert" 
                     onClick={unloadGridSingleView}>
                 <img className="h-5" src={close} />
             </button>
             <img 
-                src={item?.url} 
+                src={cardGridSingle.item.url} 
                 className="max-w-sm block"
                 />
             {checkLikeSingleGrid ? 
@@ -26,8 +31,8 @@ export default function CardGridSelection({
             </button> 
             }
             
-            <p className="max-w-sm">{item?.explanation}</p>
-            <p className="mb-8">{item?.date}</p>
+            <p className="max-w-sm">{cardGridSingle.item.explanation}</p>
+            <p className="mb-8">{cardGridSingle.item.date}</p>
         </div>
         
     )

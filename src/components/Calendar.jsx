@@ -1,29 +1,14 @@
+import { useContext } from 'react'
+import { DataContext } from '../App'
+
 import DatePicker from "react-datepicker";
 import "./calendar.css";
-import { useState } from "react";
-import { debounce } from 'lodash';
-import Container from "./Container";
 
+export default function Search() {
+    const dataContext = useContext(DataContext)
 
-export default function Search({ 
-    handleDatePicker, handleDateSearch, searchDate,
-    cards, isLoading, cardGridSingle, handleLike, unloadGridSingleView, like, feedView,
-    isSearching,
-}) {
-
-    // const [startDate, setStartDate] = useState(new Date())
-    // const debounceHandleDateSearch = debounce(handleDatePicker, 600)
-    
-    // const handleChange = date => {
-    //     // setStartDate(date);
-    //     const debounceHandleDateSearch = debounce(handleDateSearch(date), 1500);
-    
-    //     debounceHandleDateSearch;
-    // }
-
-    // console.log(startDate)
-    
-    
+    const { handleDateSearch, searchDate } = dataContext || {}
+        
     return (
         <>
         
