@@ -15,7 +15,7 @@ export default function Navbar() {
     const dataContext = useContext(DataContext)
 
     const { 
-        handleScrollToTop, isSearching, handleDatePicker, handleDateSearch, searchDate, 
+        handleScrollToTop, mode, handleDatePicker, handleDateSearch, searchDate, 
         handleRandomView, handleLatestView, handleFeedView, handleGridView, handleLikeMode  
     } = dataContext || {}
 
@@ -49,7 +49,7 @@ export default function Navbar() {
                 <li>
                     <Link to="/search">
                         <button onClick={handleDatePicker}>Search</button>
-                        {isSearching && <Calendar 
+                        {mode.isSearching && <Calendar 
                             handleDateSearch={handleDateSearch}
                             searchDate={searchDate}
                             />

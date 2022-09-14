@@ -102,6 +102,7 @@ function App() {
     search: false,
     likes: false,
     albums: false,
+    isSearching: false,
   })
    
   // ------------------------------------ APIs -------------------------------------------
@@ -222,12 +223,13 @@ function App() {
 
   const handleRandomView = () => {    
     // setRandomMode(true);
-    setMode({
+    setMode(prevState => ({
+      ...prevState,
       latest: false,
       random: true,
       search: false,
       likes: false,
-    })
+    }))
     setItemData([]);
     callApiRandom();
     setDateStringForApi({  
@@ -241,12 +243,13 @@ function App() {
   const handleLatestView = () => {
     if (mode.random) {
       // setRandomMode(false);  
-      setMode({
+      setMode(prevState => ({
+        ...prevState,
         latest: true,
         random: false,
         search: false,
         likes: false,
-      })    
+      }))  
       setItemData([]);
       callApiByDate();  
       setDateStringForApi({  
@@ -268,12 +271,13 @@ function App() {
       // closeDatePicker();
       // setRandomMode(false);
       // setSearchMode(false);
-      setMode({
+      setMode(prevState => ({
+        ...prevState,
         latest: true,
         random: false,
         search: false,
         likes: false,
-      })
+      }))
       setItemData([]);
       mode.likes && callApiByDate();
     }    
@@ -315,7 +319,15 @@ function App() {
 
   // toggle the date picker for searching
   const handleDatePicker = () => {
-    setIsSearching(prevState => !prevState)
+    // setIsSearching(prevState => !prevState)
+    setMode(prevState => {
+      return(
+        {
+          ...prevState,
+          isSearching: !prevState.isSearching,
+        }
+      )      
+    })
   }
 
   const closeDatePicker = debounce(handleDatePicker, 600)
@@ -344,12 +356,13 @@ function App() {
     closeDatePicker();
     // setRandomMode(false);
     // setSearchMode(true);
-    setMode({
+    setMode(prevState => ({
+      ...prevState,
       latest: false,
       random: false,
       search: true,
       likes: false,
-    })
+    }))
     setItemData([]);
   }
 
@@ -363,12 +376,13 @@ function App() {
   // render likes
   const handleLikeMode = () => {
     setItemData(likedItemData)
-    setMode({
+    setMode(prevState => ({
+      ...prevState,
       latest: false,
       random: false,
       search: false,
       likes: true,
-    })
+    }))
   }
 
   // add new album
@@ -460,6 +474,7 @@ function App() {
   const data = {
     itemData,
     feedView,
+    mode,
     isLoading,
     cardGridSingle,
     handleLike,
@@ -469,7 +484,6 @@ function App() {
     checkLikeSingleGrid,
     handleInteraction,
     handleScrollToTop,
-    isSearching,
     handleDatePicker,
     handleDateSearch,
     searchDate,
