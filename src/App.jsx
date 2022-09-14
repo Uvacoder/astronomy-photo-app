@@ -18,7 +18,7 @@ export const DataContext = createContext();
 
 function App() {
   
-  // const [dateForApi, setDateForApi] = useState(dayjs())
+  // ------------------- STATES ------------------------------------------------
   const [itemData, setItemData] = useState([])   
   const [isLoading, setIsLoading] = useState(false)
   const [dateStringForApi, setDateStringForApi] = useState({  
@@ -41,7 +41,15 @@ function App() {
   const [searchDate, setSearchDate] = useState()
   const [searchMode, setSearchMode] = useState(false)
   const [lastInteraction, setLastInteraction] = useState("")
+
+  const [mode, setMode] = useState({
+    latest: true,
+    random: false,
+    search: false,
+    likes: false,
+  })
    
+  // ------------------------------------ APIs -------------------------------------------
 
   const calculateDateForApi = () => {
     
@@ -111,67 +119,11 @@ function App() {
     })
     .then(function () {
       // always executed
-      console.log('callApiRandom')
+      // console.log('callApiRandom')
     });
   }
 
-  // first API call on app load
-  // useEffect(() => {callApiRandom()}, [])
-  useEffect(() => {callApiByDate()}, [searchDate]) 
-  // useEffect(() => setItemData(data), [])
-  
-  
-  // lazy load images listener
-  useEffect(() => {
-    const observer = lozad('.lozad', {
-      rootMargin: '600px 0px', // syntax similar to that of CSS Margin
-      threshold: 0.1, // ratio of element convergence
-      enableAutoReload: true // it will reload the new image when validating attributes changes
-    });
-    observer.observe();
-  })
-
-  // scroll to bottom event listener
-  useEffect(() => {
-    const handleScroll = event => {
-      // console.log('Math.ceil(document.documentElement.scrollTop)', Math.ceil(document.documentElement.scrollTop));
-      // console.log('window.innerHeight', window.innerHeight);  
-      // console.log('window.pageYOffset', window.pageYOffset);    
-      // console.log('document.documentElement.offsetHeight', document.documentElement.offsetHeight);
-      // const position = document.documentElement.scrollTop;
-      
-
-      if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
-        console.log("infinite scroll v1")     
-           
-        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
-        console.log(itemData);
-        return
-      } else if (Math.ceil(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
-        console.log("infinite scroll v2")     
-           
-        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
-        console.log(itemData);
-        return
-      } else if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight) {
-        console.log("infinite scroll v3")
-        
-        randomMode && isLoading === false ? callApiRandom() : callApiByDate()
-        console.log(itemData);
-        return
-      }}
-
-    const debounceHandleScroll = debounce(handleScroll, 800)
-
-    // window.addEventListener('scroll', handleScroll);
-    window.addEventListener('scroll', debounceHandleScroll);
-
-    return () => {
-      // window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('scroll', debounceHandleScroll);
-    };
-  })
-
+  // --------------------------- HANDLERS ------------------------------------------------
   // add or remove likes from likedItemData
   const handleLike = (item) => {
     
@@ -214,7 +166,13 @@ function App() {
   }
 
   const handleRandomView = () => {    
-    setRandomMode(true);
+    // setRandomMode(true);
+    setMode({
+      latest: false,
+      random: true,
+      search: false,
+      likes: false,
+    })
     setItemData([]);
     callApiRandom();
     setDateStringForApi({  
@@ -226,8 +184,14 @@ function App() {
   }
 
   const handleLatestView = () => {
-    if (randomMode) {
-      setRandomMode(false);      
+    if (mode.random) {
+      // setRandomMode(false);  
+      setMode({
+        latest: true,
+        random: false,
+        search: false,
+        likes: false,
+      })    
       setItemData([]);
       callApiByDate();  
       setDateStringForApi({  
@@ -237,7 +201,7 @@ function App() {
         offset: 11,
     })
     }
-    if (searchMode) {
+    if (mode.search || mode.likes) {
       console.log("searching latest")
       setDateStringForApi({  
         // reset to initial values  
@@ -248,19 +212,19 @@ function App() {
       setSearchDate();
       // closeDatePicker();
       // setRandomMode(false);
-      setSearchMode(false);
+      // setSearchMode(false);
+      setMode({
+        latest: true,
+        random: false,
+        search: false,
+        likes: false,
+      })
       setItemData([]);
+      mode.likes && callApiByDate();
     }    
   }  
 
-  // to scroll window to last interacted element
-  useEffect(() => {    
-    document.getElementById(lastInteraction)?.scrollIntoView();
-    console.log("scroll to: ");
-    console.log(lastInteraction);   
-  }, [feedView])
-
-
+  
   // freeze grid view and render a modal of selection
   const loadGridSingleView = (item) => {
 
@@ -323,8 +287,14 @@ function App() {
     // callApiByDate();
     setSearchDate(date);
     closeDatePicker();
-    setRandomMode(false);
-    setSearchMode(true);
+    // setRandomMode(false);
+    // setSearchMode(true);
+    setMode({
+      latest: false,
+      random: false,
+      search: true,
+      likes: false,
+    })
     setItemData([]);
   }
 
@@ -338,8 +308,82 @@ function App() {
   // render likes
   const handleLikeMode = () => {
     setItemData(likedItemData)
+    setMode({
+      latest: false,
+      random: false,
+      search: false,
+      likes: true,
+    })
   }
 
+  // --------------------------- USE EFFECTS --------------------------------------------- 
+  // first API call on app load
+  // useEffect(() => {callApiRandom()}, [])
+  useEffect(() => {callApiByDate()}, [searchDate]) 
+  // useEffect(() => setItemData(data), [])
+  
+  
+  // lazy load images listener
+  useEffect(() => {
+    const observer = lozad('.lozad', {
+      rootMargin: '600px 0px', // syntax similar to that of CSS Margin
+      threshold: 0.1, // ratio of element convergence
+      enableAutoReload: true // it will reload the new image when validating attributes changes
+    });
+    observer.observe();
+  })
+
+  // scroll to bottom event listener
+  useEffect(() => {
+    const handleScroll = event => {
+      // console.log('Math.ceil(document.documentElement.scrollTop)', Math.ceil(document.documentElement.scrollTop));
+      // console.log('window.innerHeight', window.innerHeight);  
+      // console.log('window.pageYOffset', window.pageYOffset);    
+      // console.log('document.documentElement.offsetHeight', document.documentElement.offsetHeight);
+      // const position = document.documentElement.scrollTop;
+      
+      if (mode.likes === false) {
+        if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
+          console.log("infinite scroll v1")     
+             
+          mode.random && isLoading === false ? callApiRandom() : callApiByDate()
+          console.log(itemData);
+          return
+        } else if (Math.ceil(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
+          console.log("infinite scroll v2")     
+             
+          mode.random && isLoading === false ? callApiRandom() : callApiByDate()
+          console.log(itemData);
+          return
+        } else if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight) {
+          console.log("infinite scroll v3")
+          
+          mode.random && isLoading === false ? callApiRandom() : callApiByDate()
+          console.log(itemData);
+          return
+        }}  
+      }
+
+    const debounceHandleScroll = debounce(handleScroll, 800)
+
+    // window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', debounceHandleScroll);
+
+    return () => {
+      // window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', debounceHandleScroll);
+    };
+  })
+
+  // to scroll window to last interacted element
+  useEffect(() => {    
+    document.getElementById(lastInteraction)?.scrollIntoView();
+    console.log("scroll to: ");
+    console.log(lastInteraction);   
+  }, [feedView])
+
+
+  // --------------------------------------- CONSOLE LOG ----------------------------
   // console.log(searchDate)
   console.log("likes: ")
   console.log(likedItemData)
@@ -348,6 +392,8 @@ function App() {
   console.log(lastInteraction)
   
   const test = "test"
+
+  //  -------------------------------------- DATA FOR CONTEXT ------------------------------
   const checkLikeSingleGrid = checkLikedItems(cardGridSingle.item)
   console.log(checkLikeSingleGrid)
 

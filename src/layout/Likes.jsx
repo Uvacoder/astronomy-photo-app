@@ -13,12 +13,13 @@ export default function Likes() {
     
     return(
         <>
-        {totalLikes === 0 && 
+        {totalLikes === 0 ? 
             <div className="mt-16">
-                "You have no likes"
-            </div>
-        }
+                <span className="text-lg">You have no liked items</span>
+            </div> :
         <Container/>
+        }
+        
         </>
     )
 }
