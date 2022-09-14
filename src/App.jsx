@@ -29,60 +29,64 @@ function App() {
     offset: 11,
   })
   const [likedItemData, setLikedItemData] = useState([])
-  const [albumData, setAlbumData] = useState([
-    // first object in array is used to save the input in the form
-    {
-      name: "Album One",
-      data: [
-        {
-          "copyright": "David Cortner",
-          "date": "2014-08-24",
-          "explanation": "What's that dot on the Sun? If you look closely, it is almost perfectly round.  The dot is the result of an unusual type of solar eclipse that occurred in 2006.  Usually it is the Earth's Moon that eclipses the Sun.  This time, the planet Mercury took a turn.  Like the approach to New Moon before a solar eclipse, the phase of Mercury became a continually thinner crescent as the planet progressed toward an alignment with the Sun.  Eventually the phase of Mercury dropped to zero and the dark spot of Mercury crossed our parent star.  The situation could technically be labeled a Mercurian annular eclipse with an extraordinarily large ring of fire.  From above the cratered planes of the night side of Mercury, the Earth appeared in its fullest phase.  Hours later, as Mercury continued in its orbit, a slight crescent phase appeared again.  The next Mercurian solar eclipse will occur in 2016.",
-          "hdurl": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_1200.jpg",
-          "media_type": "image",
-          "service_version": "v1",
-          "title": "Mercury's Transit: An Unusual Spot on the Sun",
-          "url": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_960.jpg"
-        },
-        {
-          "copyright": "Ian Griffin",
-          "date": "2019-02-09",
-          "explanation": "Comet Iwamoto (C/2018 Y1), shows off a pretty, greenish coma at the upper left in this telescopic field of view. Taken on February 4 from the Mount John Observatory, University of Canterbury, the 30 minute long total exposure time shows the comet sweeping quickly across a background of stars and distant galaxies in the constellation Virgo. The long exposure and Iwamoto's rapid motion relative to the stars and galaxies results in the noticeable blurred streak tracing the the comet's bright inner coma. In fact, the streaked coma gives the comet a remarkably similar appearance to Messier 104 at lower right, popularly known as the Sombrero Galaxy. The comet, a visitor to the inner Solar System, is a mere 4 light-minutes away though, while majestic Messier 104, a spiral galaxy posing edge-on, is 30 million light-years distant. The first binocular comet of 2019, Iwamoto will pass closest to Earth on February 12. This comet's highly elliptical orbit around the Sun stretches beyond the Kuiper belt with an estimated 1,371 year orbital period. That should bring it back to the inner Solar System in 3390 AD.",
-          "hdurl": "https://apod.nasa.gov/apod/image/1902/Iwamoto-104-2019griffin.jpg",
-          "media_type": "image",
-          "service_version": "v1",
-          "title": "Comet Iwamoto and the Sombrero Galaxy",
-          "url": "https://apod.nasa.gov/apod/image/1902/Iwamoto-104-2019griffin_1024.jpg"
-        }
-    ],
-    },
-    {
-      name: "Album Two",
-      data: [
-        {
-          "copyright": "Babak Tafreshi",
-          "date": "2014-02-07",
-          "explanation": "Stars come out as evening twilight fades in this serene skyscape following the Persian proverb \"Night hides the world, but reveals a universe.\" In the scene from last November, the Sun is setting over northern Kenya and the night will soon hide the shores of Lake Turkana, home to many Nile crocodiles. That region is also known as the cradle of humankind for its abundance of hominid fossils. A brilliant Venus, then the world's evening star, dominates the starry night above. But also revealed are faint stars, cosmic dust clouds, and glowing nebulae along the graceful arc of our own Milky Way galaxy.",
-          "hdurl": "https://apod.nasa.gov/apod/image/1402/NightHidesTurkanaTafreshi.jpg",
-          "media_type": "image",
-          "service_version": "v1",
-          "title": "Night Hides the World",
-          "url": "https://apod.nasa.gov/apod/image/1402/NightHidesTurkanaTafreshi.jpg"
-        },
-        {
-          "copyright": "David Cortner",
-          "date": "2014-08-24",
-          "explanation": "What's that dot on the Sun? If you look closely, it is almost perfectly round.  The dot is the result of an unusual type of solar eclipse that occurred in 2006.  Usually it is the Earth's Moon that eclipses the Sun.  This time, the planet Mercury took a turn.  Like the approach to New Moon before a solar eclipse, the phase of Mercury became a continually thinner crescent as the planet progressed toward an alignment with the Sun.  Eventually the phase of Mercury dropped to zero and the dark spot of Mercury crossed our parent star.  The situation could technically be labeled a Mercurian annular eclipse with an extraordinarily large ring of fire.  From above the cratered planes of the night side of Mercury, the Earth appeared in its fullest phase.  Hours later, as Mercury continued in its orbit, a slight crescent phase appeared again.  The next Mercurian solar eclipse will occur in 2016.",
-          "hdurl": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_1200.jpg",
-          "media_type": "image",
-          "service_version": "v1",
-          "title": "Mercury's Transit: An Unusual Spot on the Sun",
-          "url": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_960.jpg"
-        },
-      ],
-    }
-  ])
-  const [albumFormData, setAlbumFormData] = useState("")
+  const [albumData, setAlbumData] = useState({
+    form: "",
+    albums: [
+      {
+        name: "Album One",
+        data: [
+          {
+            "copyright": "David Cortner",
+            "date": "2014-08-24",
+            "explanation": "What's that dot on the Sun? If you look closely, it is almost perfectly round.  The dot is the result of an unusual type of solar eclipse that occurred in 2006.  Usually it is the Earth's Moon that eclipses the Sun.  This time, the planet Mercury took a turn.  Like the approach to New Moon before a solar eclipse, the phase of Mercury became a continually thinner crescent as the planet progressed toward an alignment with the Sun.  Eventually the phase of Mercury dropped to zero and the dark spot of Mercury crossed our parent star.  The situation could technically be labeled a Mercurian annular eclipse with an extraordinarily large ring of fire.  From above the cratered planes of the night side of Mercury, the Earth appeared in its fullest phase.  Hours later, as Mercury continued in its orbit, a slight crescent phase appeared again.  The next Mercurian solar eclipse will occur in 2016.",
+            "hdurl": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_1200.jpg",
+            "media_type": "image",
+            "service_version": "v1",
+            "title": "Mercury's Transit: An Unusual Spot on the Sun",
+            "url": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_960.jpg"
+          },
+          {
+            "copyright": "Ian Griffin",
+            "date": "2019-02-09",
+            "explanation": "Comet Iwamoto (C/2018 Y1), shows off a pretty, greenish coma at the upper left in this telescopic field of view. Taken on February 4 from the Mount John Observatory, University of Canterbury, the 30 minute long total exposure time shows the comet sweeping quickly across a background of stars and distant galaxies in the constellation Virgo. The long exposure and Iwamoto's rapid motion relative to the stars and galaxies results in the noticeable blurred streak tracing the the comet's bright inner coma. In fact, the streaked coma gives the comet a remarkably similar appearance to Messier 104 at lower right, popularly known as the Sombrero Galaxy. The comet, a visitor to the inner Solar System, is a mere 4 light-minutes away though, while majestic Messier 104, a spiral galaxy posing edge-on, is 30 million light-years distant. The first binocular comet of 2019, Iwamoto will pass closest to Earth on February 12. This comet's highly elliptical orbit around the Sun stretches beyond the Kuiper belt with an estimated 1,371 year orbital period. That should bring it back to the inner Solar System in 3390 AD.",
+            "hdurl": "https://apod.nasa.gov/apod/image/1902/Iwamoto-104-2019griffin.jpg",
+            "media_type": "image",
+            "service_version": "v1",
+            "title": "Comet Iwamoto and the Sombrero Galaxy",
+            "url": "https://apod.nasa.gov/apod/image/1902/Iwamoto-104-2019griffin_1024.jpg"
+          },
+        ]
+      },
+    
+      {
+        name: "Album Two",
+        data: [
+          {
+            "copyright": "Babak Tafreshi",
+            "date": "2014-02-07",
+            "explanation": "Stars come out as evening twilight fades in this serene skyscape following the Persian proverb \"Night hides the world, but reveals a universe.\" In the scene from last November, the Sun is setting over northern Kenya and the night will soon hide the shores of Lake Turkana, home to many Nile crocodiles. That region is also known as the cradle of humankind for its abundance of hominid fossils. A brilliant Venus, then the world's evening star, dominates the starry night above. But also revealed are faint stars, cosmic dust clouds, and glowing nebulae along the graceful arc of our own Milky Way galaxy.",
+            "hdurl": "https://apod.nasa.gov/apod/image/1402/NightHidesTurkanaTafreshi.jpg",
+            "media_type": "image",
+            "service_version": "v1",
+            "title": "Night Hides the World",
+            "url": "https://apod.nasa.gov/apod/image/1402/NightHidesTurkanaTafreshi.jpg"
+          },
+          {
+            "copyright": "David Cortner",
+            "date": "2014-08-24",
+            "explanation": "What's that dot on the Sun? If you look closely, it is almost perfectly round.  The dot is the result of an unusual type of solar eclipse that occurred in 2006.  Usually it is the Earth's Moon that eclipses the Sun.  This time, the planet Mercury took a turn.  Like the approach to New Moon before a solar eclipse, the phase of Mercury became a continually thinner crescent as the planet progressed toward an alignment with the Sun.  Eventually the phase of Mercury dropped to zero and the dark spot of Mercury crossed our parent star.  The situation could technically be labeled a Mercurian annular eclipse with an extraordinarily large ring of fire.  From above the cratered planes of the night side of Mercury, the Earth appeared in its fullest phase.  Hours later, as Mercury continued in its orbit, a slight crescent phase appeared again.  The next Mercurian solar eclipse will occur in 2016.",
+            "hdurl": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_1200.jpg",
+            "media_type": "image",
+            "service_version": "v1",
+            "title": "Mercury's Transit: An Unusual Spot on the Sun",
+            "url": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_960.jpg"
+          },
+        ],
+      }
+    ]
+  }) 
+    
+  // const [albumFormData, setAlbumFormData] = useState("")
   // if feedView is false, then gridView is active
   const [feedView, setFeedView] = useState(true)
   // if randomMode is false, chronological view is active
@@ -408,12 +412,33 @@ function App() {
     }))
   }
 
+  // onChange form listener
   const updateAlbumForm = event => {
     const albumName = event.target.value;
     console.log(albumName);
     
-    setAlbumFormData(albumName);
-    console.log(albumFormData)
+    setAlbumData(prevData => ({
+      ...prevData,
+      form: albumName
+    }));  
+  }
+
+  // add new album to album data
+  const handleAddNewAlbum = event => {
+    event.preventDefault();
+    const newAlbum = {
+      name: albumData.form,
+      data: [],
+    };
+    const updatedData = albumData.albums.map(d => {return({...d})});
+    console.log(updatedData);
+    updatedData.push(newAlbum);
+    console.log(updatedData);
+    setAlbumData(prevData => ({
+      ...prevData,
+      form: "",
+      albums: updatedData
+    }))
   }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
@@ -521,6 +546,7 @@ function App() {
     albumData,
     handleAddAlbumForm,
     updateAlbumForm,
+    handleAddNewAlbum
   }
 
   

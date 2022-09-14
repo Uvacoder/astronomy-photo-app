@@ -6,18 +6,19 @@ import AlbumCover from '../components/AlbumCover';
 export default function Albums() {
 
     const dataContext = useContext(DataContext);
-    const { albumData, handleAddAlbumForm, mode, updateAlbumForm } = dataContext || {};
+    const { albumData, handleAddAlbumForm, updateAlbumForm, 
+        mode, handleAddNewAlbum } = dataContext || {};
     // console.log(albumData)
 
-    const albumCovers = albumData.map((album, index) => {
-        console.log(album.data);
-        console.log("-------")
+    const albumCovers = albumData.albums.map((album, index) => {
+        // console.log(album.data);
+        // console.log("-------")
         const name = album.name;
-        console.log(name);
+        // console.log(name);
         const url = album.data?.[0].url;
-        console.log(url);
+        // console.log(url);
         const length = album.data.length;   
-        console.log(length);
+        // console.log(length);
         return(
             <AlbumCover
                 name={name} 
@@ -36,7 +37,7 @@ export default function Albums() {
             mode.isAddingAlbum ? 
             <form>
                 <input type="text" onChange={updateAlbumForm}/>
-                <button className="btn">Add</button>
+                <button className="btn" onClick={handleAddNewAlbum}>Add</button>
             </form> :
             <button className="btn" onClick={handleAddAlbumForm}>New album</button>
             }
