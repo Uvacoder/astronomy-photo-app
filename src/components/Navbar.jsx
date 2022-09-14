@@ -20,7 +20,7 @@ export default function Navbar() {
     } = dataContext || {}
 
     return (
-        <div className="navbar bg-slate-50 fixed top-0 z-40">
+        <div className="navbar bg-slate-50 dark:bg-slate-800 fixed top-0 z-40">
             <div className="flex-1">
                 <Link 
                     to="/"

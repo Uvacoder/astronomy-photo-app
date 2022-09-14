@@ -6,8 +6,9 @@ import AlbumCover from '../components/AlbumCover';
 export default function Albums() {
 
     const dataContext = useContext(DataContext);
-    const { albumData } = dataContext || {};
+    const { albumData, handleAddAlbumForm, mode, updateAlbumForm } = dataContext || {};
     // console.log(albumData)
+
     const albumCovers = albumData.map((album, index) => {
         console.log(album.data);
         console.log("-------")
@@ -29,8 +30,17 @@ export default function Albums() {
 
     return(
         <>
-        <div className="mt-16">
-            <button className="btn">New album</button>            
+        <div className="flex mt-16">
+            
+            {
+            mode.isAddingAlbum ? 
+            <form>
+                <input type="text" onChange={updateAlbumForm}/>
+                <button className="btn">Add</button>
+            </form> :
+            <button className="btn" onClick={handleAddAlbumForm}>New album</button>
+            }
+                     
         </div>
         <div className='grid grid-cols-3 gap-4 justify-center mt-16'>
         {albumCovers}

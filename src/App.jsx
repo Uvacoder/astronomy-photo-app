@@ -30,6 +30,7 @@ function App() {
   })
   const [likedItemData, setLikedItemData] = useState([])
   const [albumData, setAlbumData] = useState([
+    // first object in array is used to save the input in the form
     {
       name: "Album One",
       data: [
@@ -81,7 +82,7 @@ function App() {
       ],
     }
   ])
-
+  const [albumFormData, setAlbumFormData] = useState("")
   // if feedView is false, then gridView is active
   const [feedView, setFeedView] = useState(true)
   // if randomMode is false, chronological view is active
@@ -104,6 +105,7 @@ function App() {
     albums: false,
     isSearching: false,
     isLoading: false,
+    isAddingAlbum: false,
   })
    
   // ------------------------------------ APIs -------------------------------------------
@@ -399,8 +401,19 @@ function App() {
   }
 
   // add new album
-  const handleNewAlbum = () => {
+  const handleAddAlbumForm = () => {
+    setMode(prevState => ({
+      ...prevState,
+      isAddingAlbum: !prevState.isAddingAlbum,
+    }))
+  }
+
+  const updateAlbumForm = event => {
+    const albumName = event.target.value;
+    console.log(albumName);
     
+    setAlbumFormData(albumName);
+    console.log(albumFormData)
   }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
@@ -506,6 +519,8 @@ function App() {
     handleLikeMode,
     likedItemData,
     albumData,
+    handleAddAlbumForm,
+    updateAlbumForm,
   }
 
   
