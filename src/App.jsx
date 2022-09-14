@@ -21,7 +21,7 @@ function App() {
   
   // ------------------- STATES ------------------------------------------------
   const [itemData, setItemData] = useState([])   
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
   const [dateStringForApi, setDateStringForApi] = useState({  
     // get date 10 days before today then format date in YYYY-MM-DD  
     startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
@@ -91,7 +91,7 @@ function App() {
     selected: false, item: null})
 
   // if isSearching is true, date picker will appear
-  const [isSearching, setIsSearching] = useState(false)
+  // const [isSearching, setIsSearching] = useState(false)
   const [searchDate, setSearchDate] = useState()
   // const [searchMode, setSearchMode] = useState(false)
   const [lastInteraction, setLastInteraction] = useState("")
@@ -103,6 +103,7 @@ function App() {
     likes: false,
     albums: false,
     isSearching: false,
+    isLoading: false,
   })
    
   // ------------------------------------ APIs -------------------------------------------
@@ -132,7 +133,10 @@ function App() {
 
   const callApiByDate = () => {   
     
-    setIsLoading(true)
+    setMode(prevState => ({
+      ...prevState,
+      isLoading: true,
+    }))
     
     axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
     .then(function (response) {
@@ -143,7 +147,10 @@ function App() {
           ...response.data.reverse()
         ]
       ))
-      setIsLoading(false)
+      setMode(prevState => ({
+        ...prevState,
+        isLoading: false,
+      }))
       calculateDateForApi()
     })
     .catch(function (error) {
@@ -156,7 +163,10 @@ function App() {
   }  
 
   const callApiRandom = () => {
-    setIsLoading(true)
+    setMode(prevState => ({
+      ...prevState,
+      isLoading: true,
+    }))
     axios.get("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=10")
     .then(function (response) {
       // handle success
@@ -167,7 +177,10 @@ function App() {
           ...response.data
         ]
       ))
-      setIsLoading(false)
+      setMode(prevState => ({
+        ...prevState,
+        isLoading: false,
+      }))
     })
     .catch(function (error) {
       // handle error
@@ -420,19 +433,19 @@ function App() {
         if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
           console.log("infinite scroll v1")     
              
-          mode.random && isLoading === false ? callApiRandom() : callApiByDate()
+          mode.random && mode.isLoading === false ? callApiRandom() : callApiByDate()
           console.log(itemData);
           return
         } else if (Math.ceil(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
           console.log("infinite scroll v2")     
              
-          mode.random && isLoading === false ? callApiRandom() : callApiByDate()
+          mode.random && mode.isLoading === false ? callApiRandom() : callApiByDate()
           console.log(itemData);
           return
         } else if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight) {
           console.log("infinite scroll v3")
           
-          mode.random && isLoading === false ? callApiRandom() : callApiByDate()
+          mode.random && mode.isLoading === false ? callApiRandom() : callApiByDate()
           console.log(itemData);
           return
         }}  
@@ -475,7 +488,6 @@ function App() {
     itemData,
     feedView,
     mode,
-    isLoading,
     cardGridSingle,
     handleLike,
     checkLikedItems,
