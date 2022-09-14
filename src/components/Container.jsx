@@ -12,10 +12,10 @@ export default function Container() {
   // destructure dataContext
   const { itemData, feedView, isLoading,
     cardGridSingle, handleLike, checkLikedItems,
-    loadGridSingleView, handleInteraction } = dataContext || {}
+    loadGridSingleView, handleInteraction } = dataContext || {};
 
   // map cards
-  const cards = itemData.map(item => {
+  const cards = itemData.map((item, index) => {
     if (item.media_type === "image") {
       
       const like = checkLikedItems(item)
@@ -28,6 +28,7 @@ export default function Container() {
           feedView={feedView}
           loadGridSingleView={loadGridSingleView}
           handleInteraction={handleInteraction}
+          key={index}
         />
       )
     }

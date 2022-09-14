@@ -1,6 +1,8 @@
 import { useState } from "react"
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
+import bookmarkEmpty from "../icons/bookmark-empty.svg"
+import bookmarkSolid from "../icons/bookmark-solid.svg"
 
 export default function CardPost({ 
     item, handleLike, like, handleInteraction }) {
@@ -24,6 +26,12 @@ export default function CardPost({
                 <img className="h-5" src={heartEmpty} />
             </button> 
             }
+            <button className="btn btn-square btn-ghost" onClick={() => console.log("bookmarked")}>
+                <img className="h-5" src={bookmarkEmpty} />
+            </button>
+            <button className="btn btn-square btn-ghost" onClick={() => console.log("unbookmarked")}>
+                <img className="h-5" src={bookmarkSolid} />
+            </button>
             
             {seeMore && <p className="max-w-sm">{item?.explanation}</p>}
             {seeMore === false && <p className="max-h-24 max-w-sm line-clamp-3">{item?.explanation}</p>}

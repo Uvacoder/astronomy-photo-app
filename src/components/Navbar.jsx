@@ -61,6 +61,11 @@ export default function Navbar() {
                         <button onClick={handleLikeMode}>Likes</button>
                     </Link>
                 </li>
+                <li>
+                    <Link to="/albums">
+                        <button onClick={() => console.log("albums")}>Albums</button>
+                    </Link>
+                </li>
                 </ul>
             </div>            
         </div>
