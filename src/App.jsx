@@ -335,6 +335,11 @@ function App() {
     setLastInteraction(id);
   }  
 
+  // render likes
+  const handleLikeMode = () => {
+    setItemData(likedItemData)
+  }
+
   // console.log(searchDate)
   console.log("likes: ")
   console.log(likedItemData)
@@ -365,7 +370,9 @@ function App() {
     handleRandomView,
     handleLatestView,
     handleFeedView,
-    handleGridView
+    handleGridView,
+    handleLikeMode,
+    likedItemData,
   }
 
   

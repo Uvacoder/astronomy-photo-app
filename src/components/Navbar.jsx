@@ -16,7 +16,7 @@ export default function Navbar() {
 
     const { 
         handleScrollToTop, isSearching, handleDatePicker, handleDateSearch, searchDate, 
-        handleRandomView, handleLatestView, handleFeedView, handleGridView,    
+        handleRandomView, handleLatestView, handleFeedView, handleGridView, handleLikeMode  
     } = dataContext || {}
 
     return (
@@ -56,7 +56,11 @@ export default function Navbar() {
                         }
                     </Link>
                 </li>
-                <li><Link to="/likes">Likes</Link></li>
+                <li>
+                    <Link to="/likes">
+                        <button onClick={handleLikeMode}>Likes</button>
+                    </Link>
+                </li>
                 </ul>
             </div>            
         </div>
