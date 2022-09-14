@@ -2,7 +2,8 @@ import { useState } from "react"
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
 
-export default function CardPost({ item, handleLike, like, handleInteraction }) {
+export default function CardPost({ 
+    item, handleLike, like, handleInteraction }) {
     
     const [seeMore, setSeeMore] = useState(false)
 

@@ -41,7 +41,6 @@ function App() {
   const [searchDate, setSearchDate] = useState()
   const [searchMode, setSearchMode] = useState(false)
   const [lastInteraction, setLastInteraction] = useState("")
-
    
 
   const calculateDateForApi = () => {
@@ -206,7 +205,6 @@ function App() {
     return like
   }
   
-
   const handleFeedView = () => {
     setFeedView(true);
   }
@@ -375,29 +373,12 @@ function App() {
     <DataContext.Provider value={data}>
     <BrowserRouter>
       <Routes>
-        <Route 
-          path="/" 
-          element=
-            {<Layout 
-              feedView={feedView} 
-              randomMode={randomMode}
-              handleScrollToTop={handleScrollToTop}
-              isSearching={isSearching}
-              handleDatePicker={handleDatePicker}
-              handleDateSearch={handleDateSearch}
-              searchDate={searchDate}
-              handleRandomView={handleRandomView}
-              handleLatestView={handleLatestView}
-              handleFeedView={handleFeedView}
-              handleGridView={handleGridView}
-              />
-            }>
+        <Route path="/" element={<Layout />}>
           <Route index element={<Container />} />
           <Route path="shuffle" element={<Container />} />
           <Route path="search" element={<Container />} />
           <Route path="/likes" element={<Likes />} />
-          <Route path={`${test}`} element={<Likes />} />
-          
+          <Route path={`${test}`} element={<Likes />} />          
         </Route>
         
         <Route path="*" element="NOT FOUND" />

@@ -1,3 +1,8 @@
+import { useContext } from 'react'
+import { DataContext } from '../App'
+import { Link } from "react-router-dom"
+import Calendar from "./Calendar"
+
 import caretDown from "../icons/caret-down.svg"
 import clock from "../icons/clock.svg"
 import shuffle from "../icons/shuffle.svg"
@@ -5,13 +10,15 @@ import magGlass from "../icons/mag-glass.svg"
 import grid from "../icons/grid.svg"
 import image from "../icons/image.svg"
 import heartSolid from "../icons/heart-solid.svg"
-import { Link } from "react-router-dom"
-import Calendar from "./Calendar"
 
-export default function Navbar({ 
-    handleScrollToTop, isSearching, handleDatePicker, handleDateSearch, searchDate, 
-    handleRandomView, handleLatestView, handleFeedView, handleGridView,    
-}) {
+export default function Navbar() {
+    const dataContext = useContext(DataContext)
+
+    const { 
+        handleScrollToTop, isSearching, handleDatePicker, handleDateSearch, searchDate, 
+        handleRandomView, handleLatestView, handleFeedView, handleGridView,    
+    } = dataContext || {}
+
     return (
         <div className="navbar bg-slate-50 fixed top-0 z-40">
             <div className="flex-1">
@@ -51,45 +58,7 @@ export default function Navbar({
                 </li>
                 <li><Link to="/likes">Likes</Link></li>
                 </ul>
-            </div>
-            {/* <div className="flex-none">
-                { randomMode ?
-                <button onClick={handleMode} className="btn btn-square btn-ghost invert">
-                    <img className="h-5" src={clock} />
-                </button> :
-                <button onClick={handleMode} className="btn btn-square btn-ghost invert">
-                    <img className="h-5" src={shuffle} />
-                </button>
-                }                
-                
-                <>
-                <button className="btn btn-square btn-ghost invert"
-                        onClick={handleDatePicker}>
-                    <img className="h-5" src={magGlass} />
-                </button>
-                { isSearching && <Calendar 
-                    handleDatePicker={handleDatePicker}
-                    handleDateSearch={handleDateSearch}
-                    searchDate={searchDate}
-                    />}
-                </>
-                
-                
-
-                { feedView ?
-                <button className="btn btn-square btn-ghost invert" onClick={handleView}>
-                    <img className="h-5" src={grid} />
-                </button> :
-                <button className="btn btn-square btn-ghost invert" onClick={handleView}>
-                    <img className="h-5" src={image} />
-                </button> }
-                
-                <Link to="/likes">
-                <button className="btn btn-square btn-ghost invert">
-                    <img className="h-5" src={heartSolid} />
-                </button>
-                </Link>
-            </div> */}
+            </div>            
         </div>
     )
 }
