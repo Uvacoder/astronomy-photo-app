@@ -1,7 +1,5 @@
-import { useContext } from 'react'
-import { DataContext } from '../App'
 
-export default function CardPost(
+export default function CardGrid(
     { item, loadGridSingleView, handleInteraction }
 ) {
     

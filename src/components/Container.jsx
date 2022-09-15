@@ -12,13 +12,16 @@ export default function Container() {
   // destructure dataContext
   const { itemData, feedView, mode,
     cardGridSingle, handleLike, checkLikedItems,
-    loadGridSingleView, handleInteraction } = dataContext || {};
+    loadGridSingleView, handleInteraction,
+    checkAlbumData,
+  } = dataContext || {};
 
   // map cards
   const cards = itemData.map((item, index) => {
     if (item.media_type === "image") {
       
       const like = checkLikedItems(item)
+      const bookmark = checkAlbumData(item)
 
       return (
         <Card
@@ -28,6 +31,7 @@ export default function Container() {
           feedView={feedView}
           loadGridSingleView={loadGridSingleView}
           handleInteraction={handleInteraction}
+          bookmark={bookmark}
           key={index}
         />
       )

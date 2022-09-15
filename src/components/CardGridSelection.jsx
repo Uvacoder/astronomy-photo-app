@@ -11,7 +11,12 @@ export default function CardGridSelection() {
     
     const dataContext = useContext(DataContext)
     const { cardGridSingle, handleLike, 
-        checkLikeSingleGrid, unloadGridSingleView } = dataContext || {}
+        unloadGridSingleView,
+        checkAlbumData, checkLikedItems
+    } = dataContext || {}
+
+    const like = checkLikedItems(cardGridSingle.item);
+    const bookmark = checkAlbumData(cardGridSingle.item);
 
     return (
         <div className="z-50 fixed top-1 w-screen h-screen bg-slate-800/75 text-slate-50">
@@ -24,7 +29,7 @@ export default function CardGridSelection() {
                 src={cardGridSingle.item.url} 
                 className="max-w-sm block"
                 />
-            {checkLikeSingleGrid ? 
+            {like ? 
             <button className="btn btn-square btn-ghost invert" onClick={() => handleLike(item)}>
                 <img className="h-5" src={heartSolid} />
             </button> :
@@ -32,13 +37,15 @@ export default function CardGridSelection() {
                 <img className="h-5" src={heartEmpty} />
             </button> 
             }
-            <button className="btn btn-square btn-ghost invert" onClick={() => console.log("bookmarked")}>
-                <img className="h-5" src={bookmarkEmpty} />
-            </button>
+            {bookmark ?
             <button className="btn btn-square btn-ghost invert" onClick={() => console.log("unbookmarked")}>
-                <img className="h-5" src={bookmarkSolid} />
+            <img className="h-5" src={bookmarkSolid} />
+            </button> :
+            <button className="btn btn-square btn-ghost invert" onClick={() => console.log("bookmarked")}>
+            <img className="h-5" src={bookmarkEmpty} />
             </button>
-            
+            }
+     
             <p className="max-w-sm">{cardGridSingle.item.explanation}</p>
             <p className="mb-8">{cardGridSingle.item.date}</p>
         </div>

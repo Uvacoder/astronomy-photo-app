@@ -3,8 +3,6 @@ import { DataContext } from '../App'
 
 import AlbumCover from '../components/AlbumCover'
 
-import placeholder from '../data/placeholder-img.jpg'
-
 export default function Albums() {
 
     const dataContext = useContext(DataContext);

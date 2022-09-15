@@ -5,7 +5,7 @@ import bookmarkEmpty from "../icons/bookmark-empty.svg"
 import bookmarkSolid from "../icons/bookmark-solid.svg"
 
 export default function CardPost({ 
-    item, handleLike, like, handleInteraction }) {
+    item, handleLike, like, handleInteraction, bookmark }) {
     
     const [seeMore, setSeeMore] = useState(false)
 
@@ -26,13 +26,15 @@ export default function CardPost({
                 <img className="h-5" src={heartEmpty} />
             </button> 
             }
-            <button className="btn btn-square btn-ghost" onClick={() => console.log("bookmarked")}>
-                <img className="h-5" src={bookmarkEmpty} />
-            </button>
+            {bookmark ?
             <button className="btn btn-square btn-ghost" onClick={() => console.log("unbookmarked")}>
-                <img className="h-5" src={bookmarkSolid} />
-            </button>
-            
+            <img className="h-5" src={bookmarkSolid} />
+            </button> :
+            <button className="btn btn-square btn-ghost" onClick={() => console.log("bookmarked")}>
+            <img className="h-5" src={bookmarkEmpty} />
+            </button>            
+            }
+                        
             {seeMore && <p className="max-w-sm">{item?.explanation}</p>}
             {seeMore === false && <p className="max-h-24 max-w-sm line-clamp-3">{item?.explanation}</p>}
             {seeMore === false && <p onClick={handleMore} className="cursor-pointer">..more</p>}

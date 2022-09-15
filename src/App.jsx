@@ -55,6 +55,16 @@ function App() {
             "title": "Comet Iwamoto and the Sombrero Galaxy",
             "url": "https://apod.nasa.gov/apod/image/1902/Iwamoto-104-2019griffin_1024.jpg"
           },
+          {
+            "copyright": "Dario Giannobile",
+            "date": "2022-09-15",
+            "explanation": "For northern hemisphere dwellers, September's Full Moon was the Harvest Moon. Reflecting warm hues at sunset it rises over the historic town of Castiglione di Sicilia in this telephoto view from September 9. Famed in festival, story, and song Harvest Moon is just the traditional name of the full moon nearest the autumnal equinox. According to lore the name is a fitting one. Despite the diminishing daylight hours as the growing season drew to a close, farmers could harvest crops by the light of a full moon shining on from dusk to dawn.   Harvest Full Moon 2022: Notable Submissions to APOD",
+            "hdurl": "https://apod.nasa.gov/apod/image/2209/HarvestMoonCastiglioneSicilyLD.jpg",
+            "media_type": "image",
+            "service_version": "v1",
+            "title": "Harvest Moon over Sicily",
+            "url": "https://apod.nasa.gov/apod/image/2209/HarvestMoonCastiglioneSicily1024.jpg"
+          }
         ]
       },
     
@@ -426,19 +436,37 @@ function App() {
   // add new album to album data
   const handleAddNewAlbum = event => {
     event.preventDefault();
-    const newAlbum = {
-      name: albumData.form,
-      data: [],
-    };
-    const updatedData = albumData.albums.map(d => {return({...d})});
-    console.log(updatedData);
-    updatedData.push(newAlbum);
-    console.log(updatedData);
-    setAlbumData(prevData => ({
-      ...prevData,
-      form: "",
-      albums: updatedData
-    }))
+    if (albumData.form !== "") {
+      const newAlbum = {
+        name: albumData.form,
+        data: [],
+      };
+      const updatedData = albumData.albums.map(d => {return({...d})});
+      // console.log(updatedData);
+      updatedData.push(newAlbum);
+      console.log(updatedData);
+      setAlbumData(prevData => ({
+        ...prevData,
+        form: "",
+        albums: updatedData
+      }))
+    }
+    handleAddAlbumForm()
+  }
+
+  const checkAlbumData = item => {
+    let bookmark = false;
+    const numOfAlbums = albumData.albums.length;
+    for (let i=0; i<numOfAlbums; i++) {
+      const album = albumData.albums[i].data;
+      const albumLength = albumData.albums[i].data.length;
+      for (let j=0; j<albumLength; j++) {
+        if (album[j]?.date === item?.date) {
+          bookmark = true
+        }
+      }      
+    }
+    return bookmark;
   }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
@@ -509,9 +537,9 @@ function App() {
 
 
   // --------------------------------------- CONSOLE LOG ----------------------------
-  // console.log(searchDate)
-  console.log("likes: ")
-  console.log(likedItemData)
+  console.log(itemData)
+  // console.log("likes: ")
+  // console.log(likedItemData)
   // console.log(cardGridSingle)
   // console.log(dateStringForApi)
   // console.log(lastInteraction)
@@ -519,9 +547,7 @@ function App() {
   const test = "test"
 
   //  -------------------------------------- DATA FOR CONTEXT ------------------------------
-  const checkLikeSingleGrid = checkLikedItems(cardGridSingle.item)
-  console.log(checkLikeSingleGrid)
-
+  
   const data = {
     itemData,
     feedView,
@@ -531,7 +557,6 @@ function App() {
     checkLikedItems,
     loadGridSingleView,
     unloadGridSingleView,
-    checkLikeSingleGrid,
     handleInteraction,
     handleScrollToTop,
     handleDatePicker,
@@ -546,7 +571,8 @@ function App() {
     albumData,
     handleAddAlbumForm,
     updateAlbumForm,
-    handleAddNewAlbum
+    handleAddNewAlbum,
+    checkAlbumData,
   }
 
   
