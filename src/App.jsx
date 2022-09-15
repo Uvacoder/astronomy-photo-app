@@ -5,6 +5,7 @@ import Likes from './layout/Likes'
 import Layout from './layout/Layout'
 import Container from './components/Container'
 import Albums from './layout/Albums'
+import Album from './layout/Album'
 
 import data from './data/sampleData'
 
@@ -14,6 +15,7 @@ import lozad from 'lozad'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
+
 
 export const DataContext = createContext();
 
@@ -34,6 +36,7 @@ function App() {
     albums: [
       {
         name: "Album One",
+        route: "albumone",
         data: [
           {
             "copyright": "David Cortner",
@@ -70,6 +73,7 @@ function App() {
     
       {
         name: "Album Two",
+        route: "albumtwo",
         data: [
           {
             "copyright": "Babak Tafreshi",
@@ -437,8 +441,10 @@ function App() {
   const handleAddNewAlbum = event => {
     event.preventDefault();
     if (albumData.form !== "") {
+      const route = albumData.form.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
       const newAlbum = {
         name: albumData.form,
+        route: route,
         data: [],
       };
       const updatedData = albumData.albums.map(d => {return({...d})});
@@ -544,7 +550,8 @@ function App() {
   // console.log(dateStringForApi)
   // console.log(lastInteraction)
   
-  const test = "test"
+  const album1 = `${albumData.albums[0].route}` || ""
+  console.log(album1)
 
   //  -------------------------------------- DATA FOR CONTEXT ------------------------------
   
@@ -586,7 +593,7 @@ function App() {
           <Route path="search" element={<Container />} />
           <Route path="likes" element={<Likes />} />
           <Route path="albums" element={<Albums />} />
-          <Route path={`${test}`} element={<Likes />} />
+          <Route path={`${album1}`} element={<Album />} />
                 
         </Route>
         

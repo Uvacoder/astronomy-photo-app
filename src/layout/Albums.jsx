@@ -14,6 +14,7 @@ export default function Albums() {
         // console.log(album.data);
         // console.log("-------")
         const name = album.name;
+        const route = album.route;
         const length = album.data.length;
         let url;
         console.log(length);
@@ -30,7 +31,8 @@ export default function Albums() {
         
         return(
             <AlbumCover
-                name={name} 
+                name={name}
+                route={route} 
                 url={url}
                 length={length}
                 key={index}
