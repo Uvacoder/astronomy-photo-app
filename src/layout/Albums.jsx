@@ -22,12 +22,7 @@ export default function Albums() {
             url = "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
         } else {
             url = album.data?.[0].url;
-        }
-        
-        // console.log(name);
-        
-        // console.log(url);
-           
+        }               
         
         return(
             <AlbumCover

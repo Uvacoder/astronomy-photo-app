@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom"
 
 import Likes from './layout/Likes'
 import Layout from './layout/Layout'
@@ -262,6 +262,7 @@ function App() {
       random: true,
       search: false,
       likes: false,
+      albums: false,
     }))
     setItemData([]);
     callApiRandom();
@@ -282,6 +283,7 @@ function App() {
         random: false,
         search: false,
         likes: false,
+        albums: false,
       }))  
       setItemData([]);
       callApiByDate();  
@@ -310,6 +312,7 @@ function App() {
         random: false,
         search: false,
         likes: false,
+        albums: false,
       }))
       setItemData([]);
       mode.likes && callApiByDate();
@@ -395,6 +398,7 @@ function App() {
       random: false,
       search: true,
       likes: false,
+      albums: false,
     }))
     setItemData([]);
   }
@@ -415,6 +419,7 @@ function App() {
       random: false,
       search: false,
       likes: true,
+      albums: false,
     }))
   }
 
@@ -473,6 +478,18 @@ function App() {
       }      
     }
     return bookmark;
+  }
+
+  const handleAlbumsMode = album => {
+    setItemData(album)
+    setMode(prevState => ({
+      ...prevState,
+      latest: false,
+      random: false,
+      search: false,
+      likes: false,
+      albums: true,
+    }))
   }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
@@ -550,8 +567,8 @@ function App() {
   // console.log(dateStringForApi)
   // console.log(lastInteraction)
   
-  const album1 = `${albumData.albums[0].route}` || ""
-  console.log(album1)
+  // const album1 = `${albumData.albums[0].route}` || ""
+  // console.log(album1)
 
   //  -------------------------------------- DATA FOR CONTEXT ------------------------------
   
@@ -580,6 +597,7 @@ function App() {
     updateAlbumForm,
     handleAddNewAlbum,
     checkAlbumData,
+    handleAlbumsMode,
   }
 
   
@@ -587,14 +605,15 @@ function App() {
     <DataContext.Provider value={data}>
     <BrowserRouter>
       <Routes>
+        
         <Route path="/" element={<Layout />}>
           <Route index element={<Container />} />
           <Route path="shuffle" element={<Container />} />
           <Route path="search" element={<Container />} />
           <Route path="likes" element={<Likes />} />
           <Route path="albums" element={<Albums />} />
-          <Route path={`${album1}`} element={<Album />} />
-                
+          {/* <Route path={`${album1}`} element={<Album />} /> */}
+          <Route path="/:albumroute" element={<Album />} />    
         </Route>
         
         <Route path="*" element="NOT FOUND" />

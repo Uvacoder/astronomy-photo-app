@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import { useParams } from "react-router-dom";
 import { DataContext } from "../App"
 
 import Container from "../components/Container"
@@ -7,10 +8,25 @@ export default function Album() {
 
     const dataContext = useContext(DataContext);
 
-    const { likedItemData } = dataContext || {};
+    const { albumData, handleAlbumsMode } = dataContext || {};
 
+    let { albumroute } = useParams();
+    // console.log(albumroute);
+    // console.log(albumData.albums[0].route);
+    const numOfAlbums = albumData.albums.length;
+    let checkAlbumExists = false;
+    let albumIndex;
+    let album;
+    for (let i=0; i<numOfAlbums; i++) {
+        if (albumroute === albumData.albums[i].route) {
+            checkAlbumExists = true;
+            albumIndex = i;    
+            album = albumData.albums[albumIndex];
+            
+        }
+    }
     
-    
+    console.log(album)
     return(
         <>
         {/* {totalLikes === 0 ? 
@@ -20,8 +36,17 @@ export default function Album() {
         <Container/>
         } */}
         <div className="mt-16">
-        TESTING ALBUM
-        </div>
+        {
+            checkAlbumExists ?
+            <>
+            <h2>{album.name}</h2>
+            <div onLoad={() => handleAlbumsMode(album.data)}>
+                <Container />
+            </div>
+            </> :
+            <h2>Album Not Found</h2>
+        }
+        </div>        
         
         </>
     )
