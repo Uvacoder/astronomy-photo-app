@@ -3,16 +3,20 @@ import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
 import bookmarkEmpty from "../icons/bookmark-empty.svg"
 import bookmarkSolid from "../icons/bookmark-solid.svg"
+import AddToAlbumBox from "./AddToAlbumBox"
 
 export default function CardPost({ 
-    item, handleLike, like, handleInteraction, bookmark }) {
+    item, handleLike, like, handleInteraction, 
+    bookmark }) {
     
     const [seeMore, setSeeMore] = useState(false)
+    const [seeAlbum, setSeeAlbum] = useState(false)
 
     const handleMore = () => setSeeMore(prevState => !prevState)
+    const handleBookmark = () => setSeeAlbum(prevState => !prevState)
 
     return (
-        <div id={`${item?.date}`} onMouseOver={() => handleInteraction(item?.date)} className="z-0">
+        <div id={`${item?.date}`} onMouseOver={() => handleInteraction(item?.date)} className="z-0 relative">
             <h3 className="text-lg">{item?.title}</h3>
             <img 
                 data-src={item?.url} 
@@ -27,12 +31,16 @@ export default function CardPost({
             </button> 
             }
             {bookmark ?
-            <button className="btn btn-square btn-ghost" onClick={() => console.log("unbookmarked")}>
+            <button className="btn btn-square btn-ghost" onClick={handleBookmark}>
             <img className="h-5" src={bookmarkSolid} />
             </button> :
-            <button className="btn btn-square btn-ghost" onClick={() => console.log("bookmarked")}>
+            <button className="btn btn-square btn-ghost" onClick={handleBookmark}>
             <img className="h-5" src={bookmarkEmpty} />
             </button>            
+            }
+            {seeAlbum ?
+            <span className="absolute"><AddToAlbumBox /></span> :
+            <span className="absolute"></span>
             }
                         
             {seeMore && <p className="max-w-sm">{item?.explanation}</p>}

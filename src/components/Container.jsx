@@ -22,6 +22,7 @@ export default function Container() {
       
       const like = checkLikedItems(item)
       const bookmark = checkAlbumData(item)
+      // const isBookmarking = mode.isBookmarking
 
       return (
         <Card
@@ -32,6 +33,8 @@ export default function Container() {
           loadGridSingleView={loadGridSingleView}
           handleInteraction={handleInteraction}
           bookmark={bookmark}
+          // handleBookmark={handleBookmark}
+          // isBookmarking={isBookmarking}
           key={index}
         />
       )

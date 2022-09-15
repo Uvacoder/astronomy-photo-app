@@ -7,7 +7,7 @@ export default function Albums() {
 
     const dataContext = useContext(DataContext);
     const { albumData, handleAddAlbumForm, updateAlbumForm, 
-        mode, handleAddNewAlbum } = dataContext || {};
+        mode, handleAddNewAlbum, handleAlbumsMode } = dataContext || {};
     // console.log(albumData)
 
     const albumCovers = albumData.albums.map((album, index) => {
@@ -16,6 +16,7 @@ export default function Albums() {
         const name = album.name;
         const route = album.route;
         const length = album.data.length;
+        const data = album.data;
         let url;
         console.log(length);
         if (length === 0) {
@@ -28,8 +29,10 @@ export default function Albums() {
             <AlbumCover
                 name={name}
                 route={route} 
+                data={data}
                 url={url}
                 length={length}
+                handleAlbumsMode={handleAlbumsMode}
                 key={index}
             />
         )

@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { DataContext } from "../App"
 
@@ -25,8 +25,12 @@ export default function Album() {
             
         }
     }
+
+    // useEffect(() => {
+    //     handleAlbumsMode(album?.data)
+    // }, [])
     
-    console.log(album)
+    // console.log(album)
     return(
         <>
         {/* {totalLikes === 0 ? 
@@ -40,12 +44,13 @@ export default function Album() {
             checkAlbumExists ?
             <>
             <h2>{album.name}</h2>
-            <div onLoad={() => handleAlbumsMode(album.data)}>
+            <div>
                 <Container />
             </div>
             </> :
             <h2>Album Not Found</h2>
         }
+        {album.data.length === 0 && <span>No photos added!</span>}
         </div>        
         
         </>

@@ -26,7 +26,7 @@ export default function Navbar() {
                     to="/"
                     className="btn btn-ghost normal-case text-lg"
                     onClick={handleScrollToTop}>
-                        APOD
+                        Astronomy
                 </Link>
                 {/* <div class="dropdown hover:bg-slate-900/25">
                     <div className="flex items-center">

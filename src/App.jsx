@@ -119,11 +119,11 @@ function App() {
     latest: true,
     random: false,
     search: false,
-    likes: false,
-    albums: false,
+    saves: false,
     isSearching: false,
     isLoading: false,
     isAddingAlbum: false,
+    isBookmarking: false,
   })
    
   // ------------------------------------ APIs -------------------------------------------
@@ -213,7 +213,7 @@ function App() {
   }
 
   // --------------------------- HANDLERS ------------------------------------------------
-  // add or remove likes from likedItemData
+  // add or remove saves from likedItemData
   const handleLike = (item) => {
     
     const likedDates = likedItemData.map(item => item.date)
@@ -261,8 +261,7 @@ function App() {
       latest: false,
       random: true,
       search: false,
-      likes: false,
-      albums: false,
+      saves: false,
     }))
     setItemData([]);
     callApiRandom();
@@ -282,8 +281,7 @@ function App() {
         latest: true,
         random: false,
         search: false,
-        likes: false,
-        albums: false,
+        saves: false,
       }))  
       setItemData([]);
       callApiByDate();  
@@ -294,7 +292,7 @@ function App() {
         offset: 11,
     })
     }
-    if (mode.search || mode.likes) {
+    if (mode.search || mode.saves) {
       console.log("searching latest")
       setDateStringForApi({  
         // reset to initial values  
@@ -311,11 +309,10 @@ function App() {
         latest: true,
         random: false,
         search: false,
-        likes: false,
-        albums: false,
+        saves: false,
       }))
       setItemData([]);
-      mode.likes && callApiByDate();
+      mode.saves && callApiByDate();
     }    
   }  
 
@@ -397,8 +394,7 @@ function App() {
       latest: false,
       random: false,
       search: true,
-      likes: false,
-      albums: false,
+      saves: false,
     }))
     setItemData([]);
   }
@@ -410,7 +406,7 @@ function App() {
     setLastInteraction(id);
   }  
 
-  // render likes
+  // render saves
   const handleLikeMode = () => {
     setItemData(likedItemData)
     setMode(prevState => ({
@@ -418,8 +414,7 @@ function App() {
       latest: false,
       random: false,
       search: false,
-      likes: true,
-      albums: false,
+      saves: true,
     }))
   }
 
@@ -487,10 +482,23 @@ function App() {
       latest: false,
       random: false,
       search: false,
-      likes: false,
-      albums: true,
+      saves: true,
     }))
+    setDateStringForApi({  
+      // reset to initial values  
+      startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
+      endDateString: dayjs().format("YYYY-MM-DD"),    
+      offset: 11,
+    })
   }
+
+  // const handleBookmark = () => {
+  //   setMode(prevState => ({
+  //     ...prevState,
+  //     isBookmarking: !prevState.isBookmarking,
+  //   }))
+  //   console.log("bookmarking")
+  // }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
   // first API call on app load
@@ -518,7 +526,7 @@ function App() {
       // console.log('document.documentElement.offsetHeight', document.documentElement.offsetHeight);
       // const position = document.documentElement.scrollTop;
       
-      if (mode.likes === false) {
+      if (mode.saves === false) {
         if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
           console.log("infinite scroll v1")     
              
@@ -560,8 +568,8 @@ function App() {
 
 
   // --------------------------------------- CONSOLE LOG ----------------------------
-  console.log(itemData)
-  // console.log("likes: ")
+  // console.log(itemData)
+  // console.log("saves: ")
   // console.log(likedItemData)
   // console.log(cardGridSingle)
   // console.log(dateStringForApi)
@@ -598,6 +606,7 @@ function App() {
     handleAddNewAlbum,
     checkAlbumData,
     handleAlbumsMode,
+    // handleBookmark,
   }
 
   
@@ -615,7 +624,6 @@ function App() {
           {/* <Route path={`${album1}`} element={<Album />} /> */}
           <Route path="/:albumroute" element={<Album />} />    
         </Route>
-        
         <Route path="*" element="NOT FOUND" />
       </Routes>
     </BrowserRouter>
