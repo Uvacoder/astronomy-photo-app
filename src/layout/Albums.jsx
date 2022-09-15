@@ -1,7 +1,9 @@
 import { useContext } from 'react'
 import { DataContext } from '../App'
 
-import AlbumCover from '../components/AlbumCover';
+import AlbumCover from '../components/AlbumCover'
+
+import placeholder from '../data/placeholder-img.jpg'
 
 export default function Albums() {
 
@@ -14,11 +16,20 @@ export default function Albums() {
         // console.log(album.data);
         // console.log("-------")
         const name = album.name;
+        const length = album.data.length;
+        let url;
+        console.log(length);
+        if (length === 0) {
+            url = "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
+        } else {
+            url = album.data?.[0].url;
+        }
+        
         // console.log(name);
-        const url = album.data?.[0].url;
+        
         // console.log(url);
-        const length = album.data.length;   
-        // console.log(length);
+           
+        
         return(
             <AlbumCover
                 name={name} 
@@ -36,7 +47,7 @@ export default function Albums() {
             {
             mode.isAddingAlbum ? 
             <form>
-                <input type="text" onChange={updateAlbumForm}/>
+                <input type="text" onChange={updateAlbumForm} value={albumData.form} />
                 <button className="btn" onClick={handleAddNewAlbum}>Add</button>
             </form> :
             <button className="btn" onClick={handleAddAlbumForm}>New album</button>
