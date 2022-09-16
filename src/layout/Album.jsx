@@ -8,7 +8,7 @@ export default function Album() {
 
     const dataContext = useContext(DataContext);
 
-    const { albumData, handleAlbumsMode } = dataContext || {};
+    const { albumData } = dataContext || {};
 
     let { albumroute } = useParams();
     // console.log(albumroute);
@@ -33,12 +33,7 @@ export default function Album() {
     // console.log(album)
     return(
         <>
-        {/* {totalLikes === 0 ? 
-            <div className="mt-16">
-                <span className="text-lg">You have no liked items</span>
-            </div> :
-        <Container/>
-        } */}
+        
         <div className="mt-16">
         {
             checkAlbumExists ?
@@ -50,7 +45,7 @@ export default function Album() {
             </> :
             <h2>Album Not Found</h2>
         }
-        {album.data.length === 0 && <span>No photos added!</span>}
+        {album?.data.length === 0 && <span>No photos added!</span>}
         </div>        
         
         </>

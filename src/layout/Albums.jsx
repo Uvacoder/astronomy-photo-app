@@ -10,6 +10,8 @@ export default function Albums() {
         mode, handleAddNewAlbum, handleAlbumsMode } = dataContext || {};
     // console.log(albumData)
 
+    const numOfAlbums = albumData.albums.length;
+    
     const albumCovers = albumData.albums.map((album, index) => {
         // console.log(album.data);
         // console.log("-------")
@@ -45,13 +47,23 @@ export default function Albums() {
             {
             mode.isAddingAlbum ? 
             <form>
-                <input type="text" onChange={updateAlbumForm} value={albumData.form} />
+                <input 
+                    type="text" 
+                    onChange={updateAlbumForm} value={albumData.form} 
+                    placeholder="album name"
+                    className="input input-bordered w-full max-w-xs"
+                />
                 <button className="btn" onClick={handleAddNewAlbum}>Add</button>
             </form> :
             <button className="btn" onClick={handleAddAlbumForm}>New album</button>
             }
-                     
+      
         </div>
+        {numOfAlbums === 0 && 
+            <div className="mt-16">
+                <span className="text-lg">You have no albums</span>
+            </div>         
+        }
         <div className='grid grid-cols-3 gap-4 justify-center mt-16'>
         {albumCovers}
         </div>

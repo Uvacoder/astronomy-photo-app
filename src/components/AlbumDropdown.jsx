@@ -8,7 +8,7 @@ export default function AlbumDropdown({ bookmark, item }) {
 
     const dataContext = useContext(DataContext);
 
-    const { albumData, checkAlbumData } = dataContext || {};
+    const { albumData, handleBookmark } = dataContext || {};
 
     const albumNames = albumData.albums.map((album, index) => {
 
@@ -16,7 +16,7 @@ export default function AlbumDropdown({ bookmark, item }) {
 
         return (            
             <li key={index}>
-                <a onClick={()=>console.log(`add to ${album.name}`)}>
+                <a onClick={() => handleBookmark(album, item, found)}>
                     {album.name}
                     {
                     found ?
@@ -29,18 +29,18 @@ export default function AlbumDropdown({ bookmark, item }) {
     })
 
     return(
-        <div className="dropdown dropdown-top">
+        <div className="dropdown dropdown-right dropdown-end">
             <label tabIndex={0}>
                 {bookmark ?
-                    <button className="btn btn-square btn-ghost" onClick={console.log("click1")}>
+                    <button className="btn btn-square btn-ghost">
                         <img className="h-5" src={bookmarkSolid} />
                     </button> :
-                    <button className="btn btn-square btn-ghost" onClick={console.log("click1")}>
+                    <button className="btn btn-square btn-ghost">
                         <img className="h-5" src={bookmarkEmpty} />
                     </button>            
                 }
             </label>
-                <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40">
+                <ul tabIndex={0} className="dropdown-content menu p-1 shadow bg-base-100 rounded-box w-40">
                     {albumNames}    
                 </ul>
         </div>

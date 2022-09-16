@@ -49,7 +49,7 @@ export default function Navbar() {
                 <li>
                     <Link to="/search">
                         <button onClick={handleDatePicker}>Search</button>
-                        {mode.isSearching && <Calendar 
+                        {mode?.isSearching && <Calendar 
                             handleDateSearch={handleDateSearch}
                             searchDate={searchDate}
                             />

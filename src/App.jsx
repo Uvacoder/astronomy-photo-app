@@ -33,71 +33,7 @@ function App() {
   const [likedItemData, setLikedItemData] = useState([])
   const [albumData, setAlbumData] = useState({
     form: "",
-    albums: [
-      {
-        name: "Album One",
-        route: "albumone",
-        data: [
-          {
-            "copyright": "David Cortner",
-            "date": "2014-08-24",
-            "explanation": "What's that dot on the Sun? If you look closely, it is almost perfectly round.  The dot is the result of an unusual type of solar eclipse that occurred in 2006.  Usually it is the Earth's Moon that eclipses the Sun.  This time, the planet Mercury took a turn.  Like the approach to New Moon before a solar eclipse, the phase of Mercury became a continually thinner crescent as the planet progressed toward an alignment with the Sun.  Eventually the phase of Mercury dropped to zero and the dark spot of Mercury crossed our parent star.  The situation could technically be labeled a Mercurian annular eclipse with an extraordinarily large ring of fire.  From above the cratered planes of the night side of Mercury, the Earth appeared in its fullest phase.  Hours later, as Mercury continued in its orbit, a slight crescent phase appeared again.  The next Mercurian solar eclipse will occur in 2016.",
-            "hdurl": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_1200.jpg",
-            "media_type": "image",
-            "service_version": "v1",
-            "title": "Mercury's Transit: An Unusual Spot on the Sun",
-            "url": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_960.jpg"
-          },
-          {
-            "copyright": "Ian Griffin",
-            "date": "2019-02-09",
-            "explanation": "Comet Iwamoto (C/2018 Y1), shows off a pretty, greenish coma at the upper left in this telescopic field of view. Taken on February 4 from the Mount John Observatory, University of Canterbury, the 30 minute long total exposure time shows the comet sweeping quickly across a background of stars and distant galaxies in the constellation Virgo. The long exposure and Iwamoto's rapid motion relative to the stars and galaxies results in the noticeable blurred streak tracing the the comet's bright inner coma. In fact, the streaked coma gives the comet a remarkably similar appearance to Messier 104 at lower right, popularly known as the Sombrero Galaxy. The comet, a visitor to the inner Solar System, is a mere 4 light-minutes away though, while majestic Messier 104, a spiral galaxy posing edge-on, is 30 million light-years distant. The first binocular comet of 2019, Iwamoto will pass closest to Earth on February 12. This comet's highly elliptical orbit around the Sun stretches beyond the Kuiper belt with an estimated 1,371 year orbital period. That should bring it back to the inner Solar System in 3390 AD.",
-            "hdurl": "https://apod.nasa.gov/apod/image/1902/Iwamoto-104-2019griffin.jpg",
-            "media_type": "image",
-            "service_version": "v1",
-            "title": "Comet Iwamoto and the Sombrero Galaxy",
-            "url": "https://apod.nasa.gov/apod/image/1902/Iwamoto-104-2019griffin_1024.jpg"
-          },
-          {
-            "copyright": "Dario Giannobile",
-            "date": "2022-09-15",
-            "explanation": "For northern hemisphere dwellers, September's Full Moon was the Harvest Moon. Reflecting warm hues at sunset it rises over the historic town of Castiglione di Sicilia in this telephoto view from September 9. Famed in festival, story, and song Harvest Moon is just the traditional name of the full moon nearest the autumnal equinox. According to lore the name is a fitting one. Despite the diminishing daylight hours as the growing season drew to a close, farmers could harvest crops by the light of a full moon shining on from dusk to dawn.   Harvest Full Moon 2022: Notable Submissions to APOD",
-            "hdurl": "https://apod.nasa.gov/apod/image/2209/HarvestMoonCastiglioneSicilyLD.jpg",
-            "media_type": "image",
-            "service_version": "v1",
-            "title": "Harvest Moon over Sicily",
-            "url": "https://apod.nasa.gov/apod/image/2209/HarvestMoonCastiglioneSicily1024.jpg"
-          }
-        ]
-      },
-    
-      {
-        name: "Album Two",
-        route: "albumtwo",
-        data: [
-          {
-            "copyright": "Babak Tafreshi",
-            "date": "2014-02-07",
-            "explanation": "Stars come out as evening twilight fades in this serene skyscape following the Persian proverb \"Night hides the world, but reveals a universe.\" In the scene from last November, the Sun is setting over northern Kenya and the night will soon hide the shores of Lake Turkana, home to many Nile crocodiles. That region is also known as the cradle of humankind for its abundance of hominid fossils. A brilliant Venus, then the world's evening star, dominates the starry night above. But also revealed are faint stars, cosmic dust clouds, and glowing nebulae along the graceful arc of our own Milky Way galaxy.",
-            "hdurl": "https://apod.nasa.gov/apod/image/1402/NightHidesTurkanaTafreshi.jpg",
-            "media_type": "image",
-            "service_version": "v1",
-            "title": "Night Hides the World",
-            "url": "https://apod.nasa.gov/apod/image/1402/NightHidesTurkanaTafreshi.jpg"
-          },
-          {
-            "copyright": "David Cortner",
-            "date": "2014-08-24",
-            "explanation": "What's that dot on the Sun? If you look closely, it is almost perfectly round.  The dot is the result of an unusual type of solar eclipse that occurred in 2006.  Usually it is the Earth's Moon that eclipses the Sun.  This time, the planet Mercury took a turn.  Like the approach to New Moon before a solar eclipse, the phase of Mercury became a continually thinner crescent as the planet progressed toward an alignment with the Sun.  Eventually the phase of Mercury dropped to zero and the dark spot of Mercury crossed our parent star.  The situation could technically be labeled a Mercurian annular eclipse with an extraordinarily large ring of fire.  From above the cratered planes of the night side of Mercury, the Earth appeared in its fullest phase.  Hours later, as Mercury continued in its orbit, a slight crescent phase appeared again.  The next Mercurian solar eclipse will occur in 2016.",
-            "hdurl": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_1200.jpg",
-            "media_type": "image",
-            "service_version": "v1",
-            "title": "Mercury's Transit: An Unusual Spot on the Sun",
-            "url": "https://apod.nasa.gov/apod/image/1408/mercurytransit_cortner_960.jpg"
-          },
-        ],
-      }
-    ]
+    albums: []
   }) 
     
   // const [albumFormData, setAlbumFormData] = useState("")
@@ -494,13 +430,55 @@ function App() {
     })
   }
 
-  // const handleBookmark = () => {
-  //   setMode(prevState => ({
-  //     ...prevState,
-  //     isBookmarking: !prevState.isBookmarking,
-  //   }))
-  //   console.log("bookmarking")
-  // }
+  const handleBookmark = (album, item, found) => {
+    
+    let changedAlbum = album;
+    let changedAlbumData;
+    
+    // console.log(album)    
+    // console.log(album.name)
+    // console.log(item)
+    // console.log(found)
+
+    // map albumData.albums but remove album to edit
+    const unchangedAlbums = albumData.albums.filter(alb => {
+      if (alb.name !== album.name) {
+        return alb
+      }
+    });
+    console.log(unchangedAlbums);
+
+    if (item.date === found?.date) {
+      console.log("remove item");
+      
+      // map album without item
+      changedAlbumData = album.data.filter(i => {
+        if (i.date !== item.date) {
+          return i
+        }
+      })
+      console.log(changedAlbumData);
+      
+    } else {
+      console.log("add item");
+      
+      // add item to album
+      changedAlbumData = album.data;
+      changedAlbumData.unshift(item);
+      console.log(changedAlbumData);
+      
+    }
+
+    changedAlbum.data = changedAlbumData;
+    console.log(changedAlbum);
+    // unshift album to mapped total albums
+    unchangedAlbums.unshift(changedAlbum);
+    console.log(unchangedAlbums)
+    setAlbumData(prevData => ({
+      ...prevData,
+      albums: unchangedAlbums,
+    }))           
+  }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
   // first API call on app load
@@ -608,7 +586,7 @@ function App() {
     handleAddNewAlbum,
     checkAlbumData,
     handleAlbumsMode,
-    // handleBookmark,
+    handleBookmark,
   }
 
   
