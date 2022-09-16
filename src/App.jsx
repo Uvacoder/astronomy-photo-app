@@ -460,6 +460,7 @@ function App() {
     handleAddAlbumForm()
   }
 
+  // check if photo is stored in albums
   const checkAlbumData = item => {
     let bookmark = false;
     const numOfAlbums = albumData.albums.length;
@@ -475,6 +476,7 @@ function App() {
     return bookmark;
   }
 
+  // switch mode to albums (shared with likes mode)
   const handleAlbumsMode = album => {
     setItemData(album)
     setMode(prevState => ({
