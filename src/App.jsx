@@ -168,7 +168,10 @@ function App() {
       // console.log(item)
       :
       setLikedItemData(prevData => ([...prevData, item]))
-      // console.log("add like")    
+      // console.log("add like")  
+      if (mode.saves) {
+        setItemData(likedItemData);
+      }  
   }
 
   // check if card is liked when rendering
@@ -432,6 +435,10 @@ function App() {
 
   const handleBookmark = (album, item, found) => {
     
+    // if (mode.saves) {
+    //   setItemData([])
+      // setItemData(changedAlbumData)
+    // }
     let changedAlbum = album;
     let changedAlbumData;
     
@@ -458,6 +465,19 @@ function App() {
         }
       })
       console.log(changedAlbumData);
+      changedAlbum.data = changedAlbumData;
+      console.log(changedAlbum);
+      // unshift album to mapped total albums
+      unchangedAlbums.unshift(changedAlbum);
+      console.log(unchangedAlbums)
+      setAlbumData(prevData => ({
+        ...prevData,
+        albums: unchangedAlbums,
+      }))   
+      if (mode.saves) {
+        // setItemData([])
+        setItemData(changedAlbumData)
+      }
       
     } else {
       console.log("add item");
@@ -466,18 +486,20 @@ function App() {
       changedAlbumData = album.data;
       changedAlbumData.unshift(item);
       console.log(changedAlbumData);
+
+      changedAlbum.data = changedAlbumData;
+      console.log(changedAlbum);
+      // unshift album to mapped total albums
+      unchangedAlbums.unshift(changedAlbum);
+      console.log(unchangedAlbums)
+      setAlbumData(prevData => ({
+        ...prevData,
+        albums: unchangedAlbums,
+      }))   
       
     }
-
-    changedAlbum.data = changedAlbumData;
-    console.log(changedAlbum);
-    // unshift album to mapped total albums
-    unchangedAlbums.unshift(changedAlbum);
-    console.log(unchangedAlbums)
-    setAlbumData(prevData => ({
-      ...prevData,
-      albums: unchangedAlbums,
-    }))           
+    
+    
   }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 

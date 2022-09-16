@@ -3,7 +3,7 @@ import CardGrid from './CardGrid'
 
 export default function Card({ 
     item, handleLike, like, feedView, loadGridSingleView, 
-    handleInteraction, bookmark, 
+    handleInteraction, bookmark, mode,
 }) {
     
     
@@ -17,8 +17,7 @@ export default function Card({
                 like={like}
                 handleInteraction={handleInteraction}
                 bookmark={bookmark}
-                // handleBookmark={handleBookmark}
-                // isBookmarking={isBookmarking}
+                mode={mode}
                 />
             :
         

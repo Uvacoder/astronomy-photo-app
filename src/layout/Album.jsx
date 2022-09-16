@@ -4,6 +4,8 @@ import { DataContext } from "../App"
 
 import Container from "../components/Container"
 
+import gear from "../icons/gear.svg"
+
 export default function Album() {
 
     const dataContext = useContext(DataContext);
@@ -38,10 +40,11 @@ export default function Album() {
         {
             checkAlbumExists ?
             <>
-            <h2>{album.name}</h2>
-            <div>
+            <div className="flex flex-col items-start">
+                <h2>{album.name}</h2>
+                <button className="btn">Edit album</button>
+            </div>           
                 <Container />
-            </div>
             </> :
             <h2>Album Not Found</h2>
         }

@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { Link } from 'react-router-dom';
 import { DataContext } from '../App'
 
 import bookmarkEmpty from "../icons/bookmark-empty.svg"
@@ -11,7 +12,7 @@ export default function AlbumDropdown({ bookmark, item }) {
     const { albumData, handleBookmark } = dataContext || {};
 
     const albumNames = albumData.albums.map((album, index) => {
-
+        
         const found = album.data.find(info => info.date === item.date)        
 
         return (            
@@ -28,6 +29,8 @@ export default function AlbumDropdown({ bookmark, item }) {
         )
     })
 
+    const numOfAlbums = albumData.albums.length
+
     return(
         <div className="dropdown dropdown-right dropdown-end">
             <label tabIndex={0}>
@@ -42,6 +45,7 @@ export default function AlbumDropdown({ bookmark, item }) {
             </label>
                 <ul tabIndex={0} className="dropdown-content menu p-1 shadow bg-base-100 rounded-box w-40">
                     {albumNames}    
+                    { numOfAlbums > 0 || <li><Link to="/albums">Add an album</Link></li> }
                 </ul>
         </div>
             

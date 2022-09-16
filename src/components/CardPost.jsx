@@ -1,13 +1,12 @@
 import { useState } from "react"
 import heartEmpty from "../icons/heart-empty.svg"
 import heartSolid from "../icons/heart-solid.svg"
-import bookmarkEmpty from "../icons/bookmark-empty.svg"
-import bookmarkSolid from "../icons/bookmark-solid.svg"
+
 import AlbumDropdown from "./AlbumDropdown"
 
 export default function CardPost({ 
     item, handleLike, like, handleInteraction, 
-    bookmark }) {
+    bookmark, mode }) {
     
     const [seeMore, setSeeMore] = useState(false)
     const [seeAlbum, setSeeAlbum] = useState(false)
@@ -18,10 +17,18 @@ export default function CardPost({
     return (
         <div id={`${item?.date}`} onMouseOver={() => handleInteraction(item?.date)} className="z-0 relative">
             <h3 className="text-lg">{item?.title}</h3>
-            <img 
+            {
+                mode.saves ?
+                <img 
+                src={item?.url} 
+                className="max-w-sm block"
+                /> :
+                <img 
                 data-src={item?.url} 
                 className="max-w-sm block lozad"
                 />
+            }
+            
             {like ? 
             <button className="btn btn-square btn-ghost" onClick={() => handleLike(item)}>
                 <img className="h-5" src={heartSolid} />

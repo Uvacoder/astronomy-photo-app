@@ -33,8 +33,7 @@ export default function Container() {
           loadGridSingleView={loadGridSingleView}
           handleInteraction={handleInteraction}
           bookmark={bookmark}
-          // handleBookmark={handleBookmark}
-          // isBookmarking={isBookmarking}
+          mode={mode}
           key={index}
         />
       )
