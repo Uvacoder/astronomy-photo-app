@@ -56,6 +56,7 @@ function App() {
     random: false,
     search: false,
     saves: false,
+    albums: false,
     isSearching: false,
     isLoading: false,
     isAddingAlbum: false,
@@ -169,7 +170,7 @@ function App() {
       :
       setLikedItemData(prevData => ([...prevData, item]))
       // console.log("add like")  
-      if (mode.saves) {
+      if (mode.saves && mode.albums === false) {
         setItemData(likedItemData);
       }  
   }
@@ -201,6 +202,7 @@ function App() {
       random: true,
       search: false,
       saves: false,
+      albums: false
     }))
     setItemData([]);
     callApiRandom();
@@ -221,6 +223,7 @@ function App() {
         random: false,
         search: false,
         saves: false,
+        albums: false
       }))  
       setItemData([]);
       callApiByDate();  
@@ -249,6 +252,7 @@ function App() {
         random: false,
         search: false,
         saves: false,
+        albums: false
       }))
       setItemData([]);
       mode.saves && callApiByDate();
@@ -334,6 +338,7 @@ function App() {
       random: false,
       search: true,
       saves: false,
+      albums: false
     }))
     setItemData([]);
   }
@@ -354,6 +359,7 @@ function App() {
       random: false,
       search: false,
       saves: true,
+      albums: false
     }))
   }
 
@@ -415,7 +421,7 @@ function App() {
     return bookmark;
   }
 
-  // switch mode to albums (shared with likes mode)
+  // switch mode to albums and saves
   const handleAlbumsMode = album => {
     setItemData(album)
     setMode(prevState => ({
@@ -424,6 +430,7 @@ function App() {
       random: false,
       search: false,
       saves: true,
+      albums: true
     }))
     setDateStringForApi({  
       // reset to initial values  
@@ -474,7 +481,7 @@ function App() {
         ...prevData,
         albums: unchangedAlbums,
       }))   
-      if (mode.saves) {
+      if (mode.saves && mode.albums) {
         // setItemData([])
         setItemData(changedAlbumData)
       }
