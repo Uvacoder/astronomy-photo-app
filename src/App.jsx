@@ -361,6 +361,13 @@ function App() {
       saves: true,
       albums: false
     }))
+
+    setDateStringForApi({  
+      // reset to initial values  
+      startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
+      endDateString: dayjs().format("YYYY-MM-DD"),    
+      offset: 11,
+    })
   }
 
   // add new album
