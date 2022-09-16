@@ -124,7 +124,7 @@ function App() {
       ...prevState,
       isLoading: true,
     }))
-    axios.get("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=10")
+    axios.get("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=16")
     .then(function (response) {
       // handle success
       console.log(response.data);

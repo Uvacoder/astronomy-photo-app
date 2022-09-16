@@ -15,17 +15,21 @@ export default function CardPost({
     const handleBookmark = () => setSeeAlbum(prevState => !prevState)
 
     return (
-        <div id={`${item?.date}`} onMouseOver={() => handleInteraction(item?.date)} className="z-0 relative">
-            <h3 className="text-lg">{item?.title}</h3>
+        <div 
+            id={`${item?.date}`} 
+            onMouseOver={() => handleInteraction(item?.date)} 
+            className="z-0 relative"
+        >
+            <h3 className="text-lg font-semibold mb-2">{item?.title}</h3>
             {
                 mode.saves ?
                 <img 
                 src={item?.url} 
-                className="max-w-sm block"
+                className="max-w-sm block rounded-xl"
                 /> :
                 <img 
                 data-src={item?.url} 
-                className="max-w-sm block lozad"
+                className="max-w-sm block lozad rounded-xl"
                 />
             }
             
@@ -53,8 +57,8 @@ export default function CardPost({
                         
             {seeMore && <p className="max-w-sm">{item?.explanation}</p>}
             {seeMore === false && <p className="max-h-24 max-w-sm line-clamp-3">{item?.explanation}</p>}
-            {seeMore === false && <p onClick={handleMore} className="cursor-pointer">..more</p>}
-            <p className="mb-8">{item?.date}</p>
+            {seeMore === false && <p onClick={handleMore} className="cursor-pointer font-medium">..more</p>}
+            <p className="mb-8 mt-2 font-light">{item?.date}</p>
         </div>
         
     )

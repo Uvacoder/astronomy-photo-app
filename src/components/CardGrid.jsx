@@ -8,9 +8,10 @@ export default function CardGrid(
             
             <img 
                 data-src={item?.url} 
-                className="rounded-lg object-cover h-80 max-h-80 cursor-pointer lozad"
+                className="rounded-lg object-cover h-60 mx-auto cursor-pointer lozad"
                 onClick={() => loadGridSingleView(item)}
-            />            
+            />   
+            <h2 className="font-semibold line-clamp-2 text-center">{item.title}</h2>         
         </div>
         
     )
