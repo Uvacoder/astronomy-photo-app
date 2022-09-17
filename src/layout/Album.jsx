@@ -1,8 +1,9 @@
 import { useState, useContext, useEffect } from "react"
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { DataContext } from "../App"
 
 import Container from "../components/Container"
+import Albums from "./Albums";
 
 import gear from "../icons/gear.svg"
 
@@ -14,6 +15,8 @@ export default function Album() {
 
     const [isRenaming, setIsRenaming] = useState(false);
     const [newName, setNewName] = useState("")
+
+    let navigate = useNavigate();
 
     let { albumroute } = useParams();
     // console.log(albumroute);
@@ -38,6 +41,7 @@ export default function Album() {
     
 
     const handleRename = () => {
+        // event.preventDefault();
         setIsRenaming(prevState => !prevState)
         if (newName !== "") {
             const route = newName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
@@ -51,7 +55,8 @@ export default function Album() {
             let updatedAlbumsAll = albumData;
             updatedAlbumsAll.albums[albumIndex] = updatedAlbum;
             console.log(updatedAlbumsAll);
-            updateAlbumData(updatedAlbumsAll);
+            () => updateAlbumData(updatedAlbumsAll);
+            navigate(`/${route}`);
         }
     }
 
@@ -60,6 +65,7 @@ export default function Album() {
         setNewName(form)
     }
     
+    console.log(albumData)
     console.log(album)
     console.log(albumIndex)
    
@@ -92,7 +98,10 @@ export default function Album() {
             </div>           
                 <Container />
             </> :
-            <h2>Album Not Found</h2>
+            // <h2>Album Not Found</h2>  
+            <Albums />
+                     
+   
         }
         {album?.data.length === 0 && <span>No photos added!</span>}
         </div>        
