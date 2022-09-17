@@ -610,7 +610,7 @@ function App() {
   
   // const album1 = `${albumData.albums[0].route}` || ""
   // console.log(album1)
-  console.log(process.env.VITE_NASA_API)
+  console.log(import.meta.env.VITE_NASA_API)
   
   //  -------------------------------------- DATA FOR CONTEXT ------------------------------
   
