@@ -27,7 +27,7 @@ export default function Card({
                 // like={like}
                 loadGridSingleView={loadGridSingleView}
                 handleInteraction={handleInteraction}
-                // checkAlbumData={checkAlbumData}
+                
             />
             
             }
