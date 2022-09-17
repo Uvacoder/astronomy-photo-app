@@ -96,7 +96,7 @@ function App() {
       isLoading: true,
     }))
     
-    axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
+    axios.get(`https://api.nasa.gov/planetary/apod?api_key=${import.meta.env.VITE_NASA_API}&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
     .then(function (response) {
       // handle success
       setItemData(prevData => (
@@ -125,7 +125,7 @@ function App() {
       ...prevState,
       isLoading: true,
     }))
-    axios.get("https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=16")
+    axios.get(`https://api.nasa.gov/planetary/apod?api_key=${import.meta.env.VITE_NASA_API}&count=16`)
     .then(function (response) {
       // handle success
       console.log(response.data);
@@ -611,6 +611,7 @@ function App() {
   // const album1 = `${albumData.albums[0].route}` || ""
   // console.log(album1)
 
+  
   //  -------------------------------------- DATA FOR CONTEXT ------------------------------
   
   const data = {
