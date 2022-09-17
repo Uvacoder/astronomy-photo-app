@@ -69,6 +69,7 @@ function App() {
     isLoading: false,
     isAddingAlbum: false,
     isBookmarking: false,
+    isAtAlbumsTab: false,
   })
    
   // ------------------------------------ APIs -------------------------------------------
@@ -210,7 +211,8 @@ function App() {
       random: true,
       search: false,
       saves: false,
-      albums: false
+      albums: false,
+      isAtAlbumsTab: false,
     }))
     setItemData([]);
     callApiRandom();
@@ -231,7 +233,8 @@ function App() {
         random: false,
         search: false,
         saves: false,
-        albums: false
+        albums: false,
+        isAtAlbumsTab: false,
       }))  
       setItemData([]);
       callApiByDate();  
@@ -260,7 +263,8 @@ function App() {
         random: false,
         search: false,
         saves: false,
-        albums: false
+        albums: false,
+        isAtAlbumsTab: false,
       }))
       setItemData([]);
       mode.saves && callApiByDate();
@@ -346,7 +350,8 @@ function App() {
       random: false,
       search: true,
       saves: false,
-      albums: false
+      albums: false,
+      isAtAlbumsTab: false,
     }))
     setItemData([]);
   }
@@ -367,7 +372,8 @@ function App() {
       random: false,
       search: false,
       saves: true,
-      albums: false
+      albums: false,
+      isAtAlbumsTab: false,
     }))
 
     setDateStringForApi({  
@@ -376,6 +382,19 @@ function App() {
       endDateString: dayjs().format("YYYY-MM-DD"),    
       offset: 11,
     })
+  }
+
+  // toggle album tab on navbar
+  const handleAlbumTab = () => {
+    setMode(prevState => ({
+      ...prevState,
+      latest: false,
+      random: false,
+      search: false,
+      saves: true,
+      albums: false,
+      isAtAlbumsTab: true,
+    }))
   }
 
   // add new album
@@ -457,7 +476,8 @@ function App() {
       random: false,
       search: false,
       saves: true,
-      albums: true
+      albums: true,
+      isAtAlbumsTab: true,
     }))
     setDateStringForApi({  
       // reset to initial values  
@@ -606,6 +626,47 @@ function App() {
     console.log(lastInteraction);   
   }, [feedView])
 
+  // call Airtable API on load to get saved like and album data
+  useEffect(() => {
+    // let likes;
+    // let albums;
+    base('State Name').select({
+      // Selecting the first 3 records in Grid view:
+      maxRecords: 1,
+      view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+        // This function (`page`) will get called for each page of records.
+        // console.log(records)
+  
+        records.forEach(function(record) {
+          const fieldOne = record.get('Name');
+          // console.log(fieldOne);
+          // console.log('Retrieved', record.get('Name'));
+          const fieldTwo = record.get('JSONstring');
+          // console.log(fieldTwo)
+          // console.log('Retrieved', record.get('JSONstring'));
+          // if (fieldOne === "likedItemData") {
+          //   console.log("parse liked data");
+            // likes = fieldTwo;
+          // setLikedItemData(JSON.parse(fieldTwo));
+          // } else {
+          //   console.log("parse album data")
+          // }
+        });
+  
+        // To fetch the next page of records, call `fetchNextPage`.
+        // If there are more records, `page` will get called again.
+        // If there are no more records, `done` will get called.
+        fetchNextPage();
+  
+    }, function done(err) {
+        if (err) { console.error(err); return; }
+        // console.log(likes.json());
+        // const likesJSON = JSON.parse(likes);
+        // setLikedItemData(likesJSON);
+    });
+  }, [])
+
 
   // --------------------------------------- CONSOLE LOG ----------------------------
   // console.log(itemData)
@@ -618,26 +679,7 @@ function App() {
   // const album1 = `${albumData.albums[0].route}` || ""
   // console.log(album1)
   // console.log(import.meta.env.VITE_NASA_API)
-
-  base('State Name').select({
-    // Selecting the first 3 records in Grid view:
-    maxRecords: 3,
-    view: "Grid view"
-  }).eachPage(function page(records, fetchNextPage) {
-      // This function (`page`) will get called for each page of records.
-
-      records.forEach(function(record) {
-          console.log('Retrieved', record.get('Name'));
-      });
-
-      // To fetch the next page of records, call `fetchNextPage`.
-      // If there are more records, `page` will get called again.
-      // If there are no more records, `done` will get called.
-      fetchNextPage();
-
-  }, function done(err) {
-      if (err) { console.error(err); return; }
-  });
+  
   
   //  -------------------------------------- DATA FOR CONTEXT ------------------------------
   
@@ -669,6 +711,7 @@ function App() {
     handleAlbumsMode,
     handleBookmark,
     updateAlbumData,
+    handleAlbumTab,
   }
 
   
