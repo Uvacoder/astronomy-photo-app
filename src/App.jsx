@@ -15,9 +15,16 @@ import lozad from 'lozad'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import { debounce } from 'lodash'
-
+import Airtable from 'airtable'
 
 export const DataContext = createContext();
+
+Airtable.configure({ 
+  apiKey: 'keyOqYhriP7UXVBht',
+  endpointUrl: 'https://api.airtable.com',
+});
+
+let base = Airtable.base('appQerk9R1FpDeKEX');
 
 function App() {
   
@@ -96,7 +103,7 @@ function App() {
       isLoading: true,
     }))
     
-    axios.get(`https://api.nasa.gov/planetary/apod?api_key=${import.meta.env.VITE_NASA_API}&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
+    axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&start_date=${dateStringForApi.startDateString}&end_date=${dateStringForApi.endDateString}`)
     .then(function (response) {
       // handle success
       setItemData(prevData => (
@@ -125,7 +132,7 @@ function App() {
       ...prevState,
       isLoading: true,
     }))
-    axios.get(`https://api.nasa.gov/planetary/apod?api_key=${import.meta.env.VITE_NASA_API}&count=16`)
+    axios.get(`https://api.nasa.gov/planetary/apod?api_key=CmaRrOqD96tV80CDIrjTmpawIrei2fv7hBEgOqH8&count=16`)
     .then(function (response) {
       // handle success
       console.log(response.data);
@@ -610,7 +617,27 @@ function App() {
   
   // const album1 = `${albumData.albums[0].route}` || ""
   // console.log(album1)
-  console.log(import.meta.env.VITE_NASA_API)
+  // console.log(import.meta.env.VITE_NASA_API)
+
+  base('State Name').select({
+    // Selecting the first 3 records in Grid view:
+    maxRecords: 3,
+    view: "Grid view"
+  }).eachPage(function page(records, fetchNextPage) {
+      // This function (`page`) will get called for each page of records.
+
+      records.forEach(function(record) {
+          console.log('Retrieved', record.get('Name'));
+      });
+
+      // To fetch the next page of records, call `fetchNextPage`.
+      // If there are more records, `page` will get called again.
+      // If there are no more records, `done` will get called.
+      fetchNextPage();
+
+  }, function done(err) {
+      if (err) { console.error(err); return; }
+  });
   
   //  -------------------------------------- DATA FOR CONTEXT ------------------------------
   
