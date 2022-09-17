@@ -509,11 +509,15 @@ function App() {
       setAlbumData(prevData => ({
         ...prevData,
         albums: unchangedAlbums,
-      }))   
-      
-    }
-    
-    
+      }))         
+    }    
+  }
+
+  const updateAlbumData = updatedData => {
+    setAlbumData(prevData => ({
+      ...prevData,
+      albums: updatedData
+    }))
   }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
@@ -623,6 +627,7 @@ function App() {
     checkAlbumData,
     handleAlbumsMode,
     handleBookmark,
+    updateAlbumData,
   }
 
   

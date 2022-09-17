@@ -20,7 +20,7 @@ export default function Albums() {
         const length = album.data.length;
         const data = album.data;
         let url;
-        console.log(length);
+        // console.log(length);
         if (length === 0) {
             url = "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
         } else {
@@ -41,33 +41,34 @@ export default function Albums() {
     })
 
     return(
-        <>
-        <div className="flex mt-16">
+        
+        <div className="mt-20 ml-8">
             
-            {
-            mode.isAddingAlbum ? 
-            <form>
-                <input 
-                    type="text" 
-                    onChange={updateAlbumForm} value={albumData.form} 
-                    placeholder="album name"
-                    className="input input-bordered w-full max-w-xs"
-                />
-                <button className="btn" onClick={handleAddNewAlbum}>Add</button>
-            </form> :
-            <button className="btn" onClick={handleAddAlbumForm}>New album</button>
+            <div className='flex justify-end mr-8'>
+                {
+                mode.isAddingAlbum ? 
+                <form className='flex'>
+                    <input 
+                        type="text" 
+                        onChange={updateAlbumForm} value={albumData.form} 
+                        placeholder="album name"
+                        className="input input-bordered input-sm w-full max-w-xs"
+                    />
+                    <button className="btn btn-sm" onClick={handleAddNewAlbum}>Add</button>
+                </form> :
+                <button className="btn btn-sm" onClick={handleAddAlbumForm}>Add album</button>
+                }      
+            </div>
+            {numOfAlbums === 0 && 
+                <div className="mt-16">
+                    <span className="text-lg">You have no albums</span>
+                </div>         
             }
-      
-        </div>
-        {numOfAlbums === 0 && 
-            <div className="mt-16">
-                <span className="text-lg">You have no albums</span>
-            </div>         
-        }
-        <div className='grid grid-cols-3 gap-4 justify-center mt-16'>
-        {albumCovers}
+            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
+                xl:grid-cols-5 gap-4 justify-center mt-16 container mx-auto'>
+            {albumCovers}
+            </div>
         </div>
         
-        </>
     )
 }

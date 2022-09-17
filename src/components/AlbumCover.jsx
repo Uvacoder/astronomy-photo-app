@@ -13,7 +13,7 @@ export default function AlbumCover({
                 onClick={() => handleAlbumsMode(data)}
             />            
             </Link>            
-            <h2>{name}</h2>                     
+            <h2 className="font-semibold">{name}</h2>                     
             <p className="flex m-1">{`${length} photos`}</p>
         </div>
         

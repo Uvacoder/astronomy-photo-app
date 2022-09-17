@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useState, useContext, useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { DataContext } from "../App"
 
@@ -10,7 +10,10 @@ export default function Album() {
 
     const dataContext = useContext(DataContext);
 
-    const { albumData } = dataContext || {};
+    const { albumData, updateAlbumData } = dataContext || {};
+
+    const [isRenaming, setIsRenaming] = useState(false);
+    const [newName, setNewName] = useState("")
 
     let { albumroute } = useParams();
     // console.log(albumroute);
@@ -23,26 +26,69 @@ export default function Album() {
         if (albumroute === albumData.albums[i].route) {
             checkAlbumExists = true;
             albumIndex = i;    
-            album = albumData.albums[albumIndex];
-            
+            album = albumData.albums[albumIndex];            
         }
     }
 
+    
     // useEffect(() => {
     //     handleAlbumsMode(album?.data)
     // }, [])
+
     
-    // console.log(album)
+
+    const handleRename = () => {
+        setIsRenaming(prevState => !prevState)
+        if (newName !== "") {
+            const route = newName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
+            const updatedAlbum = {
+                name: newName,
+                route: route,
+                data: album.data,
+            };
+            console.log(updatedAlbum);
+            console.log(albumData);
+            let updatedAlbumsAll = albumData;
+            updatedAlbumsAll.albums[albumIndex] = updatedAlbum;
+            console.log(updatedAlbumsAll);
+            updateAlbumData(updatedAlbumsAll);
+        }
+    }
+
+    const updateRenameForm = event => {
+        const form = event.target.value;
+        setNewName(form)
+    }
+    
+    console.log(album)
+    console.log(albumIndex)
+   
+    
     return(
         <>
         
-        <div className="mt-16">
+        <div className="mt-16 ml-8">
         {
             checkAlbumExists ?
             <>
-            <div className="flex flex-col items-start">
-                <h2>{album.name}</h2>
-                <button className="btn">Edit album</button>
+            <div className="flex justify-end fixed p-2 w-full bg-white z-40">
+                {
+                    isRenaming || <h2 className="mx-2 font-semibold">{album.name}</h2>
+                }
+                {
+                    isRenaming && 
+                    <form className='flex'>
+                        <input 
+                            type="text" 
+                            onChange={updateRenameForm} value={newName} 
+                            placeholder="album name"
+                            className="input input-bordered input-xs w-full max-w-xs"
+                        />                    
+                    </form>
+                }
+                
+                <button className="btn btn-xs mx-2" onClick={handleRename}>Rename</button>
+                <button className="btn btn-xs mx-2 mr-12">Delete</button>
             </div>           
                 <Container />
             </> :
