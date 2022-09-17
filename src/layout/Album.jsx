@@ -5,8 +5,6 @@ import { DataContext } from "../App"
 import Container from "../components/Container"
 import Albums from "./Albums";
 
-import gear from "../icons/gear.svg"
-
 export default function Album() {
 
     const dataContext = useContext(DataContext);
@@ -14,7 +12,8 @@ export default function Album() {
     const { albumData, updateAlbumData } = dataContext || {};
 
     const [isRenaming, setIsRenaming] = useState(false);
-    const [newName, setNewName] = useState("")
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [newName, setNewName] = useState("");
 
     let navigate = useNavigate();
 
@@ -33,7 +32,6 @@ export default function Album() {
         }
     }
 
-    
     // useEffect(() => {
     //     handleAlbumsMode(album?.data)
     // }, [])
@@ -42,7 +40,9 @@ export default function Album() {
 
     const handleRename = () => {
         // event.preventDefault();
-        setIsRenaming(prevState => !prevState)
+        setNewName(album.name);
+        setIsRenaming(prevState => !prevState);
+        setIsDeleting(false);
         if (newName !== "") {
             const route = newName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
             const updatedAlbum = {
@@ -50,11 +50,11 @@ export default function Album() {
                 route: route,
                 data: album.data,
             };
-            console.log(updatedAlbum);
-            console.log(albumData);
+            // console.log(updatedAlbum);
+            // console.log(albumData);
             let updatedAlbumsAll = albumData;
             updatedAlbumsAll.albums[albumIndex] = updatedAlbum;
-            console.log(updatedAlbumsAll);
+            // console.log(updatedAlbumsAll);
             () => updateAlbumData(updatedAlbumsAll);
             navigate(`/${route}`);
         }
@@ -65,10 +65,28 @@ export default function Album() {
         setNewName(form)
     }
     
+    
+    const cancelRename = () => {
+        setIsRenaming(false);
+        setNewName("");
+    }
+
+    const confirmDelete = () => {
+        setIsDeleting(prevState => !prevState);
+        setIsRenaming(false);
+    }
+    
+    const handleDelete = () => {
+        let updatedAlbumsAll = albumData.albums;
+        updatedAlbumsAll.splice(albumIndex, 1);
+        console.log(updatedAlbumsAll);
+        () => updateAlbumData(updatedAlbumsAll);
+        navigate(`/albums`);
+    }
+
     console.log(albumData)
     console.log(album)
-    console.log(albumIndex)
-   
+    console.log(albumIndex)  
     
     return(
         <>
@@ -79,7 +97,7 @@ export default function Album() {
             <>
             <div className="flex justify-end fixed p-2 w-full bg-white z-40">
                 {
-                    isRenaming || <h2 className="mx-2 font-semibold">{album.name}</h2>
+                    isRenaming || <h2 className="mx-2 font-semibold mr-6 text-lg">{album.name}</h2>
                 }
                 {
                     isRenaming && 
@@ -94,7 +112,22 @@ export default function Album() {
                 }
                 
                 <button className="btn btn-xs mx-2" onClick={handleRename}>Rename</button>
-                <button className="btn btn-xs mx-2 mr-12">Delete</button>
+
+                {
+                    isRenaming &&
+                    <button className="btn btn-xs mx-2" onClick={cancelRename}>Cancel</button>
+                }
+                
+                {
+                    isDeleting &&
+                    <button className="btn btn-xs mx-2 btn-warning" onClick={handleDelete}>Confirm delete?</button>
+                }               
+                                
+                <button className="btn btn-xs mx-2 mr-12" onClick={confirmDelete}>
+                    { isDeleting ? "Cancel" : "Delete"}
+                </button>
+                
+                
             </div>           
                 <Container />
             </> :

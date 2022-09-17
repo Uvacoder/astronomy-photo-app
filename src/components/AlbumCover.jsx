@@ -8,7 +8,7 @@ export default function AlbumCover({
         <div className="flex flex-col items-start">
             <Link to={`/${route}`}>
             <img 
-                className="w-40 h-60 object-cover" 
+                className="rounded-lg object-cover h-60 mx-auto cursor-pointer lozadr" 
                 src={url} 
                 onClick={() => handleAlbumsMode(data)}
             />            

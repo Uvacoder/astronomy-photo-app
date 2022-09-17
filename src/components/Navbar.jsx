@@ -16,7 +16,8 @@ export default function Navbar() {
 
     const { 
         handleScrollToTop, mode, handleDatePicker, handleDateSearch, searchDate, 
-        handleRandomView, handleLatestView, handleFeedView, handleGridView, handleLikeMode  
+        handleRandomView, handleLatestView, handleFeedView, handleGridView, handleLikeMode,
+        handleAlbumsMode,  
     } = dataContext || {}
 
     return (

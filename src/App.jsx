@@ -35,6 +35,7 @@ function App() {
     form: "",
     albums: []
   }) 
+  const [albumRoutes, setAlbumRoutes] = useState()
     
   // const [albumFormData, setAlbumFormData] = useState("")
   // if feedView is false, then gridView is active
@@ -381,7 +382,12 @@ function App() {
   // onChange form listener
   const updateAlbumForm = event => {
     const albumName = event.target.value;
-    console.log(albumName);
+    // console.log(albumName);
+
+    const allRoutesArray = albumData?.albums?.map(album => album.route);
+    // console.log("ALL ROUTES")
+    // console.log(allRoutesArray);
+    setAlbumRoutes(allRoutesArray);
     
     setAlbumData(prevData => ({
       ...prevData,
@@ -392,8 +398,15 @@ function App() {
   // add new album to album data
   const handleAddNewAlbum = event => {
     event.preventDefault();
+
     if (albumData.form !== "") {
-      const route = albumData.form.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
+      let route = albumData.form.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
+
+      if (albumRoutes.includes(route)) {
+        console.log("duplicate")
+        route = `${route}${Math.floor(Math.random()*1000000)}`
+      }
+
       const newAlbum = {
         name: albumData.form,
         route: route,
