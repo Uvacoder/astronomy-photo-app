@@ -71,6 +71,8 @@ function App() {
     isBookmarking: false,
     isAtAlbumsTab: false,
   })
+
+  const [airtableData, setAirtableData] = useState()
    
   // ------------------------------------ APIs -------------------------------------------
 
@@ -177,7 +179,7 @@ function App() {
       }) 
       // console.log(item)
       :
-      setLikedItemData(prevData => ([...prevData, item]))
+      setLikedItemData(prevData => ([item, ...prevData]))
       // console.log("add like")  
       if (mode.saves && mode.albums === false) {
         setItemData(likedItemData);
@@ -365,7 +367,19 @@ function App() {
 
   // render saves
   const handleLikeMode = () => {
-    setItemData(likedItemData)
+    // setLikedItemData(prevData => {
+    //   const check = airtableData?.likedItemData;
+    //   let likes;
+    //   if (check) {          
+    //     likes = JSON.parse(airtableData.likedItemData);
+    //     console.log(likes);         
+    //   }
+    //   return ([
+    //     ...prevData,
+    //     ...likes
+    //   ]);
+    // })
+    // setItemData(likedItemData)
     setMode(prevState => ({
       ...prevState,
       latest: false,
@@ -382,6 +396,8 @@ function App() {
       endDateString: dayjs().format("YYYY-MM-DD"),    
       offset: 11,
     })
+
+    setItemData(likedItemData)
   }
 
   // toggle album tab on navbar
@@ -560,11 +576,41 @@ function App() {
     }))
   }
 
+  const updateLikesFromAirtable = () => {
+    setLikedItemData(prevData => {
+      const check = airtableData?.likedItemData;
+      let likes;
+      let checkedLikes;
+      if (check) {          
+        likes = JSON.parse(airtableData.likedItemData);
+        console.log(likes);   
+
+        checkedLikes = likes.map(like => {
+          if (checkLikedItems(like)) {
+            return;
+          } else return like;
+        })
+
+        console.log(checkedLikes)
+
+        if (checkedLikes) {
+          return ([
+            ...prevData,
+            ...checkedLikes
+          ]);
+        } else return ([...prevData])
+              
+      } else return ([...prevData])
+      
+    })
+  }
+
   // --------------------------- USE EFFECTS --------------------------------------------- 
   // first API call on app load
   // useEffect(() => {callApiRandom()}, [])
   useEffect(() => {callApiByDate()}, [searchDate]) 
   // useEffect(() => setItemData(data), [])
+  useEffect(() => {updateLikesFromAirtable()}, [mode])
   
   
   // lazy load images listener
@@ -626,46 +672,76 @@ function App() {
     console.log(lastInteraction);   
   }, [feedView])
 
+
   // call Airtable API on load to get saved like and album data
-  useEffect(() => {
-    // let likes;
-    // let albums;
+  useEffect(() => {       
+    
     base('State Name').select({
-      // Selecting the first 3 records in Grid view:
-      maxRecords: 1,
+      // Selecting the first 2 records in Grid view:
+      maxRecords: 2,
       view: "Grid view"
     }).eachPage(function page(records, fetchNextPage) {
         // This function (`page`) will get called for each page of records.
         // console.log(records)
-  
+        
         records.forEach(function(record) {
-          const fieldOne = record.get('Name');
+          const fieldOne = record?.get('Name');
           // console.log(fieldOne);
           // console.log('Retrieved', record.get('Name'));
-          const fieldTwo = record.get('JSONstring');
+          const fieldTwo = record?.get('JSONstring');
           // console.log(fieldTwo)
           // console.log('Retrieved', record.get('JSONstring'));
-          // if (fieldOne === "likedItemData") {
-          //   console.log("parse liked data");
-            // likes = fieldTwo;
-          // setLikedItemData(JSON.parse(fieldTwo));
-          // } else {
-          //   console.log("parse album data")
-          // }
+          if (fieldOne === "likedItemData") {
+            if (fieldTwo) {
+              console.log("get liked data");
+              setAirtableData(prevData => ({
+                ...prevData,
+                likedItemData: fieldTwo
+              }))
+            }           
+          } else if (fieldOne === "albumData") {
+            if (fieldTwo) {
+              console.log("get album data")
+              setAirtableData(prevData => ({
+                ...prevData,
+                albumData: fieldTwo
+              }))
+            }          
+          } else {
+            setAirtableData(prevData => ({
+              ...prevData,
+            }))
+          }
         });
   
         // To fetch the next page of records, call `fetchNextPage`.
         // If there are more records, `page` will get called again.
         // If there are no more records, `done` will get called.
-        fetchNextPage();
+        try {
+          fetchNextPage();
+        } catch { return; }
   
     }, function done(err) {
         if (err) { console.error(err); return; }
-        // console.log(likes.json());
-        // const likesJSON = JSON.parse(likes);
-        // setLikedItemData(likesJSON);
+                
     });
+    
   }, [])
+
+  // update like data using the data from airtable
+  // useEffect(() => {
+  //   if (airtableData?.likedItemData) {
+  //     try {
+  //       const likes = JSON.parse(airtableData.likedItemData);
+  //       console.log(likes);
+  //     }
+  //     catch(err) {
+  //       console.error(err)
+  //       return
+  //     }
+      
+  //   }
+  // }, [airtableData])
 
 
   // --------------------------------------- CONSOLE LOG ----------------------------
@@ -679,7 +755,17 @@ function App() {
   // const album1 = `${albumData.albums[0].route}` || ""
   // console.log(album1)
   // console.log(import.meta.env.VITE_NASA_API)
-  
+//   const x = {
+//     "date": "2012-01-30",
+//     "explanation": "Behold one of the more detailed images of the Earth yet created. This Blue Marble Earth montage shown above -- created from photographs taken by the Visible/Infrared Imager Radiometer Suite (VIIRS) instrument on board the new Suomi NPP satellite -- shows many stunning details of our home planet. The Suomi NPP satellite was launched last October and renamed last week after Verner Suomi, commonly deemed the father of satellite meteorology. The composite was created from the data collected during four orbits of the robotic satellite taken earlier this month and digitally projected onto the globe. Many features of North America and the Western Hemisphere are particularly visible on a high resolution version of the image. Previously, several other Blue Marble Earth images have been created, some at even higher resolution.",
+//     "hdurl": "https://apod.nasa.gov/apod/image/1201/bluemarbleearth_npp_8000.jpg",
+//     "media_type": "image",
+//     "service_version": "v1",
+//     "title": "Blue Marble Earth from Suomi NPP",
+//     "url": "https://apod.nasa.gov/apod/image/1201/bluemarbleearth_npp_980.jpg"
+// }
+//   const y = JSON.stringify(x)
+//   console.log(y)
   
   //  -------------------------------------- DATA FOR CONTEXT ------------------------------
   
