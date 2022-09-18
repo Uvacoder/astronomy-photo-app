@@ -16,12 +16,11 @@ export default function Navbar() {
     return (
         <div className="navbar bg-slate-50 dark:bg-slate-800 fixed top-0 z-40">
             <div className="flex-1">
-                <Link 
-                    to="/"
+                <span 
                     className="btn btn-ghost normal-case text-lg"
                     onClick={handleScrollToTop}>
                         Astronomy
-                </Link>
+                </span>
                 {/* <div class="dropdown hover:bg-slate-900/25">
                     <div className="flex items-center">
                         <label tabindex="0" class="btn btn-ghost rounded-btn">   

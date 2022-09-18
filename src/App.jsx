@@ -467,6 +467,12 @@ function App() {
 
   // check if photo is stored in albums
   const checkAlbumData = item => {
+
+    const coin = Math.floor(Math.random()*100);
+    if (coin > 85) {
+      updateAlbumsToAirtable();
+    }
+
     let bookmark = false;
     const numOfAlbums = albumData.albums.length;
     for (let i=0; i<numOfAlbums; i++) {
@@ -574,6 +580,11 @@ function App() {
       ...prevData,
       albums: updatedData
     }))
+
+    // const coin = Math.floor(Math.random()*100);
+    // if (coin > 85) {
+    //   updateAlbumsToAirtable();
+    // }
   }
 
   // update state with data from airtable 
@@ -584,14 +595,14 @@ function App() {
       let checkedLikes;
       if (check) {          
         likes = JSON.parse(airtableData.likedItemData);
-        console.log(likes);   
+        // console.log(likes);   
 
         checkedLikes = likes.filter(like => {
           if (checkLikedItems(like) === false) {
             return like;}          
           })
 
-        console.log(checkedLikes)
+        // console.log(checkedLikes)
         
         return ([
           ...prevData,
@@ -620,7 +631,66 @@ function App() {
         return;
       }
       records.forEach(function(record) {
-        console.log(record.get('Name'));
+        // console.log(record.get('Name'));
+      });
+    });
+  }
+
+  // update state with data from airtable 
+  const updateAlbumsFromAirtable = () => {
+    setAlbumData(prevData => {
+      const check = airtableData?.albumData;
+      let albums;
+      let checkedAlbums;
+      // check if defined
+      if (check) {          
+        albums = JSON.parse(airtableData.albumData);
+        console.log(albums);  
+        
+        // check if album route already exists
+        const albumRoutesArray = prevData.albums.map(album => album.route);
+        console.log(albumRoutesArray);
+
+        // filter albums which exists
+        checkedAlbums = albums.filter(album => {
+            if (albumRoutesArray.includes(album.route)) {
+              return false
+            } else return true                     
+          })
+
+        // console.log(checkedAlbums)
+        
+        return ({
+          ...prevData,
+          albums: [
+            ...prevData.albums,
+            ...checkedAlbums
+          ]
+        });        
+              
+      } else return ({...prevData})      
+    })
+  }
+
+  const updateAlbumsToAirtable = () => {
+    const albums = albumData.albums;
+    const updatedAlbums = JSON.stringify(albums);
+    console.log("updating albums...");
+    base('State Name').update([
+      {
+        "id": "rec9DnEWJXQKzp77l",
+        "fields": {
+          "Name": "albumData",
+          "JSONstring": updatedAlbums,
+        }
+      },
+    ], function(err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach(function(record) {
+        // console.log(record.get('Name'));
       });
     });
   }
@@ -632,7 +702,7 @@ function App() {
   // useEffect(() => setItemData(data), [])
 
   // get likes from airtable on mode change (doesn't work on load so using mode as dependencies array)
-  useEffect(() => {updateLikesFromAirtable()}, [mode])
+  useEffect(() => {updateLikesFromAirtable(); updateAlbumsFromAirtable()}, [mode])
   
   // lazy load images listener
   useEffect(() => {
@@ -776,17 +846,9 @@ function App() {
   // const album1 = `${albumData.albums[0].route}` || ""
   // console.log(album1)
   // console.log(import.meta.env.VITE_NASA_API)
-//   const x = {
-//     "date": "2012-01-30",
-//     "explanation": "Behold one of the more detailed images of the Earth yet created. This Blue Marble Earth montage shown above -- created from photographs taken by the Visible/Infrared Imager Radiometer Suite (VIIRS) instrument on board the new Suomi NPP satellite -- shows many stunning details of our home planet. The Suomi NPP satellite was launched last October and renamed last week after Verner Suomi, commonly deemed the father of satellite meteorology. The composite was created from the data collected during four orbits of the robotic satellite taken earlier this month and digitally projected onto the globe. Many features of North America and the Western Hemisphere are particularly visible on a high resolution version of the image. Previously, several other Blue Marble Earth images have been created, some at even higher resolution.",
-//     "hdurl": "https://apod.nasa.gov/apod/image/1201/bluemarbleearth_npp_8000.jpg",
-//     "media_type": "image",
-//     "service_version": "v1",
-//     "title": "Blue Marble Earth from Suomi NPP",
-//     "url": "https://apod.nasa.gov/apod/image/1201/bluemarbleearth_npp_980.jpg"
-// }
-//   const y = JSON.stringify(x)
-//   console.log(y)
+  // const x = albumData.albums
+  // const y = JSON.stringify(x)
+  // console.log(y)
   
   //  -------------------------------------- DATA FOR CONTEXT ------------------------------
   
@@ -819,6 +881,7 @@ function App() {
     handleBookmark,
     updateAlbumData,
     handleAlbumTab,
+    updateAlbumsToAirtable
   }
 
   

@@ -9,7 +9,7 @@ export default function Album() {
 
     const dataContext = useContext(DataContext);
 
-    const { albumData, updateAlbumData } = dataContext || {};
+    const { albumData, updateAlbumData, updateAlbumsToAirtable } = dataContext || {};
 
     const [isRenaming, setIsRenaming] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -84,9 +84,11 @@ export default function Album() {
         navigate(`/albums`);
     }
 
-    console.log(albumData)
-    console.log(album)
-    console.log(albumIndex)  
+    useEffect(() => {updateAlbumsToAirtable();}, [isRenaming]);
+
+    // console.log(albumData)
+    // console.log(album)
+    // console.log(albumIndex)  
     
     return(
         <>
