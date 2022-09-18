@@ -184,10 +184,20 @@ function App() {
       if (mode.saves && mode.albums === false) {
         setItemData(likedItemData);
       }  
+      
   }
 
   // check if card is liked when rendering
   const checkLikedItems = (item) => {
+    // setTimeout(updateLikesToAirtable, 150);
+    // updateLikesToAirtable();    
+    // const debounceUpdateLikesToAirtable = debounce(updateLikesToAirtable, 100);
+    // debounceUpdateLikesToAirtable;
+    const coin = Math.floor(Math.random()*100);
+    if (coin > 85) {
+      updateLikesToAirtable();
+    }
+
     let like = false
     for (let i=0; i<likedItemData.length; i++) {
       if (likedItemData[i]?.date === item?.date) {
@@ -367,19 +377,7 @@ function App() {
 
   // render saves
   const handleLikeMode = () => {
-    // setLikedItemData(prevData => {
-    //   const check = airtableData?.likedItemData;
-    //   let likes;
-    //   if (check) {          
-    //     likes = JSON.parse(airtableData.likedItemData);
-    //     console.log(likes);         
-    //   }
-    //   return ([
-    //     ...prevData,
-    //     ...likes
-    //   ]);
-    // })
-    // setItemData(likedItemData)
+    
     setMode(prevState => ({
       ...prevState,
       latest: false,
@@ -503,6 +501,7 @@ function App() {
     })
   }
 
+  // add/remove item from album
   const handleBookmark = (album, item, found) => {
     
     // if (mode.saves) {
@@ -569,6 +568,7 @@ function App() {
     }    
   }
 
+  // to update rename or delete albums
   const updateAlbumData = updatedData => {
     setAlbumData(prevData => ({
       ...prevData,
@@ -576,6 +576,7 @@ function App() {
     }))
   }
 
+  // update state with data from airtable 
   const updateLikesFromAirtable = () => {
     setLikedItemData(prevData => {
       const check = airtableData?.likedItemData;
@@ -587,22 +588,41 @@ function App() {
 
         checkedLikes = likes.filter(like => {
           if (checkLikedItems(like) === false) {
-            return like;}
-          
+            return like;}          
           })
 
         console.log(checkedLikes)
-
         
         return ([
           ...prevData,
           ...checkedLikes
-        ]);
-        
+        ]);        
               
-      } else return ([...prevData])
-      
+      } else return ([...prevData])      
     })
+  }
+
+  const updateLikesToAirtable = () => {
+    const likes = likedItemData;
+    const updatedLikes = JSON.stringify(likes);
+    console.log("updating likes...");
+    base('State Name').update([
+      {
+        "id": "recNOmMqSacjOAej7",
+        "fields": {
+          "Name": "likedItemData",
+          "JSONstring": updatedLikes,
+        }
+      },
+    ], function(err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach(function(record) {
+        console.log(record.get('Name'));
+      });
+    });
   }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
@@ -610,8 +630,9 @@ function App() {
   // useEffect(() => {callApiRandom()}, [])
   useEffect(() => {callApiByDate()}, [searchDate]) 
   // useEffect(() => setItemData(data), [])
+
+  // get likes from airtable on mode change (doesn't work on load so using mode as dependencies array)
   useEffect(() => {updateLikesFromAirtable()}, [mode])
-  
   
   // lazy load images listener
   useEffect(() => {
