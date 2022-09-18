@@ -585,20 +585,20 @@ function App() {
         likes = JSON.parse(airtableData.likedItemData);
         console.log(likes);   
 
-        checkedLikes = likes.map(like => {
-          if (checkLikedItems(like)) {
-            return;
-          } else return like;
-        })
+        checkedLikes = likes.filter(like => {
+          if (checkLikedItems(like) === false) {
+            return like;}
+          
+          })
 
         console.log(checkedLikes)
 
-        if (checkedLikes) {
-          return ([
-            ...prevData,
-            ...checkedLikes
-          ]);
-        } else return ([...prevData])
+        
+        return ([
+          ...prevData,
+          ...checkedLikes
+        ]);
+        
               
       } else return ([...prevData])
       
