@@ -32,14 +32,10 @@ export default function Album() {
         }
     }
 
-    // useEffect(() => {
-    //     handleAlbumsMode(album?.data)
-    // }, [])
-
     
 
-    const handleRename = () => {
-        // event.preventDefault();
+    const handleRename = (event) => {
+        event.preventDefault();
         setNewName(album.name);
         setIsRenaming(prevState => !prevState);
         setIsDeleting(false);
@@ -56,11 +52,14 @@ export default function Album() {
             updatedAlbumsAll.albums[albumIndex] = updatedAlbum;
             // console.log(updatedAlbumsAll);
             () => updateAlbumData(updatedAlbumsAll);
-            navigate(`/${route}`);
+            // navigate to route causing duplicate album problems
+            // navigate(`/${route}`);
+            navigate('/albums');
         }
     }
 
     const updateRenameForm = event => {
+        // event.preventDefault();
         const form = event.target.value;
         setNewName(form)
     }
@@ -76,7 +75,9 @@ export default function Album() {
         setIsRenaming(false);
     }
     
-    const handleDelete = () => {
+    const handleDelete = () => {        
+        
+        setIsDeleting(false);
         let updatedAlbumsAll = albumData.albums;
         updatedAlbumsAll.splice(albumIndex, 1);
         console.log(updatedAlbumsAll);
@@ -84,10 +85,12 @@ export default function Album() {
         navigate(`/albums`);
     }
 
-    useEffect(() => {updateAlbumsToAirtable();}, [isRenaming]);
+    // use effect for renaming albums
+    useEffect(() => {updateAlbumsToAirtable();}, []);
+    // useEffect(() => {updateAlbumsToAirtable();}, [isDeleting]);
 
     // console.log(albumData)
-    // console.log(album)
+    console.log("album rendered")
     // console.log(albumIndex)  
     
     return(

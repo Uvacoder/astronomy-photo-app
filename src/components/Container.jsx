@@ -13,7 +13,7 @@ export default function Container() {
   const { itemData, feedView, mode,
     cardGridSingle, handleLike, checkLikedItems,
     loadGridSingleView, handleInteraction,
-    checkAlbumData,
+    checkAlbumData, updateLikesFromAirtable, updateAlbumsFromAirtable
   } = dataContext || {};
 
   // map cards
@@ -39,29 +39,30 @@ export default function Container() {
       )
     }
   })
+
     
-    return (
-        // <div className="bg-neutral-900 text-slate-50">
-        <div className="p-8">
-          {feedView ? 
-          // feed view
-          <div className='mt-16 ml-5 md:ml-14'>         
-            {cards}
-            {mode.isLoading && <LoadingSpinner />}
-          </div> :
-          // grid view
-          <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
-            xl:grid-cols-5 gap-4 justify-center mt-16 container mx-auto'>
-            {cards}
-            {mode.isLoading && <LoadingSpinner />}
-          </div>
-          }
-          
-          {
-            cardGridSingle.selected && 
-            <CardGridSelection />
-          }
-        
+  return (
+      // <div className="bg-neutral-900 text-slate-50">
+      <div className="p-8">
+        {feedView ? 
+        // feed view
+        <div className='mt-16 ml-5 md:ml-14'>         
+          {cards}
+          {mode.isLoading && <LoadingSpinner />}
+        </div> :
+        // grid view
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
+          xl:grid-cols-5 gap-4 justify-center mt-16 container mx-auto'>
+          {cards}
+          {mode.isLoading && <LoadingSpinner />}
         </div>
-    )
+        }
+        
+        {
+          cardGridSingle.selected && 
+          <CardGridSelection />
+        }
+      
+      </div>
+  )
 }

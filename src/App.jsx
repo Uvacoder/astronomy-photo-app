@@ -194,7 +194,7 @@ function App() {
     // const debounceUpdateLikesToAirtable = debounce(updateLikesToAirtable, 100);
     // debounceUpdateLikesToAirtable;
     const coin = Math.floor(Math.random()*100);
-    if (coin > 85) {
+    if (coin > 80) {
       updateLikesToAirtable();
     }
 
@@ -398,7 +398,7 @@ function App() {
     setItemData(likedItemData)
   }
 
-  // toggle album tab on navbar
+  // toggle album tab on navbar NOT for viewing individual albums
   const handleAlbumTab = () => {
     setMode(prevState => ({
       ...prevState,
@@ -409,6 +409,12 @@ function App() {
       albums: false,
       isAtAlbumsTab: true,
     }))
+    setDateStringForApi({  
+      // reset to initial values  
+      startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
+      endDateString: dayjs().format("YYYY-MM-DD"),    
+      offset: 11,
+    })
   }
 
   // add new album
@@ -469,9 +475,9 @@ function App() {
   const checkAlbumData = item => {
 
     const coin = Math.floor(Math.random()*100);
-    if (coin > 85) {
-      updateAlbumsToAirtable();
-    }
+    // if (coin > 85) {
+    //   updateAlbumsToAirtable();
+    // }
 
     let bookmark = false;
     const numOfAlbums = albumData.albums.length;
@@ -487,7 +493,7 @@ function App() {
     return bookmark;
   }
 
-  // switch mode to albums and saves
+  // switch mode to albums and saves NOTE: WHEN VIEWING INDIVIDUAL ALBUMS ONLY
   const handleAlbumsMode = album => {
     setItemData(album)
     setMode(prevState => ({
@@ -560,10 +566,10 @@ function App() {
       // add item to album
       changedAlbumData = album.data;
       changedAlbumData.unshift(item);
-      console.log(changedAlbumData);
+      // console.log(changedAlbumData);
 
       changedAlbum.data = changedAlbumData;
-      console.log(changedAlbum);
+      // console.log(changedAlbum);
       // unshift album to mapped total albums
       unchangedAlbums.unshift(changedAlbum);
       console.log(unchangedAlbums)
@@ -583,7 +589,7 @@ function App() {
 
     // const coin = Math.floor(Math.random()*100);
     // if (coin > 85) {
-    //   updateAlbumsToAirtable();
+    updateAlbumsToAirtable();
     // }
   }
 
@@ -593,6 +599,7 @@ function App() {
       const check = airtableData?.likedItemData;
       let likes;
       let checkedLikes;
+      console.log("updating likes from AT: string to JSON")
       if (check) {          
         likes = JSON.parse(airtableData.likedItemData);
         // console.log(likes);   
@@ -616,7 +623,7 @@ function App() {
   const updateLikesToAirtable = () => {
     const likes = likedItemData;
     const updatedLikes = JSON.stringify(likes);
-    console.log("updating likes...");
+    console.log("updating likes to AT");
     base('State Name').update([
       {
         "id": "recNOmMqSacjOAej7",
@@ -638,6 +645,7 @@ function App() {
 
   // update state with data from airtable 
   const updateAlbumsFromAirtable = () => {
+    console.log("updating albums from AT: string to JSON")
     setAlbumData(prevData => {
       const check = airtableData?.albumData;
       let albums;
@@ -649,7 +657,7 @@ function App() {
         
         // check if album route already exists
         const albumRoutesArray = prevData.albums.map(album => album.route);
-        console.log(albumRoutesArray);
+        // console.log(albumRoutesArray);
 
         // filter albums which exists
         checkedAlbums = albums.filter(album => {
@@ -658,7 +666,7 @@ function App() {
             } else return true                     
           })
 
-        // console.log(checkedAlbums)
+        // console.log(...prevData.albums)
         
         return ({
           ...prevData,
@@ -675,7 +683,7 @@ function App() {
   const updateAlbumsToAirtable = () => {
     const albums = albumData.albums;
     const updatedAlbums = JSON.stringify(albums);
-    console.log("updating albums...");
+    console.log("updating albums to AT");
     base('State Name').update([
       {
         "id": "rec9DnEWJXQKzp77l",
@@ -844,7 +852,7 @@ function App() {
   // console.log(lastInteraction)
   
   // const album1 = `${albumData.albums[0].route}` || ""
-  // console.log(album1)
+  // console.log(albumData)
   // console.log(import.meta.env.VITE_NASA_API)
   // const x = albumData.albums
   // const y = JSON.stringify(x)
@@ -881,7 +889,9 @@ function App() {
     handleBookmark,
     updateAlbumData,
     handleAlbumTab,
-    updateAlbumsToAirtable
+    updateAlbumsToAirtable,
+    updateLikesFromAirtable,
+    updateAlbumsFromAirtable
   }
 
   

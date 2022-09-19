@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { DataContext } from '../App'
 
 import AlbumCover from '../components/AlbumCover'
@@ -7,9 +7,9 @@ export default function Albums() {
 
     const dataContext = useContext(DataContext);
     const { albumData, handleAddAlbumForm, updateAlbumForm, 
-        mode, handleAddNewAlbum, handleAlbumsMode } = dataContext || {};
+        mode, handleAddNewAlbum, handleAlbumsMode, updateAlbumsToAirtable } = dataContext || {};
     // console.log(albumData)
-
+    
     const numOfAlbums = albumData.albums.length;
     
     const albumCovers = albumData.albums.map((album, index) => {
@@ -39,6 +39,9 @@ export default function Albums() {
             />
         )
     })
+
+    // for deleting albums
+    useEffect(() => {updateAlbumsToAirtable(); console.log("Albums component use effect triggered")}, []);
 
     return(
         
