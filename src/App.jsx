@@ -599,10 +599,11 @@ function App() {
       const check = airtableData?.likedItemData;
       let likes;
       let checkedLikes;
-      console.log("updating likes from AT: string to JSON")
+      
       if (check) {          
         likes = JSON.parse(airtableData.likedItemData);
         // console.log(likes);   
+        console.log("updating likes from AT: string to JSON")
 
         checkedLikes = likes.filter(like => {
           if (checkLikedItems(like) === false) {
@@ -645,16 +646,16 @@ function App() {
 
   // update state with data from airtable 
   const updateAlbumsFromAirtable = () => {
-    console.log("updating albums from AT: string to JSON")
+    
     setAlbumData(prevData => {
       const check = airtableData?.albumData;
       let albums;
       let checkedAlbums;
       // check if defined
       if (check) {          
-        albums = JSON.parse(airtableData.albumData);
+        albums = JSON.parse(airtableData.albumData);        
+        console.log("updating albums from AT: string to JSON")
         console.log(albums);  
-        
         // check if album route already exists
         const albumRoutesArray = prevData.albums.map(album => album.route);
         // console.log(albumRoutesArray);
@@ -906,7 +907,6 @@ function App() {
           <Route path="search" element={<Container />} />
           <Route path="likes" element={<Likes />} />
           <Route path="albums" element={<Albums />} />
-          {/* <Route path={`${album1}`} element={<Album />} /> */}
           <Route path="/:albumroute" element={<Album />} />    
         </Route>
         <Route path="*" element="NOT FOUND" />

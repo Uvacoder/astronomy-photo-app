@@ -19,7 +19,7 @@ export default function CardGridSelection() {
     const bookmark = checkAlbumData(cardGridSingle.item);
 
     return (
-        <div className="z-50 fixed top-1 w-screen h-screen left-0 bg-slate-100/95 flex">
+        <div className="z-50 fixed top-1 w-screen h-screen left-0 bg-slate-100/95 flex dark:bg-slate-800/95">
                         
             <img 
                 src={cardGridSingle.item.url} 
@@ -28,17 +28,17 @@ export default function CardGridSelection() {
             <div className='flex flex-col'>
                 <div className='flex items-center'>
                     <h3 className="text-lg font-semibold ml-2">{cardGridSingle.item.title}</h3>
-                    <button className="btn btn-square btn-ghost" 
+                    <button className="btn btn-square btn-ghost dark:invert" 
                             onClick={unloadGridSingleView}>
                         <img className="h-6" src={close} />
                     </button>
                 </div>
                 <div className='flex items-center'>
                     {like ? 
-                    <button className="btn btn-square btn-ghost" onClick={() => handleLike(cardGridSingle.item)}>
+                    <button className="btn btn-square btn-ghost dark:invert" onClick={() => handleLike(cardGridSingle.item)}>
                         <img className="h-5" src={heartSolid} />
                     </button> :
-                    <button className="btn btn-square btn-ghost" onClick={() => handleLike(cardGridSingle.item)}>
+                    <button className="btn btn-square btn-ghost dark:invert" onClick={() => handleLike(cardGridSingle.item)}>
                         <img className="h-5" src={heartEmpty} />
                     </button> 
                     }

@@ -34,10 +34,10 @@ export default function CardPost({
             }
             
             {like ? 
-            <button className="btn btn-square btn-ghost" onClick={() => handleLike(item)}>
+            <button className="btn btn-square btn-ghost dark:invert" onClick={() => handleLike(item)}>
                 <img className="h-5" src={heartSolid} />
             </button> :
-            <button className="btn btn-square btn-ghost" onClick={() => handleLike(item)}>
+            <button className="btn btn-square btn-ghost dark:invert" onClick={() => handleLike(item)}>
                 <img className="h-5" src={heartEmpty} />
             </button> 
             }            

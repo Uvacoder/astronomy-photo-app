@@ -100,7 +100,7 @@ export default function Album() {
         {
             checkAlbumExists ?
             <>
-            <div className="flex justify-end fixed p-2 w-full bg-white z-40">
+            <div className="flex justify-end fixed p-2 w-full bg-white z-40 dark:bg-slate-800">
                 {
                     isRenaming || <h2 className="mx-2 font-semibold mr-6 text-lg">{album.name}</h2>
                 }

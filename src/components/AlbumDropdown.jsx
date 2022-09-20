@@ -21,8 +21,8 @@ export default function AlbumDropdown({ bookmark, item }) {
                     {album.name}
                     {
                     found ?
-                    <img className='h-4' src={bookmarkSolid} /> :
-                    <img className='h-4' src={bookmarkEmpty} />
+                    <img className='h-4 dark:invert' src={bookmarkSolid} /> :
+                    <img className='h-4 dark:invert' src={bookmarkEmpty} />
                     }                    
                 </a>
             </li>          
@@ -32,13 +32,13 @@ export default function AlbumDropdown({ bookmark, item }) {
     const numOfAlbums = albumData.albums.length
 
     return(
-        <div className="dropdown dropdown-right dropdown-end">
+        <div className="dropdown dropdown-right">
             <label tabIndex={0}>
                 {bookmark ?
-                    <button className="btn btn-square btn-ghost">
+                    <button className="btn btn-square btn-ghost dark:invert">
                         <img className="h-5" src={bookmarkSolid} />
                     </button> :
-                    <button className="btn btn-square btn-ghost">
+                    <button className="btn btn-square btn-ghost dark:invert">
                         <img className="h-5" src={bookmarkEmpty} />
                     </button>            
                 }
