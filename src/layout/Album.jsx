@@ -81,7 +81,7 @@ export default function Album() {
         let updatedAlbumsAll = albumData.albums;
         updatedAlbumsAll.splice(albumIndex, 1);
         console.log(updatedAlbumsAll);
-        () => updateAlbumData(updatedAlbumsAll);
+        updateAlbumData(updatedAlbumsAll);
         navigate(`/albums`);
     }
 

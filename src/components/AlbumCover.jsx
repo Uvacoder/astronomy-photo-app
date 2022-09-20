@@ -1,8 +1,16 @@
 import { Link } from "react-router-dom"
+import { useContext, useEffect } from 'react'
+import { DataContext } from '../App'
 
 export default function AlbumCover({
     name, url, length, route, handleAlbumsMode, data
 }) {
+
+    const dataContext = useContext(DataContext);
+    const { updateAlbumsToAirtable } = dataContext || {}
+
+    useEffect(() => updateAlbumsToAirtable(), []);
+
     return(
         
         <div className="flex flex-col items-start">

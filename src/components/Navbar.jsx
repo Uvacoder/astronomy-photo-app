@@ -11,7 +11,6 @@ export default function Navbar() {
         handleRandomView, handleLatestView, handleFeedView, handleGridView, handleLikeMode,
         handleAlbumsMode, feedView, handleAlbumTab
     } = dataContext || {}
-   
 
     return (
         <div className="navbar bg-slate-50 dark:bg-slate-800 fixed top-0 z-40">
