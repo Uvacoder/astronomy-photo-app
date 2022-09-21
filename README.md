@@ -17,39 +17,45 @@ It is my second project for General Assembly's Software Engineering Immersive Fl
 
 - [NASA APOD API](https://github.com/nasa/apod-api)
 
+---
+
 ## Features
 
-### Latest or random photos
+### - Latest or random photos
 - View the latest photos (Latest mode)
 - View random photos (Shuffle mode)
 
-### Feed or grid view
+### - Feed or grid view
 While in latest or shuffle mode, you can view the photos either in:
 - Feed mode, like Instagram
 - Grid mode, like Pinterest
 
-#### Improved user experience
-When the user is scrolling through a lot of photos and wishes to switch between feed and grid, the last viewed photos will be lost as the height of the HTML body differs with feed and grid mode.
+### - Mode switch retains last moused over post
+When the user is scrolling through a lot of photos and wishes to switch between feed and grid, the last viewed photo will be lost as the height of the HTML body differs with feed and grid mode.
 
-When there is a mode switch, the last interacted post will appear in the window. ([Code](https://github.com/berwyntan/astronomy-photo-app#code))
-
-To work around this, every post HTML element has its own id, the date of post. When there is a mouseover event, the id of the element is updated to the state `lastInteraction`.
+This is worked around with Javascript and HTML. When there is a mode switch, the last interacted post will appear in the window. ([Code](#code))
 
 insert gif here
 
-### Infinite scroll
-Like all social media apps, this app has infinite scroll and you can keep scrolling down to see more photos.
-([Code](https://github.com/berwyntan/astronomy-photo-app#code))
+### - Infinite scroll
+Like all social media apps, this app has infinite scroll and you can keep scrolling down to see more photos. ([Code](#code))
 
-### Search by date
+### - Search by date
 APOD releases a new photo everyday, since 1996. You can search a photo by date. Besides that photo, the app will also show you together previous photos before the search date.
 
-### Likes and albums
+### - Custom likes and albums
 You can like a photo or save it to an album. Albums have customized names and can be renamed or deleted. Likes and albums are stored on Airtable and will be retrieved when the app loads.
+
+### - Responsive design + Light and dark mode compatible
+Thanks to TailwindCSS, minimal code is needed to implement this.
+
+---
 
 ## Deployment
 
 https://astronomy-photo-app.vercel.app/
+
+---
 
 ## Wireframe
 
@@ -63,10 +69,16 @@ https://astronomy-photo-app.vercel.app/
 
 *Figure 2: Component Hierarchy*
 
+---
+
 ## Code
 
 ### Infinite scroll
 ### Last interacted post
+
+To work around this, every post HTML element has its own id, the date of post. When there is a mouseover event, the id of the element is updated to the state `lastInteraction`.
+
+### Retrieving from and saving data to Airtable
 
 ### References
 Infinite scroll:
