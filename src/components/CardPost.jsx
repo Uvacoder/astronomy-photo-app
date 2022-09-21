@@ -41,18 +41,7 @@ export default function CardPost({
                 <img className="h-5" src={heartEmpty} />
             </button> 
             }            
-            {/* {bookmark ?
-            <button className="btn btn-square btn-ghost" onClick={handleBookmark}>
-            <img className="h-5" src={bookmarkSolid} />
-            </button> :
-            <button className="btn btn-square btn-ghost" onClick={handleBookmark}>
-            <img className="h-5" src={bookmarkEmpty} />
-            </button>            
-            } */}
-            {/* {seeAlbum ?
-            <span className="absolute"><AlbumDropbox /></span> :
-            <span className="absolute"></span>
-            } */}
+            
             <AlbumDropdown bookmark={bookmark} item={item} />
                         
             {seeMore && <p className="max-w-sm">{item?.explanation}</p>}

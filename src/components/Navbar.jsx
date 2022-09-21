@@ -82,32 +82,3 @@ export default function Navbar() {
     )
 }
 
-{/* <div className="flex-none">
-                <ul className="menu menu-horizontal p-0">
-                <li><Link to="/"><button onClick={handleLatestView}>Latest</button></Link></li>
-                <li><Link to="/shuffle"><button onClick={handleRandomView}>Shuffle</button></Link></li>
-                <li><button onClick={handleFeedView}>Feed</button></li>
-                <li><button onClick={handleGridView}>Grid</button></li>
-                <li>
-                    <Link to="/search">
-                        <button onClick={handleDatePicker}>Search</button>
-                        {mode?.isSearching && <Calendar 
-                            handleDateSearch={handleDateSearch}
-                            searchDate={searchDate}
-                            />
-                        }
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/likes">
-                        <button onClick={handleLikeMode}>Likes</button>
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/albums">
-                        <button onClick={() => console.log("albums")}>Albums</button>
-                    </Link>
-                </li>
-                </ul>
-            </div>            
-        </div> */}

@@ -29,8 +29,10 @@ let base = Airtable.base('appQerk9R1FpDeKEX');
 function App() {
   
   // ------------------- STATES ------------------------------------------------
+  // state to store the photos/title/text etc to be rendered
   const [itemData, setItemData] = useState([])   
-  // const [isLoading, setIsLoading] = useState(false)
+  
+  // to get todays date and date 10 days ago for the API
   const [dateStringForApi, setDateStringForApi] = useState({  
     // get date 10 days before today then format date in YYYY-MM-DD  
     startDateString: dayjs(dayjs().subtract(10, "day")).format("YYYY-MM-DD"),    
@@ -45,20 +47,21 @@ function App() {
   const [albumRoutes, setAlbumRoutes] = useState()
     
   // const [albumFormData, setAlbumFormData] = useState("")
+
   // if feedView is false, then gridView is active
   const [feedView, setFeedView] = useState(true)
-  // if randomMode is false, chronological view is active
-  // const [randomMode, setRandomMode] = useState(false)
-  // if card grid single is true, show the selected single post
+  
+  // if card grid single is true, show the selected single post in grid mode
   const [cardGridSingle, setCardGridSingle] = useState({
     selected: false, item: null})
 
-  // if isSearching is true, date picker will appear
-  // const [isSearching, setIsSearching] = useState(false)
+  // store search date
   const [searchDate, setSearchDate] = useState()
-  // const [searchMode, setSearchMode] = useState(false)
-  const [lastInteraction, setLastInteraction] = useState("")
   
+  // store last interacted photo
+  const [lastInteraction, setLastInteraction] = useState("")  
+
+  // if isSearching is true, date picker will appear
   const [mode, setMode] = useState({
     latest: true,
     random: false,
@@ -72,10 +75,12 @@ function App() {
     isAtAlbumsTab: false,
   })
 
+  // to store data retrieved from airtable in string format
   const [airtableData, setAirtableData] = useState()
    
   // ------------------------------------ APIs -------------------------------------------
 
+  // to provide the API with dates by using dayJS to calculate date subtracting
   const calculateDateForApi = () => {
     
     const offset = dateStringForApi.offset
@@ -99,6 +104,7 @@ function App() {
     })
   }
 
+  // call API by date for latest and search mode
   const callApiByDate = () => {   
     
     setMode(prevState => ({
@@ -130,6 +136,7 @@ function App() {
     });
   }  
 
+  // call API for random photos
   const callApiRandom = () => {
     setMode(prevState => ({
       ...prevState,
@@ -370,12 +377,11 @@ function App() {
 
   // gets the id of last interacted card element so window can scroll to element when switching view
   const handleInteraction = id => {
-    // const debounceLastInteraction = debounce(() => setLastInteraction(id), 500);
-    // debounceLastInteraction;
+    
     setLastInteraction(id);
   }  
 
-  // render saves
+  // render likes
   const handleLikeMode = () => {
     
     setMode(prevState => ({
@@ -398,7 +404,7 @@ function App() {
     setItemData(likedItemData)
   }
 
-  // toggle album tab on navbar NOT for viewing individual albums
+  // toggle album tab on navbar only NOT for viewing individual albums
   const handleAlbumTab = () => {
     setMode(prevState => ({
       ...prevState,
@@ -447,7 +453,7 @@ function App() {
 
     if (albumData.form !== "") {
       let route = albumData.form.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
-
+      // check for duplicate routes
       if (albumRoutes.includes(route)) {
         console.log("duplicate")
         route = `${route}${Math.floor(Math.random()*1000000)}`
@@ -474,7 +480,7 @@ function App() {
   // check if photo is stored in albums
   const checkAlbumData = item => {
 
-    const coin = Math.floor(Math.random()*100);
+    // const coin = Math.floor(Math.random()*100);
     // if (coin > 85) {
     //   updateAlbumsToAirtable();
     // }
@@ -593,7 +599,7 @@ function App() {
     // }
   }
 
-  // update state with data from airtable 
+  // update state with STRING data from airtable 
   const updateLikesFromAirtable = () => {
     setLikedItemData(prevData => {
       const check = airtableData?.likedItemData;
@@ -621,6 +627,7 @@ function App() {
     })
   }
 
+  // convert like data to string, upload to Airtable
   const updateLikesToAirtable = () => {
     const likes = likedItemData;
     const updatedLikes = JSON.stringify(likes);
@@ -644,7 +651,7 @@ function App() {
     });
   }
 
-  // update state with data from airtable 
+  // update state with STRING data from airtable 
   const updateAlbumsFromAirtable = () => {
     
     setAlbumData(prevData => {
@@ -681,6 +688,7 @@ function App() {
     })
   }
 
+  // convert album data to string, upload to Airtable
   const updateAlbumsToAirtable = () => {
     const albums = albumData.albums;
     const updatedAlbums = JSON.stringify(albums);
@@ -828,22 +836,6 @@ function App() {
     
   }, [])
 
-  // update like data using the data from airtable
-  // useEffect(() => {
-  //   if (airtableData?.likedItemData) {
-  //     try {
-  //       const likes = JSON.parse(airtableData.likedItemData);
-  //       console.log(likes);
-  //     }
-  //     catch(err) {
-  //       console.error(err)
-  //       return
-  //     }
-      
-  //   }
-  // }, [airtableData])
-
-
   // --------------------------------------- CONSOLE LOG ----------------------------
   // console.log(itemData)
   // console.log("saves: ")
@@ -899,8 +891,7 @@ function App() {
   return (
     <DataContext.Provider value={data}>
     <BrowserRouter>
-      <Routes>
-        
+      <Routes>        
         <Route path="/" element={<Layout />}>
           <Route index element={<Container />} />
           <Route path="shuffle" element={<Container />} />
