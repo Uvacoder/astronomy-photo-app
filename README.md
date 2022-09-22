@@ -46,8 +46,8 @@ APOD releases a new photo everyday, since 1996. You can search a photo by date. 
 ### - Custom likes and albums
 You can like a photo or save it to an album. Albums have customized names and can be renamed or deleted. Likes and albums are stored on Airtable and will be retrieved when the app loads.
 
-### - Responsive design + Light and dark mode compatible
-Thanks to TailwindCSS, minimal code is needed to implement this.
+### - Responsive design (desktop only) + Light and dark mode compatible
+The app will display light or dark mode depending on your system preferences. However you cannot toggle between light and dark mode on the app. That will require custom CSS for every elements.
 
 ---
 
@@ -74,14 +74,83 @@ https://astronomy-photo-app.vercel.app/
 ## Code
 
 ### Infinite scroll
+
+When the browser window is detected to reach the bottom of the document element, an event listener for scrolling will trigger, call the API and push new posts to the document element.
+
+However, there are rounding errors sometimes when calculating `scrollTop`. Then the listener would not trigger the API call. So I added `Math.floor` and `Math.ceil` to round the `scrollTop` calculation.
+
+The next issue is that the API will call multiple times upon reaching the bottom. The `debounce` function from Lodash is used to fix this issue. The app may receive multiple triggers to call the API, but it will wait for 800ms before calling the API once. Once the API is triggered, the state `mode.isLoading` will be true and the API cannot be called again too. 
+
+The API called will depend on the mode state. `mode.random` will `callApiRandom()`. The other modes will `callApiByDate()`.
+
+The event listener is placed in a `useEffect` hook with a cleanup function to `removeEventListener`.
+
+    useEffect(() => {
+        const handleScroll = event => {
+                
+        if (mode.saves === false) {
+            if (Math.floor(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
+
+                mode.random && mode.isLoading === false ? callApiRandom() : callApiByDate()
+                return
+
+            } else if (Math.ceil(document.documentElement.scrollTop) + window.innerHeight === document.documentElement.offsetHeight) {
+
+            mode.random && mode.isLoading === false ? callApiRandom() : callApiByDate()
+            return
+
+            } else if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight) {
+
+            mode.random && mode.isLoading === false ? callApiRandom() : callApiByDate()
+            return
+
+            }}  
+        };
+
+    const debounceHandleScroll = debounce(handleScroll, 800)
+
+    window.addEventListener('scroll', debounceHandleScroll);
+
+    return () => {
+        window.removeEventListener('scroll', debounceHandleScroll);
+        };
+    })
+
+
 ### Last interacted post
 
-To work around this, every post HTML element has its own id, the date of post. When there is a mouseover event, the id of the element is updated to the state `lastInteraction`.
+Early versions of this app was not able to keep track of the last interacted posts. I could be viewing a post near the bottom of the body but when I switched from feed to grid view, my window will be at the top of the body. This is disorienting for the user.
+
+To work around this, every post element has its own id, which is the date of the post. Since APOD publishes 1 photo a day, the date is unique (unless the same post appears twice in random mode, which is an edge case). When the mouse goes over a post element, the id of that element is updated to the state `lastInteraction`. 
+
+On switching mode, the app will use `getElementById` to search for the last moused over post element and scroll to it using `scrollIntoView()`.
+
+This code is placed in a `useEffect` hook with the state `feedView` as the dependency array. `feedView` is a boolean which controls whether the app is displaying feed view or grid view.
+
+
+    // Id is set in the element with a mouseOver listener
+    <div 
+        id={`${item?.date}`} 
+        onMouseOver={() => handleInteraction(item?.date)} 
+    >...</div>
+
+
+    // the date which is the id is lifted from the element to App.jsx
+    const handleInteraction = id => {    
+        setLastInteraction(id);
+    }  
+
+
+    // useEffect hook will trigger when feedView changes
+    useEffect(() => {    
+        document.getElementById(lastInteraction)?.scrollIntoView();
+    }, [feedView])
+
 
 ### Retrieving from and saving data to Airtable
 
 ### References
-Infinite scroll:
+Infinite scroll with debounce:
 https://www.digitalocean.com/community/tutorials/react-react-infinite-scroll
 
 
