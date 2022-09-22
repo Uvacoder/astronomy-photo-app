@@ -35,28 +35,28 @@ When the user is scrolling through a lot of photos and wishes to switch between 
 
 This is worked around with Javascript and HTML. When there is a mode switch, the last interacted post will appear in the window. ([Code](#last-interacted-post))
 
-<img src="./readme/handle-last-interaction.gif" alt="handle-last-interaction">
+<img src="./readme/handle-last-interaction.gif" alt="handle-last-interaction" width="400">
 
 ### - Infinite scroll
 Like all social media apps, this app has infinite scroll and you can keep scrolling down to see more photos. ([Code](#infinite-scroll))
 
-<img src="./readme/infinite-scroll.gif" alt="infinite-scroll">
+<img src="./readme/infinite-scroll.gif" alt="infinite-scroll" width="400">
 
 ### - Search by date
 APOD releases a new photo everyday, since 1996. You can search a photo by date. Besides searching for that photo, the app will also show the ten previous photos before the search date. Infinite scroll is also enabled in search mode.
 
-<img src="./readme/search.gif" alt="search">
+<img src="./readme/search.gif" alt="search" width="400">
 
 ### - Custom likes and albums
 You can like a photo or save it to an album. Albums have customized names and can be renamed or deleted. If a photo has already been liked or saved on an album, it cannot be saved again. Likes and albums are stored on Airtable and will be retrieved when the app loads.
 
 ### - Responsive design (desktop only) + Light and dark mode compatible
 
-<img src="./readme/responsive.gif" alt="responsive">
+<img src="./readme/responsive.gif" alt="responsive" width="400">
 
 The app will display light or dark mode depending on your system preferences. However you cannot toggle between light and dark mode on the app. That means having to set dark mode CSS for every element.
 
-<img src="./readme/light-dark-mode.gif" alt="light-dark-mode">
+<img src="./readme/light-dark-mode.gif" alt="light-dark-mode" width="400">
 
 ---
 
