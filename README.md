@@ -33,21 +33,30 @@ While in latest or shuffle mode, you can view the photos either in:
 ### - Mode switch retains last moused over post
 When the user is scrolling through a lot of photos and wishes to switch between feed and grid, the last viewed photo will be lost as the height of the HTML body differs with feed and grid mode.
 
-This is worked around with Javascript and HTML. When there is a mode switch, the last interacted post will appear in the window. ([Code](#code))
+This is worked around with Javascript and HTML. When there is a mode switch, the last interacted post will appear in the window. ([Code](#last-interacted-post))
 
-insert gif here
+<img src="./readme/handle-last-interaction.gif" alt="handle-last-interaction">
 
 ### - Infinite scroll
-Like all social media apps, this app has infinite scroll and you can keep scrolling down to see more photos. ([Code](#code))
+Like all social media apps, this app has infinite scroll and you can keep scrolling down to see more photos. ([Code](#infinite-scroll))
+
+<img src="./readme/infinite-scroll.gif" alt="infinite-scroll">
 
 ### - Search by date
-APOD releases a new photo everyday, since 1996. You can search a photo by date. Besides that photo, the app will also show you together previous photos before the search date.
+APOD releases a new photo everyday, since 1996. You can search a photo by date. Besides searching for that photo, the app will also show the ten previous photos before the search date. Infinite scroll is also enabled in search mode.
+
+<img src="./readme/search.gif" alt="search">
 
 ### - Custom likes and albums
-You can like a photo or save it to an album. Albums have customized names and can be renamed or deleted. Likes and albums are stored on Airtable and will be retrieved when the app loads.
+You can like a photo or save it to an album. Albums have customized names and can be renamed or deleted. If a photo has already been liked or saved on an album, it cannot be saved again. Likes and albums are stored on Airtable and will be retrieved when the app loads.
 
 ### - Responsive design (desktop only) + Light and dark mode compatible
-The app will display light or dark mode depending on your system preferences. However you cannot toggle between light and dark mode on the app. That will require custom CSS for every elements.
+
+<img src="./readme/responsive.gif" alt="responsive">
+
+The app will display light or dark mode depending on your system preferences. However you cannot toggle between light and dark mode on the app. That means having to set dark mode CSS for every element.
+
+<img src="./readme/light-dark-mode.gif" alt="light-dark-mode">
 
 ---
 
@@ -149,9 +158,35 @@ This code is placed in a `useEffect` hook with the state `feedView` as the depen
 
 ### Retrieving from and saving data to Airtable
 
+#### Retrieving
+
+There is a useEffect on app load that calls the Airtable database and retrieves the album and likes data in string format and sets the data into the state `airtableData`. Conditional statements check which data is for albums and for likes.
+
+The functions `updateLikesFromAirtable` and `updateAlbumsFromAirtable` parse the data into JSON format and then update the states containing the likes, `likedItemData` and albums, `albumData`. 
+
+#### Updating
+
+The functions `updateLikesToAirtable` and `updateAlbumsToAirtable` cannot be run on load as the likes and albums states are empty. Then the data on Airtable will be erased. 
+
+Likes are updated whenever the app checks whether a post is liked. Albums are updated when the user adds, renames, deletes an album or adds/removes a photo from album.
+
+---
+
 ### References
-Infinite scroll with debounce:
+Infinite scroll using debounce:
 https://www.digitalocean.com/community/tutorials/react-react-infinite-scroll
+
+Debounce function:
+https://timmousk.com/blog/lodash-debounce/
+
+Fixing the rounding error for infinite scroll:
+https://stackoverflow.com/questions/45585542/detecting-when-user-scrolls-to-bottom-of-div-with-react-js
+
+Airtable API error: TypeError: Cannot read property 'offset' of undefined
+https://github.com/Airtable/airtable.js/issues/246
+
+Passing functions with useContext:
+https://stackoverflow.com/questions/62366824/how-can-%C4%B1-pass-function-with-state-for-react-usecontext
 
 
 
