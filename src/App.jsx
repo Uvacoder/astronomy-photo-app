@@ -191,7 +191,7 @@ function App() {
       if (mode.saves && mode.albums === false) {
         setItemData(likedItemData);
       }  
-      
+    // updateLikesToAirtable();  
   }
 
   // check if card is liked when rendering
@@ -200,10 +200,10 @@ function App() {
     // updateLikesToAirtable();    
     // const debounceUpdateLikesToAirtable = debounce(updateLikesToAirtable, 100);
     // debounceUpdateLikesToAirtable;
-    const coin = Math.floor(Math.random()*100);
-    if (coin > 80) {
-      updateLikesToAirtable();
-    }
+    // const coin = Math.floor(Math.random()*100);
+    // if (coin > 80) {
+    //   updateLikesToAirtable();
+    // }
 
     let like = false
     for (let i=0; i<likedItemData.length; i++) {
@@ -595,7 +595,7 @@ function App() {
 
     // const coin = Math.floor(Math.random()*100);
     // if (coin > 85) {
-    updateAlbumsToAirtable();
+    // updateAlbumsToAirtable();
     // }
   }
 
@@ -606,7 +606,7 @@ function App() {
       let likes;
       let checkedLikes;
       
-      if (check) {          
+      if (check && airtableData.likedItemData !== "") {          
         likes = JSON.parse(airtableData.likedItemData);
         // console.log(likes);   
         console.log("updating likes from AT: string to JSON")
@@ -630,7 +630,8 @@ function App() {
   // convert like data to string, upload to Airtable
   const updateLikesToAirtable = () => {
     const likes = likedItemData;
-    const updatedLikes = JSON.stringify(likes);
+    if (likes.length > 0) {
+      const updatedLikes = JSON.stringify(likes);
     console.log("updating likes to AT");
     base('State Name').update([
       {
@@ -649,6 +650,7 @@ function App() {
         // console.log(record.get('Name'));
       });
     });
+    }    
   }
 
   // update state with STRING data from airtable 
@@ -659,7 +661,7 @@ function App() {
       let albums;
       let checkedAlbums;
       // check if defined
-      if (check) {          
+      if (check && airtableData.albumData !== "") {          
         albums = JSON.parse(airtableData.albumData);        
         console.log("updating albums from AT: string to JSON")
         console.log(albums);  
@@ -691,7 +693,8 @@ function App() {
   // convert album data to string, upload to Airtable
   const updateAlbumsToAirtable = () => {
     const albums = albumData.albums;
-    const updatedAlbums = JSON.stringify(albums);
+    if (albums.length > 0) {
+      const updatedAlbums = JSON.stringify(albums);
     console.log("updating albums to AT");
     base('State Name').update([
       {
@@ -710,6 +713,7 @@ function App() {
         // console.log(record.get('Name'));
       });
     });
+    }    
   }
 
   // --------------------------- USE EFFECTS --------------------------------------------- 
@@ -717,9 +721,18 @@ function App() {
   // useEffect(() => {callApiRandom()}, [])
   useEffect(() => {callApiByDate()}, [searchDate]) 
   // useEffect(() => setItemData(data), [])
+  useEffect(() => updateLikesToAirtable(), [likedItemData])
+  useEffect(() => updateAlbumsToAirtable(), [albumData])
 
-  // get likes from airtable on mode change (doesn't work on load so using mode as dependencies array)
-  useEffect(() => {updateLikesFromAirtable(); updateAlbumsFromAirtable()}, [mode])
+  // set states for likes and albums when airtable string data is received
+  useEffect(() => {
+    const delay = () => {
+      updateLikesFromAirtable(); updateAlbumsFromAirtable()
+    };
+    setTimeout(delay, 0);  
+
+    return clearTimeout(delay);
+  }, [airtableData])
   
   // lazy load images listener
   useEffect(() => {
