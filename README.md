@@ -162,13 +162,13 @@ This code is placed in a `useEffect` hook with the state `feedView` as the depen
 
 There is a useEffect on app load that calls the Airtable database and retrieves the album and likes data in string format and sets the data into the state `airtableData`. Conditional statements check which data is for albums and for likes.
 
-The functions `updateLikesFromAirtable` and `updateAlbumsFromAirtable` parse the data into JSON format and then update the states containing the likes, `likedItemData` and albums, `albumData`. 
+The functions `updateLikesFromAirtable` and `updateAlbumsFromAirtable` parse the data into JSON format and then update the states containing the likes, `likedItemData` and albums, `albumData`. This is only done once, on load with a useEffect using `airtableData` as the dependency array.
 
 #### Updating
 
 The functions `updateLikesToAirtable` and `updateAlbumsToAirtable` cannot be run on load as the likes and albums states are empty. Then the data on Airtable will be erased. 
 
-Likes are updated whenever the app checks whether a post is liked. Albums are updated when the user adds, renames, deletes an album or adds/removes a photo from album.
+Likes are updated whenever whether a post is liked/unliked. Albums are updated when the user adds, renames, deletes an album or adds/removes a photo from album.
 
 ---
 
