@@ -1,4 +1,23 @@
 # Astronomy Photo App
+
+*** UPDATE ***
+
+UPDATE: I made my front-end project into a full stack MERN project, along with some improvements:
+
+- Authentication
+- Persistent login using HTTP only cookies
+- The app is still accessible without login, except for the functionality of saving likes and albums
+- Routes for every page, that are accessible when page is refreshed or url is typed in
+- Some automated testing using Cypress
+
+Updated project Github:
+https://github.com/berwyntan/astronomy-app-2
+
+Updated project deployment:
+http://astronomy-app-2.vercel.app/
+
+*** END OF UPDATE ***
+
 An Instagram / Pinterest clone that uses NASA's APOD API to browse astronomy photos. This is a front-end single page app that applies CRUD and uses Airtable to store likes and albums.
 It is my second project for General Assembly's Software Engineering Immersive Flex program.
 
